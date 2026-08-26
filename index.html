@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <!-- ETIQUETAS ANTI-CACHE TOTAL (Para Smartphones / Safari / Chrome) -->
+    <!-- ANTI-CACHE HEADERS -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -24,7 +24,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: #1b2616;
+            background: #0e150a;
             color: #fff;
             font-family: 'MedievalSharp', cursive, sans-serif;
             touch-action: none;
@@ -40,66 +40,219 @@
             overflow: hidden;
         }
 
-        canvas {
+        canvas#gameCanvas {
             display: block;
             image-rendering: pixelated;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
         }
 
-        /* UI Top Bar */
+        /* --- TOP NAVIGATION & SEARCH BAR --- */
         #top-bar {
             position: absolute;
-            top: env(safe-area-inset-top, 12px);
-            left: 12px;
-            right: 12px;
+            top: env(safe-area-inset-top, 10px);
+            left: 10px;
+            right: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
             pointer-events: none;
             z-index: 100;
         }
 
         .ui-ribbon {
-            background: linear-gradient(180deg, rgba(139, 90, 43, 0.94) 0%, rgba(74, 40, 16, 0.94) 100%);
+            background: linear-gradient(180deg, rgba(139, 90, 43, 0.95) 0%, rgba(74, 40, 16, 0.95) 100%);
             border: 2px solid #dfa143;
             border-radius: 8px;
             padding: 6px 12px;
             font-family: 'Cinzel', serif;
-            font-size: 12px;
+            font-size: 11px;
             color: #ffe6a3;
             text-shadow: 2px 2px 4px #000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.7);
             pointer-events: auto;
             backdrop-filter: blur(4px);
-        }
-
-        .char-select-btn {
-            cursor: pointer;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 6px;
+            cursor: pointer;
             transition: 0.2s;
         }
-        .char-select-btn:hover, .char-select-btn:active {
+        .ui-ribbon:hover, .ui-ribbon:active {
             background: linear-gradient(180deg, #a86c35 0%, #613515 100%);
-            transform: scale(1.04);
+            color: #fff;
+            transform: scale(1.03);
+        }
+
+        /* Search Bar */
+        #search-box {
+            position: relative;
+            pointer-events: auto;
+            flex: 1;
+            max-width: 280px;
+        }
+        #search-input {
+            width: 100%;
+            background: rgba(30, 15, 8, 0.92);
+            border: 2px solid #dfa143;
+            border-radius: 20px;
+            padding: 6px 32px 6px 12px;
+            color: #ffe6a3;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 13px;
+            outline: none;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
+        }
+        #search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #dfa143;
+            font-size: 14px;
+            pointer-events: none;
+        }
+        #search-results {
+            display: none;
+            position: absolute;
+            top: 36px;
+            left: 0;
+            right: 0;
+            background: rgba(25, 12, 5, 0.98);
+            border: 2px solid #dfa143;
+            border-radius: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.9);
+            z-index: 200;
+        }
+        .search-item {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(223, 161, 67, 0.2);
+            font-size: 12px;
+            color: #ffe6a3;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-item:hover, .search-item:active {
+            background: rgba(168, 108, 53, 0.5);
             color: #fff;
         }
 
-        /* --- VIRTUAL TOUCH CONTROLS --- */
+        /* --- FLOATING CONTROLS (ISLAND TELEPORT & MINIMAP) --- */
+        #island-selector {
+            position: absolute;
+            top: calc(env(safe-area-inset-top, 10px) + 52px);
+            left: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            pointer-events: none;
+            z-index: 90;
+            max-width: 90vw;
+        }
+        .island-btn {
+            background: rgba(45, 25, 12, 0.9);
+            border: 1.5px solid #dfa143;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 10px;
+            color: #f1dfc5;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+        }
+        .island-btn:hover, .island-btn:active {
+            background: #8b5a2b;
+            color: #ffd700;
+            border-color: #ffd700;
+        }
+
+        /* Minimap Overlay */
+        #minimap-wrapper {
+            position: absolute;
+            top: calc(env(safe-area-inset-top, 10px) + 52px);
+            right: 10px;
+            background: rgba(20, 10, 5, 0.92);
+            border: 2px solid #dfa143;
+            border-radius: 8px;
+            padding: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            z-index: 90;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+        #minimapCanvas {
+            display: block;
+            width: 110px;
+            height: 80px;
+            image-rendering: pixelated;
+        }
+        #minimap-label {
+            font-size: 8px;
+            text-align: center;
+            color: #dfa143;
+            margin-top: 2px;
+        }
+
+        /* --- SLIDE-IN KINGDOM GUIDE (SIDE PANEL) --- */
+        #guide-panel {
+            position: absolute;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(35, 18, 9, 0.98) 0%, rgba(15, 8, 4, 0.98) 100%);
+            border-left: 3px solid #dfa143;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            z-index: 500;
+            padding: 20px;
+            padding-top: calc(env(safe-area-inset-top, 20px) + 10px);
+            overflow-y: auto;
+            transition: right 0.3s ease;
+        }
+        #guide-panel.open {
+            right: 0;
+        }
+        .guide-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 22px;
+            color: #dfa143;
+            cursor: pointer;
+        }
+        .guide-title {
+            font-family: 'Cinzel', serif;
+            color: #ffd700;
+            font-size: 18px;
+            border-bottom: 2px solid #5c3a21;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .guide-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #f1dfc5;
+            margin-bottom: 14px;
+        }
+
+        /* --- TOUCH CONTROLS (D-PAD & ACTION) --- */
         #touch-controls {
             display: none;
             position: absolute;
-            bottom: calc(env(safe-area-inset-bottom, 15px) + 20px);
-            left: 15px;
-            right: 15px;
+            bottom: calc(env(safe-area-inset-bottom, 12px) + 12px);
+            left: 12px;
+            right: 12px;
             justify-content: space-between;
             align-items: flex-end;
             pointer-events: none;
             z-index: 100;
         }
-
         @media (max-width: 1024px), (hover: none) and (pointer: coarse) {
             #touch-controls {
                 display: flex;
@@ -108,22 +261,21 @@
 
         .dpad-container {
             position: relative;
-            width: 140px;
-            height: 140px;
+            width: 130px;
+            height: 130px;
             pointer-events: auto;
         }
-
         .dpad-btn {
             position: absolute;
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             background: rgba(45, 25, 10, 0.85);
             border: 2px solid #dfa143;
             border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            font-size: 16px;
             color: #ffd700;
             box-shadow: 0 4px 10px rgba(0,0,0,0.6);
             touch-action: none;
@@ -133,10 +285,10 @@
             background: rgba(168, 108, 53, 0.95);
             transform: scale(0.92);
         }
-        .dpad-up    { top: 0; left: 48px; }
-        .dpad-down  { bottom: 0; left: 48px; }
-        .dpad-left  { top: 48px; left: 0; }
-        .dpad-right { top: 48px; right: 0; }
+        .dpad-up    { top: 0; left: 44px; }
+        .dpad-down  { bottom: 0; left: 44px; }
+        .dpad-left  { top: 44px; left: 0; }
+        .dpad-right { top: 44px; right: 0; }
 
         .action-btn-container {
             pointer-events: auto;
@@ -145,10 +297,9 @@
             align-items: center;
             gap: 8px;
         }
-
         .touch-action-btn {
-            width: 68px;
-            height: 68px;
+            width: 64px;
+            height: 64px;
             background: linear-gradient(135deg, rgba(168, 108, 53, 0.95) 0%, rgba(74, 40, 16, 0.95) 100%);
             border: 3px solid #ffd700;
             border-radius: 50%;
@@ -157,7 +308,7 @@
             justify-content: center;
             align-items: center;
             font-family: 'Cinzel', serif;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
             color: #fff;
             text-shadow: 1px 1px 3px #000;
@@ -171,7 +322,7 @@
             color: #000;
         }
 
-        /* Modal Styles */
+        /* --- MODAL POPUPS --- */
         #game-modal, #char-modal {
             display: none;
             position: fixed;
@@ -214,11 +365,11 @@
                 font-size: 18px !important;
                 text-align: center;
             }
-            .modal-details p {
-                font-size: 13px !important;
-            }
             .char-grid {
                 grid-template-columns: repeat(2, 1fr) !important;
+            }
+            #island-selector {
+                top: calc(env(safe-area-inset-top, 10px) + 46px);
             }
         }
 
@@ -253,14 +404,14 @@
         }
         .modal-details p {
             line-height: 1.6;
-            font-size: 15px;
+            font-size: 14px;
             color: #f1dfc5;
         }
         .btn-action {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 14px;
+            padding: 10px 14px;
             border: 2px solid #dfa143;
             border-radius: 6px;
             background: linear-gradient(180deg, #7c4c23 0%, #3e200c 100%);
@@ -320,16 +471,44 @@
 <body>
     
     <div id="game-container">
+        <!-- TOP TOOLBAR -->
         <div id="top-bar">
-            <div class="ui-ribbon">🏰 REINO LUDOTECA ⚔️</div>
-            <div class="ui-ribbon char-select-btn" onclick="openCharModal()">
-                <span>👤</span> <strong id="current-hero-name" style="color:#ffd700;">Caballero Azul</strong> ⚙️
+            <!-- Search Bar -->
+            <div id="search-box">
+                <input type="text" id="search-input" placeholder="🔍 Buscar juego..." autocomplete="off">
+                <span id="search-icon">🔍</span>
+                <div id="search-results"></div>
+            </div>
+
+            <!-- Hero Selector -->
+            <div class="ui-ribbon" onclick="openCharModal()">
+                <span>👤</span> <strong id="current-hero-name" style="color:#ffd700;">Caballero Azul</strong>
+            </div>
+
+            <!-- Guide Toggle -->
+            <div class="ui-ribbon" onclick="toggleGuide()">
+                <span>📜 GUÍA</span>
             </div>
         </div>
 
+        <!-- FAST TRAVEL ISLAND BAR -->
+        <div id="island-selector">
+            <div class="island-btn" onclick="teleportToIsland(0)">🏡 Familiares</div>
+            <div class="island-btn" onclick="teleportToIsland(1)">🎉 Party Games</div>
+            <div class="island-btn" onclick="teleportToIsland(2)">👑 Expertos</div>
+            <div class="island-btn" onclick="teleportToIsland(3)">🃏 Deducción</div>
+        </div>
+
+        <!-- INTERACTIVE MINIMAP -->
+        <div id="minimap-wrapper" onclick="toggleMinimapSize()">
+            <canvas id="minimapCanvas" width="110" height="80"></canvas>
+            <div id="minimap-label">🗺️ MAPA DEL REINO</div>
+        </div>
+
+        <!-- MAIN GAME CANVAS -->
         <canvas id="gameCanvas"></canvas>
 
-        <!-- CONTROLES TACTILES VIRTUALES -->
+        <!-- TOUCH CONTROLS (D-PAD & ACTION) -->
         <div id="touch-controls">
             <div class="dpad-container">
                 <div class="dpad-btn dpad-up" id="btn-up">▲</div>
@@ -343,6 +522,30 @@
                     <span style="font-size:18px;">⚔️</span>
                     <span>ENTRAR</span>
                 </div>
+            </div>
+        </div>
+
+        <!-- SLIDE-IN GUIDE PANEL -->
+        <div id="guide-panel">
+            <div class="guide-close-btn" onclick="toggleGuide()">✕</div>
+            <h2 class="guide-title">🏰 GUÍA DEL REINO</h2>
+            <div class="guide-text">
+                <strong>¡Bienvenido a la Ludoteca Virtual!</strong><br>
+                Este reino medieval contiene toda tu colección real de juegos de mesa distribuida en 4 distritos temáticos.
+            </div>
+            <div class="guide-text">
+                <strong>🗺️ CÓMO NAVEGAR:</strong><br>
+                • <strong>Clic / Toque (Estilo Age of Empires)</strong>: Toca cualquier camino o pasto y tu héroe viajará automáticamente esquivando obstáculos.<br>
+                • <strong>Tocar Casa</strong>: Toca la casa de cualquier juego para entrar a ver su portada y detalles.<br>
+                • <strong>Buscador Rápido</strong>: Escribe arriba para encontrar cualquier juego al instante.<br>
+                • <strong>Viaje Rápido</strong>: Usa los botones de islas para saltar entre distritos.
+            </div>
+            <div class="guide-text">
+                <strong>📦 EN CADA CASA ENCONTRARÁS:</strong><br>
+                • Portada en alta definición.<br>
+                • Puntuación de BoardGameGeek.<br>
+                • Botón para ver el tutorial en VHS/YouTube.<br>
+                • Botón para subir portadas personalizadas.
             </div>
         </div>
     </div>
@@ -378,10 +581,9 @@
     </div>
 
     <script>
-        const BUILD_VERSION = '1787758152';
-        const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg"}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg"}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg"}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg"}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg"}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg"}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg"}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg"}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg"}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg"}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg"}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg"}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg"}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg"}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg"}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg"}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg"}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg"}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg"}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg"}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg"}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg"}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg"}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg"}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg"}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg"}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg"}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg"}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg"}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg"}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg"}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg"}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg"}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg"}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg"}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg"}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg"}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg"}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg"}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg"}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg"}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg"}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg"}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg"}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg"}];
+        const BUILD_VERSION = '1787759660';
+        const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg", "islandId": 3, "id": 0}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "islandId": 3, "id": 1}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg", "islandId": 3, "id": 2}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg", "islandId": 3, "id": 3}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "islandId": 1, "id": 4}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg", "islandId": 1, "id": 5}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg", "islandId": 1, "id": 6}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg", "islandId": 1, "id": 7}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg", "islandId": 1, "id": 8}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg", "islandId": 0, "id": 9}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg", "islandId": 1, "id": 10}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg", "islandId": 3, "id": 11}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg", "islandId": 3, "id": 12}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg", "islandId": 3, "id": 13}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg", "islandId": 0, "id": 14}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg", "islandId": 1, "id": 15}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg", "islandId": 0, "id": 16}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg", "islandId": 0, "id": 17}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg", "islandId": 0, "id": 18}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg", "islandId": 0, "id": 19}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg", "islandId": 0, "id": 20}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg", "islandId": 2, "id": 21}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg", "islandId": 0, "id": 22}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg", "islandId": 0, "id": 23}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg", "islandId": 2, "id": 24}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg", "islandId": 1, "id": 25}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg", "islandId": 0, "id": 26}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg", "islandId": 2, "id": 27}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg", "islandId": 2, "id": 28}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg", "islandId": 2, "id": 29}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg", "islandId": 2, "id": 30}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg", "islandId": 0, "id": 31}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg", "islandId": 0, "id": 32}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg", "islandId": 0, "id": 33}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg", "islandId": 1, "id": 34}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg", "islandId": 0, "id": 35}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg", "islandId": 3, "id": 36}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg", "islandId": 0, "id": 37}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg", "islandId": 0, "id": 38}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg", "islandId": 0, "id": 39}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg", "islandId": 1, "id": 40}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg", "islandId": 1, "id": 41}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "islandId": 1, "id": 42}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg", "islandId": 1, "id": 43}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg", "islandId": 1, "id": 44}];
 
-        // Anti-cache image helper
         function bustCache(url) {
             if (!url) return '';
             return url + (url.includes('?') ? '&' : '?') + 'v=' + BUILD_VERSION;
@@ -443,7 +645,12 @@
             assets.houses.push(img);
         });
 
-        // --- Character Modal UI with Live Canvas Previews ---
+        // --- UI TOGGLES (GUIDE & CHAR MODAL) ---
+        function toggleGuide() {
+            const el = document.getElementById('guide-panel');
+            el.classList.toggle('open');
+        }
+
         function openCharModal() {
             const container = document.getElementById('char-grid-container');
             container.innerHTML = '';
@@ -460,7 +667,6 @@
                     const hImg = assets.heroes[h.id];
                     if (hImg && hImg.complete && hImg.naturalWidth > 0) {
                         pCtx.clearRect(0, 0, 64, 64);
-                        // Center warrior frame in 64x64 preview
                         pCtx.drawImage(hImg, 0, 0, 192, 192, -16, -18, 96, 96);
                     } else {
                         setTimeout(drawPreview, 50);
@@ -540,7 +746,7 @@
             }
         }
 
-        // --- WORLD GENERATION ---
+        // --- WORLD GENERATION: 4 THEMATIC ISLANDS ---
         const WORLD_COLS = 54;
         const WORLD_ROWS = 40;
         const TILE_SIZE = 54;
@@ -561,10 +767,10 @@
         }
 
         const islands = [
-            { name: "Distrito Norte-Oeste", c1: 3, c2: 24, r1: 3, r2: 17 },
-            { name: "Distrito Norte-Este", c1: 29, c2: 50, r1: 3, r2: 17 },
-            { name: "Distrito Sur-Oeste",  c1: 3, c2: 24, r1: 22, r2: 36 },
-            { name: "Distrito Sur-Este",   c1: 29, c2: 50, r1: 22, r2: 36 }
+            { id: 0, name: "Distrito Familiar", desc: "Juegos Familiares & Estrategia Ligera", c1: 3, c2: 24, r1: 3, r2: 17, spawn: { c: 14, r: 9 } },
+            { id: 1, name: "Distrito Party", desc: "Party Games, Risas & Humor", c1: 29, c2: 50, r1: 3, r2: 17, spawn: { c: 40, r: 9 } },
+            { id: 2, name: "Distrito Real", desc: "Juegos Expertos & Estrategia Pesada", c1: 3, c2: 24, r1: 22, r2: 36, spawn: { c: 14, r: 29 } },
+            { id: 3, name: "Distrito Secreto", desc: "Cartas, Deducción & Roles Ocultos", c1: 29, c2: 50, r1: 22, r2: 36, spawn: { c: 40, r: 29 } }
         ];
 
         islands.forEach(isl => {
@@ -585,6 +791,7 @@
             }
         });
 
+        // Multiple direct horizontal bridges
         for (let c = 24; c <= 29; c++) {
             worldMap[7][c] = BRIDGE_H;
             worldMap[12][c] = BRIDGE_H;
@@ -592,6 +799,7 @@
             worldMap[31][c] = BRIDGE_H;
         }
 
+        // Multiple direct vertical bridges
         for (let r = 17; r <= 22; r++) {
             worldMap[r][8] = BRIDGE_V;
             worldMap[r][14] = BRIDGE_V;
@@ -601,47 +809,153 @@
             worldMap[r][46] = BRIDGE_V;
         }
 
+        // Distribute categorized houses in their respective islands
         const houses = [];
-        let gIndex = 0;
+        const islandHouseSpots = [
+            // Spots template for each island
+            [
+                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 11, dr: 1 }, { dc: 16, dr: 1 },
+                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 11, dr: 6 }, { dc: 16, dr: 6 },
+                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 11, dr: 11 }, { dc: 16, dr: 11 }
+            ],
+            [
+                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 11, dr: 1 }, { dc: 16, dr: 1 },
+                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 11, dr: 6 }, { dc: 16, dr: 6 },
+                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 11, dr: 11 }, { dc: 16, dr: 11 }
+            ],
+            [
+                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 11, dr: 1 }, { dc: 16, dr: 1 },
+                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 11, dr: 6 }, { dc: 16, dr: 6 },
+                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 11, dr: 11 }, { dc: 16, dr: 11 }
+            ],
+            [
+                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 11, dr: 1 }, { dc: 16, dr: 1 },
+                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 11, dr: 6 }, { dc: 16, dr: 6 },
+                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 11, dr: 11 }, { dc: 16, dr: 11 }
+            ]
+        ];
 
-        islands.forEach((isl) => {
-            const spots = [
-                { c: isl.c1 + 1, r: isl.r1 + 1 },
-                { c: isl.c1 + 6, r: isl.r1 + 1 },
-                { c: isl.c1 + 11, r: isl.r1 + 1 },
-                { c: isl.c1 + 16, r: isl.r1 + 1 },
-                { c: isl.c1 + 1, r: isl.r1 + 6 },
-                { c: isl.c1 + 6, r: isl.r1 + 6 },
-                { c: isl.c1 + 11, r: isl.r1 + 6 },
-                { c: isl.c1 + 16, r: isl.r1 + 6 },
-                { c: isl.c1 + 1, r: isl.r1 + 11 },
-                { c: isl.c1 + 6, r: isl.r1 + 11 },
-                { c: isl.c1 + 11, r: isl.r1 + 11 },
-                { c: isl.c1 + 16, r: isl.r1 + 11 }
-            ];
+        let islandSpotCounters = [0, 0, 0, 0];
 
-            spots.forEach(spot => {
-                if (gIndex < gamesData.length) {
-                    const sIdx = gIndex % assets.houses.length;
-                    houses.push({
-                        gameIndex: gIndex,
-                        c: spot.c,
-                        r: spot.r,
-                        spriteIndex: sIdx
-                    });
-                    for (let dr = 0; dr < 3; dr++) {
-                        for (let dc = 0; dc < 3; dc++) {
-                            if (spot.r + dr < WORLD_ROWS && spot.c + dc < WORLD_COLS) {
-                                worldMap[spot.r + dr][spot.c + dc] = 10 + gIndex;
-                            }
-                        }
+        gamesData.forEach((game, gIdx) => {
+            const islId = game.islandId !== undefined ? game.islandId : 0;
+            const isl = islands[islId];
+            let spotIdx = islandSpotCounters[islId];
+            
+            // If island spots full, wrap around
+            const spot = islandHouseSpots[islId][spotIdx % islandHouseSpots[islId].length];
+            islandSpotCounters[islId]++;
+
+            const c = isl.c1 + spot.dc;
+            const r = isl.r1 + spot.dr;
+            const sIdx = gIdx % assets.houses.length;
+
+            const houseObj = {
+                gameIndex: gIdx,
+                c: c,
+                r: r,
+                doorC: c + 1,
+                doorR: r + 3,
+                spriteIndex: sIdx
+            };
+            houses.push(houseObj);
+            game.house = houseObj;
+
+            for (let dr = 0; dr < 3; dr++) {
+                for (let dc = 0; dc < 3; dc++) {
+                    if (r + dr < WORLD_ROWS && c + dc < WORLD_COLS) {
+                        worldMap[r + dr][c + dc] = 10 + gIdx;
                     }
-                    gIndex++;
                 }
-            });
+            }
         });
 
-        // --- FULLSCREEN CANVAS & RESPONSIVE CAMERA ---
+        // --- PATHFINDING A* (AGE OF EMPIRES CLICK TO WALK) ---
+        function findPath(startC, startR, targetC, targetR) {
+            // If target is inside a house or water, find nearest walkable neighbor
+            const isWalkable = (c, r) => {
+                if (c < 0 || c >= WORLD_COLS || r < 0 || r >= WORLD_ROWS) return false;
+                const t = worldMap[r][c];
+                return t === GRASS || t === PATH || t === BRIDGE_H || t === BRIDGE_V;
+            };
+
+            if (!isWalkable(targetC, targetR)) {
+                const neighbors = [
+                    { c: targetC, r: targetR + 1 },
+                    { c: targetC, r: targetR - 1 },
+                    { c: targetC + 1, r: targetR },
+                    { c: targetC - 1, r: targetR },
+                    { c: targetC + 1, r: targetR + 3 },
+                    { c: targetC + 1, r: targetR - 1 }
+                ];
+                const valid = neighbors.find(n => isWalkable(n.c, n.r));
+                if (valid) {
+                    targetC = valid.c;
+                    targetR = valid.r;
+                } else {
+                    return [];
+                }
+            }
+
+            const openSet = [{ c: startC, r: startR, g: 0, h: 0, f: 0, parent: null }];
+            const closedSet = new Set();
+
+            while (openSet.length > 0) {
+                openSet.sort((a, b) => a.f - b.f);
+                const current = openSet.shift();
+                const key = current.c + ',' + current.r;
+
+                if (current.c === targetC && current.r === targetR) {
+                    const path = [];
+                    let curr = current;
+                    while (curr.parent) {
+                        path.push({ c: curr.c, r: curr.r });
+                        curr = curr.parent;
+                    }
+                    return path.reverse();
+                }
+
+                closedSet.add(key);
+
+                const dirs = [
+                    { dc: 0, dr: -1 },
+                    { dc: 0, dr: 1 },
+                    { dc: -1, dr: 0 },
+                    { dc: 1, dr: 0 }
+                ];
+
+                for (let d of dirs) {
+                    const nc = current.c + d.dc;
+                    const nr = current.r + d.dr;
+                    const nKey = nc + ',' + nr;
+
+                    if (closedSet.has(nKey) || !isWalkable(nc, nr)) continue;
+
+                    const gScore = current.g + 1;
+                    let neighbor = openSet.find(o => o.c === nc && o.r === nr);
+
+                    if (!neighbor) {
+                        const hScore = Math.abs(nc - targetC) + Math.abs(nr - targetR);
+                        neighbor = {
+                            c: nc,
+                            r: nr,
+                            g: gScore,
+                            h: hScore,
+                            f: gScore + hScore,
+                            parent: current
+                        };
+                        openSet.push(neighbor);
+                    } else if (gScore < neighbor.g) {
+                        neighbor.g = gScore;
+                        neighbor.f = neighbor.g + neighbor.h;
+                        neighbor.parent = current;
+                    }
+                }
+            }
+            return [];
+        }
+
+        // --- PLAYER, CAMERA & CLICK-TO-MOVE ENGINE ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -654,15 +968,18 @@
 
         const player = {
             x: 14 * TILE_SIZE,
-            y: 7 * TILE_SIZE,
+            y: 9 * TILE_SIZE,
             targetX: 14 * TILE_SIZE,
-            targetY: 7 * TILE_SIZE,
+            targetY: 9 * TILE_SIZE,
             gridX: 14,
-            gridY: 7,
+            gridY: 9,
             dirX: 0,
             dirY: 1,
             frame: 0,
-            isMoving: false
+            isMoving: false,
+            pathQueue: [],
+            clickMarker: null,
+            targetGameToOpen: null
         };
 
         const camera = {
@@ -670,8 +987,26 @@
             y: player.y
         };
 
-        function movePlayer(dx, dy) {
+        function teleportToIsland(islId) {
+            const isl = islands[islId];
+            if (!isl) return;
+            player.pathQueue = [];
+            player.targetGameToOpen = null;
+            player.gridX = isl.spawn.c;
+            player.gridY = isl.spawn.r;
+            player.x = isl.spawn.c * TILE_SIZE;
+            player.y = isl.spawn.r * TILE_SIZE;
+            player.targetX = player.x;
+            player.targetY = player.y;
+            camera.x = player.x;
+            camera.y = player.y;
+        }
+
+        function movePlayerManual(dx, dy) {
             if (isModalOpen || document.getElementById('char-modal').style.display === 'flex') return;
+            player.pathQueue = [];
+            player.clickMarker = null;
+            player.targetGameToOpen = null;
 
             player.dirX = dx;
             player.dirY = dy;
@@ -708,18 +1043,38 @@
         }
 
         function update() {
+            // Process A* Path queue
             const dx = player.targetX - player.x;
             const dy = player.targetY - player.y;
-            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-                player.x += dx * 0.32;
-                player.y += dy * 0.32;
+            const dist = Math.hypot(dx, dy);
+
+            if (dist > 1.5) {
+                player.x += dx * 0.35;
+                player.y += dy * 0.35;
                 player.isMoving = true;
-                player.frame += 0.2;
+                player.frame += 0.22;
             } else {
                 player.x = player.targetX;
                 player.y = player.targetY;
-                player.isMoving = false;
-                player.frame += 0.08;
+                
+                if (player.pathQueue.length > 0) {
+                    const nextStep = player.pathQueue.shift();
+                    player.dirX = nextStep.c - player.gridX;
+                    player.dirY = nextStep.r - player.gridY;
+                    player.gridX = nextStep.c;
+                    player.gridY = nextStep.r;
+                    player.targetX = nextStep.c * TILE_SIZE;
+                    player.targetY = nextStep.r * TILE_SIZE;
+                    player.isMoving = true;
+                } else {
+                    player.isMoving = false;
+                    player.frame += 0.06;
+                    player.clickMarker = null;
+                    if (player.targetGameToOpen) {
+                        openGameModal(player.targetGameToOpen);
+                        player.targetGameToOpen = null;
+                    }
+                }
             }
 
             camera.x += (player.x + TILE_SIZE/2 - canvas.width/2 - camera.x) * 0.14;
@@ -727,6 +1082,7 @@
         }
 
         function draw() {
+            // Clean whole buffer perfectly to eliminate ghost sprites
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
             ctx.translate(-Math.floor(camera.x), -Math.floor(camera.y));
@@ -736,7 +1092,7 @@
             const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 2);
             const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 2);
 
-            // 1. Draw Terrain Base
+            // 1. Draw Ground (Water, Grass, Roads, Bridges)
             for (let r = startRow; r <= endRow; r++) {
                 for (let c = startCol; c <= endCol; c++) {
                     const x = c * TILE_SIZE;
@@ -788,7 +1144,34 @@
                 }
             }
 
-            // 2. Draw House Buildings
+            // Draw Big Thematic Island Title Banners on Grass
+            islands.forEach(isl => {
+                const ix = isl.c1 * TILE_SIZE + 20;
+                const iy = isl.r1 * TILE_SIZE + 10;
+                ctx.fillStyle = 'rgba(15, 8, 4, 0.75)';
+                ctx.fillRect(ix, iy, 280, 24);
+                ctx.strokeStyle = '#dfa143';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(ix, iy, 280, 24);
+
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 11px "Cinzel", serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('🚩 ' + isl.name.toUpperCase(), ix + 10, iy + 16);
+            });
+
+            // 2. Draw Click Marker (Age of Empires Target Ring)
+            if (player.clickMarker) {
+                const mx = player.clickMarker.c * TILE_SIZE + TILE_SIZE/2;
+                const my = player.clickMarker.r * TILE_SIZE + TILE_SIZE/2;
+                ctx.strokeStyle = '#5bb35b';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(mx, my, 14 + Math.sin(Date.now() * 0.01) * 3, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+
+            // 3. Draw House Buildings
             houses.forEach(h => {
                 const hx = h.c * TILE_SIZE;
                 const hy = h.r * TILE_SIZE;
@@ -822,7 +1205,7 @@
                 }
             });
 
-            // 3. Highlight Target House
+            // 4. Highlight Target House
             const frontC = player.gridX + player.dirX;
             const frontR = player.gridY + player.dirY;
             if (frontR >= 0 && frontR < WORLD_ROWS && frontC >= 0 && frontC < WORLD_COLS) {
@@ -858,7 +1241,7 @@
                 }
             }
 
-            // 4. Draw Selected Hero
+            // 5. Draw Selected Hero
             const heroImg = assets.heroes[selectedHero.id];
             if (heroImg && heroImg.complete && heroImg.naturalWidth > 0) {
                 const animRow = player.isMoving ? 1 : 0;
@@ -878,6 +1261,47 @@
             }
 
             ctx.restore();
+
+            // Draw Minimap
+            drawMinimap();
+        }
+
+        // --- DRAW REAL-TIME MINIMAP ---
+        const minimapCanvas = document.getElementById('minimapCanvas');
+        const mCtx = minimapCanvas.getContext('2d');
+
+        function drawMinimap() {
+            mCtx.clearRect(0, 0, minimapCanvas.width, minimapCanvas.height);
+            const scaleX = minimapCanvas.width / WORLD_COLS;
+            const scaleY = minimapCanvas.height / WORLD_ROWS;
+
+            // Draw water & grass
+            mCtx.fillStyle = '#1d556f';
+            mCtx.fillRect(0, 0, minimapCanvas.width, minimapCanvas.height);
+
+            islands.forEach(isl => {
+                mCtx.fillStyle = '#4c7b2c';
+                mCtx.fillRect(isl.c1 * scaleX, isl.r1 * scaleY, (isl.c2 - isl.c1) * scaleX, (isl.r2 - isl.r1) * scaleY);
+            });
+
+            // Draw bridges
+            mCtx.fillStyle = '#dfa143';
+            mCtx.fillRect(24 * scaleX, 7 * scaleY, 5 * scaleX, 2 * scaleY);
+            mCtx.fillRect(24 * scaleX, 26 * scaleY, 5 * scaleX, 2 * scaleY);
+            mCtx.fillRect(14 * scaleX, 17 * scaleY, 2 * scaleX, 5 * scaleY);
+            mCtx.fillRect(40 * scaleX, 17 * scaleY, 2 * scaleX, 5 * scaleY);
+
+            // Draw Player Blip
+            mCtx.fillStyle = '#ff0000';
+            mCtx.beginPath();
+            mCtx.arc(player.gridX * scaleX, player.gridY * scaleY, 3, 0, 2 * Math.PI);
+            mCtx.fill();
+        }
+
+        function toggleMinimapSize() {
+            // Teleport to next island on minimap tap
+            const nextIsl = (Math.floor(player.gridX / 27) + (player.gridY > 18 ? 2 : 0) + 1) % 4;
+            teleportToIsland(nextIsl);
         }
 
         function gameLoop() {
@@ -885,7 +1309,6 @@
             draw();
             requestAnimationFrame(gameLoop);
         }
-
         requestAnimationFrame(gameLoop);
 
         // --- KEYBOARD CONTROLS (PC) ---
@@ -898,14 +1321,14 @@
                 return;
             }
 
-            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') movePlayer(0, -1);
-            else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') movePlayer(0, 1);
-            else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') movePlayer(-1, 0);
-            else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') movePlayer(1, 0);
+            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') movePlayerManual(0, -1);
+            else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') movePlayerManual(0, 1);
+            else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') movePlayerManual(-1, 0);
+            else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') movePlayerManual(1, 0);
             else if (e.key === 'Enter') interactAction();
         });
 
-        // --- TOUCH CONTROLS (SMARTPHONE / TABLET) ---
+        // --- TOUCH CONTROLS (D-PAD) ---
         function attachTouchBtn(id, action) {
             const el = document.getElementById(id);
             if (!el) return;
@@ -931,10 +1354,10 @@
             el.addEventListener('mouseleave', stop);
         }
 
-        attachTouchBtn('btn-up', () => movePlayer(0, -1));
-        attachTouchBtn('btn-down', () => movePlayer(0, 1));
-        attachTouchBtn('btn-left', () => movePlayer(-1, 0));
-        attachTouchBtn('btn-right', () => movePlayer(1, 0));
+        attachTouchBtn('btn-up', () => movePlayerManual(0, -1));
+        attachTouchBtn('btn-down', () => movePlayerManual(0, 1));
+        attachTouchBtn('btn-left', () => movePlayerManual(-1, 0));
+        attachTouchBtn('btn-right', () => movePlayerManual(1, 0));
 
         const actBtn = document.getElementById('btn-action');
         actBtn.addEventListener('touchstart', (e) => {
@@ -944,23 +1367,99 @@
         }, { passive: false });
         actBtn.addEventListener('click', interactAction);
 
+        // --- AGE OF EMPIRES CLICK TO MOVE & TOUCH PATHFINDING ---
         canvas.addEventListener('click', (e) => {
-            if (isModalOpen) return;
+            if (isModalOpen || document.getElementById('guide-panel').classList.contains('open')) return;
             const rect = canvas.getBoundingClientRect();
             const clickX = e.clientX + camera.x;
             const clickY = e.clientY + camera.y;
 
-            const clickedCol = Math.floor(clickX / TILE_SIZE);
-            const clickedRow = Math.floor(clickY / TILE_SIZE);
+            const targetC = Math.floor(clickX / TILE_SIZE);
+            const targetR = Math.floor(clickY / TILE_SIZE);
 
-            if (clickedRow >= 0 && clickedRow < WORLD_ROWS && clickedCol >= 0 && clickedCol < WORLD_COLS) {
-                const tile = worldMap[clickedRow][clickedCol];
+            if (targetR >= 0 && targetR < WORLD_ROWS && targetC >= 0 && targetC < WORLD_COLS) {
+                const tile = worldMap[targetR][targetC];
+                
                 if (tile >= 10) {
-                    const gIdx = tile - 10;
-                    if (gamesData[gIdx]) {
-                        openGameModal(gamesData[gIdx]);
+                    // Clicked on a House!
+                    const game = gamesData[tile - 10];
+                    if (game && game.house) {
+                        const path = findPath(player.gridX, player.gridY, game.house.doorC, game.house.doorR);
+                        if (path.length > 0) {
+                            player.pathQueue = path;
+                            player.clickMarker = { c: game.house.doorC, r: game.house.doorR };
+                            player.targetGameToOpen = game;
+                        } else {
+                            // Direct open if adjacent or path not needed
+                            openGameModal(game);
+                        }
+                    }
+                } else {
+                    // Clicked on Ground/Path/Bridge
+                    const path = findPath(player.gridX, player.gridY, targetC, targetR);
+                    if (path.length > 0) {
+                        player.pathQueue = path;
+                        player.clickMarker = { c: targetC, r: targetR };
+                        player.targetGameToOpen = null;
                     }
                 }
+            }
+        });
+
+        // --- SEARCH BAR AUTOCOMPLETE ---
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+
+        searchInput.addEventListener('input', (e) => {
+            const q = e.target.value.trim().toLowerCase();
+            if (q.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            const matches = gamesData.filter(g => 
+                g.name.toLowerCase().includes(q) || 
+                g.type.toLowerCase().includes(q)
+            );
+
+            if (matches.length > 0) {
+                searchResults.innerHTML = '';
+                matches.slice(0, 8).forEach(g => {
+                    const item = document.createElement('div');
+                    item.className = 'search-item';
+                    item.innerHTML = `
+                        <span>🏠 <strong>${g.name}</strong> <small style="color:#dfa143;">(${g.type.split('/')[0]})</small></span>
+                        <span style="font-size:10px; color:#5bb35b;">▶ IR</span>
+                    `;
+                    item.onclick = () => {
+                        searchResults.style.display = 'none';
+                        searchInput.value = '';
+                        if (g.house) {
+                            // Teleport camera and open game modal
+                            player.pathQueue = [];
+                            player.gridX = g.house.doorC;
+                            player.gridY = g.house.doorR;
+                            player.x = g.house.doorC * TILE_SIZE;
+                            player.y = g.house.doorR * TILE_SIZE;
+                            player.targetX = player.x;
+                            player.targetY = player.y;
+                            camera.x = player.x;
+                            camera.y = player.y;
+                            openGameModal(g);
+                        }
+                    };
+                    searchResults.appendChild(item);
+                });
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = '<div class="search-item" style="color:#aaa;">No se encontraron juegos</div>';
+                searchResults.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!document.getElementById('search-box').contains(e.target)) {
+                searchResults.style.display = 'none';
             }
         });
     </script>
