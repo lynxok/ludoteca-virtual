@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ludoteca Medieval - Agent Quest Style</title>
+    <title>Reino Medieval - Ludoteca Quest</title>
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=MedievalSharp&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -13,7 +13,7 @@
             user-select: none;
         }
         body {
-            background: #1b2616;
+            background: #0d170a;
             color: #fff;
             font-family: 'MedievalSharp', cursive, sans-serif;
             margin: 0;
@@ -23,12 +23,11 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-image: radial-gradient(circle, #2d4520 0%, #0e150a 100%);
         }
 
         #game-wrapper {
             position: relative;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 0 8px #5c3a21, 0 0 0 12px #2b180d, 0 0 25px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.9), 0 0 0 8px #5c3a21, 0 0 0 12px #2b180d, 0 0 30px rgba(223, 161, 67, 0.4);
             border-radius: 12px;
             overflow: hidden;
         }
@@ -38,43 +37,60 @@
             image-rendering: pixelated;
         }
 
-        /* UI Overlay Ribbon at the top */
-        #top-header {
+        /* UI Top Bar */
+        #top-bar {
             position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 12px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .ui-ribbon {
             background: linear-gradient(180deg, #8b5a2b 0%, #4a2810 100%);
             border: 3px solid #dfa143;
             border-radius: 8px;
-            padding: 8px 24px;
+            padding: 8px 18px;
             font-family: 'Cinzel', serif;
-            font-size: 16px;
+            font-size: 15px;
             color: #ffe6a3;
             text-shadow: 2px 2px 4px #000;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            display: flex;
+            pointer-events: auto;
+        }
+
+        .char-select-btn {
+            cursor: pointer;
+            display: inline-flex;
             align-items: center;
-            gap: 12px;
-            z-index: 5;
-            pointer-events: none;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .char-select-btn:hover {
+            background: linear-gradient(180deg, #a86c35 0%, #613515 100%);
+            transform: scale(1.05);
+            color: #fff;
         }
 
         #controls-help {
-            margin-top: 15px;
+            margin-top: 12px;
             color: #e2c08d;
-            font-size: 14px;
+            font-size: 12px;
             font-family: 'Press Start 2P', monospace;
             text-shadow: 2px 2px 3px #000;
             letter-spacing: 1px;
         }
 
         /* Modal Styles */
-        #game-modal {
+        #game-modal, #char-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 8, 5, 0.85);
+            background: rgba(10, 8, 5, 0.88);
             z-index: 10000;
             justify-content: center;
             align-items: center;
@@ -85,11 +101,11 @@
             border: 4px solid #dfa143;
             border-radius: 14px;
             padding: 30px;
-            max-width: 900px;
+            max-width: 920px;
             width: 90%;
             display: flex;
             gap: 30px;
-            box-shadow: 0 0 40px rgba(223, 161, 67, 0.4), inset 0 0 25px rgba(0,0,0,0.8);
+            box-shadow: 0 0 45px rgba(223, 161, 67, 0.4), inset 0 0 25px rgba(0,0,0,0.8);
             position: relative;
         }
         .close-btn {
@@ -128,7 +144,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 18px;
+            padding: 10px 16px;
             border: 2px solid #dfa143;
             border-radius: 6px;
             background: linear-gradient(180deg, #7c4c23 0%, #3e200c 100%);
@@ -147,23 +163,66 @@
             box-shadow: 0 6px 12px rgba(223, 161, 67, 0.4);
             color: #fff;
         }
+
+        /* Character Selection Grid */
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .char-card {
+            background: rgba(40, 20, 10, 0.8);
+            border: 2px solid #8b5a2b;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .char-card:hover, .char-card.selected {
+            border-color: #ffd700;
+            background: rgba(90, 45, 20, 0.9);
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+        }
+        .char-card img {
+            width: 64px;
+            height: 64px;
+            object-fit: none;
+            object-position: 0 0;
+            image-rendering: pixelated;
+        }
+        .char-card span {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #ffe6a3;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     
     <div id="game-wrapper">
-        <div id="top-header">🏰 ALDEA LUDOTECA REAL ⚔️</div>
-        <canvas id="gameCanvas" width="960" height="624"></canvas>
+        <div id="top-bar">
+            <div class="ui-ribbon">🏰 REINO LUDOTECA: ISLAS & CASAS ⚔️</div>
+            <div class="ui-ribbon char-select-btn" onclick="openCharModal()">
+                <span>👤 HÉROE:</span> <strong id="current-hero-name" style="color:#ffd700;">Guerrero Azul</strong> ⚙️
+            </div>
+        </div>
+        <canvas id="gameCanvas" width="1024" height="640"></canvas>
     </div>
-    <div id="controls-help">⚔️ WASD / FLECHAS: Explorar | ENTER: Inspeccionar Juego</div>
+    <div id="controls-help">⚔️ FLECHAS/WASD: Moverse | CRUZA LOS PUENTES ENTRE ISLAS | ENTER: Entrar a la Casa</div>
 
-    <!-- Modal -->
+    <!-- Modal Juego -->
     <div id="game-modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
             <img id="modal-img" src="" alt="Cover" style="width: 320px; height: 420px; object-fit: contain; border-radius: 8px; border: 3px solid #dfa143; box-shadow: 0 8px 20px rgba(0,0,0,0.8); background: #000;">
             <div class="modal-details">
-                <h2 id="modal-title">TITULO DEL JUEGO</h2>
+                <h2 id="modal-title">CASA DEL JUEGO</h2>
                 <p id="modal-desc">Detalles del juego...</p>
                 <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:20px;">
                     <a href="#" id="modal-link" target="_blank" class="btn-action">▶ VER TUTORIAL</a>
@@ -177,20 +236,116 @@
         </div>
     </div>
 
+    <!-- Modal Seleccion Personaje -->
+    <div id="char-modal">
+        <div class="modal-content" style="max-width: 650px; flex-direction: column;">
+            <span class="close-btn" onclick="closeCharModal()">✕</span>
+            <h2 style="margin:0; color:#ffd276; font-family:'Cinzel',serif; border-bottom:2px solid #5c3a21; padding-bottom:8px;">⚔️ SELECCIONA TU HÉROE</h2>
+            <div class="char-grid" id="char-grid-container">
+                <!-- Se llena con JS -->
+            </div>
+        </div>
+    </div>
+
     <script>
         const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg"}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg"}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg"}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg"}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg"}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg"}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg"}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg"}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg"}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg"}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg"}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg"}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg"}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg"}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg"}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg"}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg"}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg"}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg"}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg"}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg"}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg"}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg"}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg"}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg"}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg"}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg"}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg"}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg"}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg"}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg"}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg"}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg"}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg"}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg"}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg"}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg"}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg"}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg"}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg"}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg"}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg"}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg"}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg"}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg"}];
 
-        // --- Modal Logic ---
+        // --- HERO CLASSES DEFINITIONS ---
+        const HERO_CLASSES = [
+            { id: 'warrior_blue', name: 'Caballero Azul', path: 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png', frameSize: 192 },
+            { id: 'warrior_red', name: 'Caballero Rojo', path: 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Red/Warrior_Red.png', frameSize: 192 },
+            { id: 'warrior_purple', name: 'Paladín Púrpura', path: 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Purple/Warrior_Purple.png', frameSize: 192 },
+            { id: 'warrior_yellow', name: 'Guerrero Dorado', path: 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Yellow/Warrior_Yellow.png', frameSize: 192 },
+            { id: 'archer_blue', name: 'Arquero Azul', path: 'assets/tiny-swords/Factions/Knights/Troops/Archer/Blue/Archer_Blue.png', frameSize: 192 },
+            { id: 'archer_red', name: 'Arquero Rojo', path: 'assets/tiny-swords/Factions/Knights/Troops/Archer/Red/Archer_Red.png', frameSize: 192 },
+            { id: 'pawn_blue', name: 'Explorador Azul', path: 'assets/tiny-swords/Factions/Knights/Troops/Pawn/Blue/Pawn_Blue.png', frameSize: 192 },
+            { id: 'pawn_purple', name: 'Explorador Místico', path: 'assets/tiny-swords/Factions/Knights/Troops/Pawn/Purple/Pawn_Purple.png', frameSize: 192 }
+        ];
+
+        let selectedHero = HERO_CLASSES[0];
+
+        // --- ASSET PRELOADER ---
+        const assets = {
+            heroes: {},
+            tilemap: new Image(),
+            water: new Image(),
+            bridge: new Image(),
+            tree: new Image(),
+            houses: []
+        };
+
+        // Load all hero sprites
+        HERO_CLASSES.forEach(h => {
+            const img = new Image();
+            img.src = h.path;
+            assets.heroes[h.id] = img;
+        });
+
+        assets.tilemap.src = 'assets/tiny-swords/Terrain/Ground/Tilemap_Flat.png';
+        assets.water.src = 'assets/tiny-swords/Terrain/Water/Water.png';
+        assets.bridge.src = 'assets/tiny-swords/Terrain/Bridge/Bridge_All.png';
+        assets.tree.src = 'assets/tiny-swords/Resources/Trees/Tree.png';
+
+        // Load Building Varieties for each house
+        const HOUSE_SPRITE_PATHS = [
+            'assets/tiny-swords/Factions/Knights/Buildings/House/House_Blue.png',
+            'assets/tiny-swords/Factions/Knights/Buildings/House/House_Red.png',
+            'assets/tiny-swords/Factions/Knights/Buildings/House/House_Yellow.png',
+            'assets/tiny-swords/Factions/Knights/Buildings/House/House_Purple.png',
+            'assets/tiny-swords/BuildingsCustom/Tavern.png',
+            'assets/tiny-swords/BuildingsCustom/Library.png',
+            'assets/tiny-swords/BuildingsCustom/Forge.png',
+            'assets/tiny-swords/BuildingsCustom/Chapel.png',
+            'assets/tiny-swords/BuildingsCustom/Alchemist.png',
+            'assets/tiny-swords/Factions/Knights/Buildings/Tower/Tower_Blue.png',
+            'assets/tiny-swords/Factions/Knights/Buildings/Tower/Tower_Yellow.png',
+            'assets/tiny-swords/Factions/Knights/Buildings/Castle/Castle_Blue.png'
+        ];
+
+        HOUSE_SPRITE_PATHS.forEach(p => {
+            const img = new Image();
+            img.src = p;
+            assets.houses.push(img);
+        });
+
+        // --- Character Modal UI ---
+        function openCharModal() {
+            const container = document.getElementById('char-grid-container');
+            container.innerHTML = '';
+            HERO_CLASSES.forEach(h => {
+                const card = document.createElement('div');
+                card.className = 'char-card ' + (selectedHero.id === h.id ? 'selected' : '');
+                card.innerHTML = `
+                    <div style="width:48px; height:48px; overflow:hidden; display:flex; justify-content:center; align-items:center;">
+                        <img src="${h.path}" style="transform: scale(0.65) translate(-72px, -72px); transform-origin: 0 0;">
+                    </div>
+                    <span>${h.name}</span>
+                `;
+                card.onclick = () => {
+                    selectedHero = h;
+                    document.getElementById('current-hero-name').innerText = h.name;
+                    closeCharModal();
+                };
+                container.appendChild(card);
+            });
+            document.getElementById('char-modal').style.display = 'flex';
+        }
+
+        function closeCharModal() {
+            document.getElementById('char-modal').style.display = 'none';
+        }
+
+        // --- Game Modal Logic ---
         let activeGameForUpload = null;
         let isModalOpen = false;
 
         function openGameModal(game) {
             activeGameForUpload = game;
             isModalOpen = true;
-            document.getElementById('modal-title').innerText = game.name;
+            document.getElementById('modal-title').innerText = '🏠 ' + game.name;
             document.getElementById('modal-img').src = game.image + '?v=' + new Date().getTime();
             document.getElementById('modal-desc').innerHTML = `
-                <span style="color:#ffd276; font-size:1.1em; font-weight:bold;">⭐ VALORACIÓN BGG: ${game.rating || 'N/A'}/10</span><br><br>
+                <span style="color:#ffd276; font-size:1.15em; font-weight:bold;">⭐ VALORACIÓN BGG: ${game.rating || 'N/A'}/10</span><br><br>
                 <span style="color:#dfa143; font-weight:bold;">JUGADORES:</span> ${game.players}<br>
                 <span style="color:#dfa143; font-weight:bold;">DIFICULTAD:</span> ${game.difficulty}<br>
                 <span style="color:#dfa143; font-weight:bold;">CATEGORÍA:</span> ${game.type}
@@ -232,282 +387,361 @@
             }
         }
 
-        // --- ASSET LOADER (Tiny Swords CC0) ---
-        const assets = {
-            warrior: new Image(),
-            tilemap: new Image(),
-            castle: new Image(),
-            house: new Image(),
-            tower: new Image(),
-            tree: new Image(),
-            banner: new Image(),
-            barrel: new Image()
-        };
+        // --- WORLD GENERATION: 4 ISLANDS CONNECTED BY BRIDGES ---
+        const WORLD_COLS = 50;
+        const WORLD_ROWS = 36;
+        const TILE_SIZE = 48;
 
-        assets.warrior.src = 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png';
-        assets.tilemap.src = 'assets/tiny-swords/Terrain/Ground/Tilemap_Flat.png';
-        assets.castle.src = 'assets/tiny-swords/Factions/Knights/Buildings/Castle/Castle_Blue.png';
-        assets.house.src = 'assets/tiny-swords/Factions/Knights/Buildings/House/House_Blue.png';
-        assets.tower.src = 'assets/tiny-swords/Factions/Knights/Buildings/Tower/Tower_Blue.png';
-        assets.tree.src = 'assets/tiny-swords/Resources/Trees/Tree.png';
-        assets.banner.src = 'assets/tiny-swords/UI/Banners/Banner_Horizontal.png';
-        assets.barrel.src = 'assets/tiny-swords/Factions/Goblins/Troops/Barrel/Blue/Barrel_Blue.png';
+        const WATER = 0;
+        const GRASS = 1;
+        const PATH = 2;
+        const BRIDGE = 3;
+        const TREE = 4;
 
-        // --- Medieval RPG Engine Logic ---
+        // Initialize World with Water
+        let worldMap = [];
+        for (let r = 0; r < WORLD_ROWS; r++) {
+            let row = [];
+            for (let c = 0; c < WORLD_COLS; c++) {
+                row.push(WATER);
+            }
+            worldMap.push(row);
+        }
+
+        // Island definitions [startCol, endCol, startRow, endRow]
+        const islands = [
+            { name: "Isla del Bosque (Juegos Familiares)", c1: 3, c2: 22, r1: 3, r2: 15 },
+            { name: "Isla del Valle (Juegos Estratégicos)", c1: 27, c2: 46, r1: 3, r2: 15 },
+            { name: "Isla de la Costa (Party Games)", c1: 3, c2: 22, r1: 20, r2: 32 },
+            { name: "Isla Real (Juegos Expertos)", c1: 27, c2: 46, r1: 20, r2: 32 }
+        ];
+
+        // Paint Grass Islands & Roads
+        islands.forEach(isl => {
+            for (let r = isl.r1; r <= isl.r2; r++) {
+                for (let c = isl.c1; c <= isl.c2; c++) {
+                    worldMap[r][c] = GRASS;
+                }
+            }
+            // Main Central Avenues inside each island
+            const midR = Math.floor((isl.r1 + isl.r2) / 2);
+            const midC = Math.floor((isl.c1 + isl.c2) / 2);
+            for (let c = isl.c1 + 1; c <= isl.c2 - 1; c++) worldMap[midR][c] = PATH;
+            for (let r = isl.r1 + 1; r <= isl.r2 - 1; r++) worldMap[r][midC] = PATH;
+        });
+
+        // Paint Bridges connecting Islands
+        // 1. Horizontal Bridges (Left islands to Right islands)
+        for (let c = 22; c <= 27; c++) {
+            worldMap[9][c] = BRIDGE;
+            worldMap[26][c] = BRIDGE;
+        }
+        // 2. Vertical Bridges (Top islands to Bottom islands)
+        for (let r = 15; r <= 20; r++) {
+            worldMap[r][12] = BRIDGE;
+            worldMap[r][36] = BRIDGE;
+        }
+
+        // Place Houses for every game (Each game gets its own house with an entrance door)
+        // Store houses: { gameIndex, x, y, spriteIndex, doorX, doorY }
+        const houses = [];
+        let gIndex = 0;
+
+        islands.forEach((isl, iIdx) => {
+            // Place houses in rows above and below the main avenues
+            const houseSpots = [
+                // Upper row
+                { c: isl.c1 + 2, r: isl.r1 + 2 },
+                { c: isl.c1 + 6, r: isl.r1 + 2 },
+                { c: isl.c1 + 10, r: isl.r1 + 2 },
+                { c: isl.c1 + 14, r: isl.r1 + 2 },
+                // Lower row
+                { c: isl.c1 + 2, r: isl.r2 - 4 },
+                { c: isl.c1 + 6, r: isl.r2 - 4 },
+                { c: isl.c1 + 10, r: isl.r2 - 4 },
+                { c: isl.c1 + 14, r: isl.r2 - 4 },
+                // Side spots
+                { c: isl.c1 + 2, r: isl.r1 + 6 },
+                { c: isl.c2 - 4, r: isl.r1 + 6 },
+                { c: isl.c1 + 2, r: isl.r2 - 7 },
+                { c: isl.c2 - 4, r: isl.r2 - 7 }
+            ];
+
+            houseSpots.forEach(spot => {
+                if (gIndex < gamesData.length) {
+                    const sIdx = gIndex % assets.houses.length;
+                    houses.push({
+                        gameIndex: gIndex,
+                        c: spot.c,
+                        r: spot.r,
+                        spriteIndex: sIdx,
+                        doorC: spot.c + 1,
+                        doorR: spot.r + 2
+                    });
+                    // Mark house footprint as solid WALL (10 + gIndex)
+                    for (let dr = 0; dr < 3; dr++) {
+                        for (let dc = 0; dc < 3; dc++) {
+                            if (spot.r + dr < WORLD_ROWS && spot.c + dc < WORLD_COLS) {
+                                worldMap[spot.r + dr][spot.c + dc] = 10 + gIndex;
+                            }
+                        }
+                    }
+                    gIndex++;
+                }
+            });
+        });
+
+        // --- PLAYER & CAMERA ENGINE ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        const TILE_SIZE = 48;
-        const COLS = Math.floor(canvas.width / TILE_SIZE); // 20 cols
-        const ROWS = Math.floor(canvas.height / TILE_SIZE); // 13 rows
-
-        const FLOOR = 0;
-        const WALL = 1;
-        const PATH = 2;
-
-        let map = [];
-        for (let r = 0; r < ROWS; r++) {
-            let row = [];
-            for (let c = 0; c < COLS; c++) {
-                if (r === 0 || r === ROWS - 1 || c === 0 || c === COLS - 1) {
-                    row.push(WALL);
-                } else {
-                    row.push(FLOOR);
-                }
-            }
-            map.push(row);
-        }
-
-        // Create cobblestone paths in the middle and between stalls
-        for (let c = 1; c < COLS - 1; c++) {
-            map[6][c] = PATH;
-            map[11][c] = PATH;
-        }
-        for (let r = 1; r < ROWS - 1; r++) {
-            map[r][1] = PATH;
-            map[r][6] = PATH;
-            map[r][11] = PATH;
-            map[r][16] = PATH;
-            map[r][18] = PATH;
-        }
-
-        // Distribute game stalls/shelves
-        // Stalls at cols (3,4), (8,9), (13,14)
-        let gameIndex = 0;
-        const stallCols = [3, 4, 8, 9, 13, 14];
-        for (let r = 2; r <= 10; r++) {
-            if (r === 6) continue; // Walkway break
-            for (let c of stallCols) {
-                if (gameIndex < gamesData.length) {
-                    map[r][c] = 10 + gameIndex;
-                    gameIndex++;
-                } else {
-                    map[r][c] = WALL;
-                }
-            }
-        }
-
-        // Player State (Warrior Knight)
         const player = {
-            x: 1,
-            y: 6,
-            dirX: 1,
-            dirY: 0,
+            x: 12 * TILE_SIZE, // Start in Isla del Bosque
+            y: 9 * TILE_SIZE,
+            targetX: 12 * TILE_SIZE,
+            targetY: 9 * TILE_SIZE,
+            gridX: 12,
+            gridY: 9,
+            dirX: 0,
+            dirY: 1,
             frame: 0,
-            animTimer: 0,
             isMoving: false
         };
 
-        // Palette for game flags/carpets
-        const bannerColors = [
-            '#e6194B', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', 
-            '#42d4f4', '#f032e6', '#bfef45', '#fabed4', '#469990', '#dcbeff', 
-            '#9A6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#6ba3d6'
-        ];
+        const camera = {
+            x: player.x,
+            y: player.y
+        };
 
-        function drawMap() {
-            // 1. Draw Grass Base
-            for (let r = 0; r < ROWS; r++) {
-                for (let c = 0; c < COLS; c++) {
-                    const x = c * TILE_SIZE;
-                    const y = r * TILE_SIZE;
-                    const tile = map[r][c];
-
-                    // Draw grass tile from Tilemap_Flat
-                    if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
-                        ctx.drawImage(assets.tilemap, 64, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
-                    } else {
-                        ctx.fillStyle = '#4c7b2c';
-                        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-                    }
-
-                    // Cobblestone / Dirt Path
-                    if (tile === PATH) {
-                        if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
-                            ctx.drawImage(assets.tilemap, 192, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
-                        } else {
-                            ctx.fillStyle = '#b8945a';
-                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-                        }
-                    }
-
-                    // Boundary Trees / Forest Wall
-                    if (tile === WALL && (r === 0 || r === ROWS - 1 || c === 0 || c === COLS - 1)) {
-                        if (assets.tree.complete && assets.tree.naturalWidth > 0) {
-                            ctx.drawImage(assets.tree, 0, 0, 192, 192, x - 12, y - 24, TILE_SIZE + 24, TILE_SIZE + 32);
-                        } else {
-                            ctx.fillStyle = '#1c3612';
-                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-                        }
-                    }
-
-                    // Game Stalls (Wooden Shop / Library Booths)
-                    if (tile >= 10) {
-                        const gIdx = tile - 10;
-                        const colHex = bannerColors[gIdx % bannerColors.length];
-
-                        // Wooden platform base
-                        ctx.fillStyle = '#5c3a21';
-                        ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
-                        ctx.strokeStyle = '#2b180d';
-                        ctx.lineWidth = 2;
-                        ctx.strokeRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
-
-                        // Banner / Velvet mat for the game
-                        ctx.fillStyle = colHex;
-                        ctx.fillRect(x + 8, y + 8, TILE_SIZE - 16, TILE_SIZE - 16);
-                        ctx.strokeStyle = '#dfa143';
-                        ctx.lineWidth = 1.5;
-                        ctx.strokeRect(x + 8, y + 8, TILE_SIZE - 16, TILE_SIZE - 16);
-
-                        // Golden game box icon
-                        ctx.fillStyle = '#ffd700';
-                        ctx.font = '14px serif';
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-                        ctx.fillText('📦', x + TILE_SIZE / 2, y + TILE_SIZE / 2);
-                    }
-                }
+        function update() {
+            // Smooth player movement interpolation
+            const dx = player.targetX - player.x;
+            const dy = player.targetY - player.y;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+                player.x += dx * 0.28;
+                player.y += dy * 0.28;
+                player.isMoving = true;
+                player.frame += 0.18;
+            } else {
+                player.x = player.targetX;
+                player.y = player.targetY;
+                player.isMoving = false;
+                player.frame += 0.08;
             }
+
+            // Smooth Camera follow
+            camera.x += (player.x + TILE_SIZE/2 - canvas.width/2 - camera.x) * 0.1;
+            camera.y += (player.y + TILE_SIZE/2 - canvas.height/2 - camera.y) * 0.1;
+
+            // Constrain camera to world
+            camera.x = Math.max(0, Math.min(camera.x, WORLD_COLS * TILE_SIZE - canvas.width));
+            camera.y = Math.max(0, Math.min(camera.y, WORLD_ROWS * TILE_SIZE - canvas.height));
         }
 
-        function drawPlayer() {
-            const px = player.x * TILE_SIZE;
-            const py = player.y * TILE_SIZE;
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(-Math.floor(camera.x), -Math.floor(camera.y));
 
-            // Highlight target interaction tile
-            const tx = player.x + player.dirX;
-            const ty = player.y + player.dirY;
-            if (tx >= 0 && tx < COLS && ty >= 0 && ty < ROWS) {
-                const targetTile = map[ty][tx];
-                if (targetTile >= 10) {
-                    const game = gamesData[targetTile - 10];
-                    if (game) {
-                        // Golden medieval selection ring
-                        ctx.strokeStyle = '#ffd700';
-                        ctx.lineWidth = 3;
-                        ctx.strokeRect(tx * TILE_SIZE + 2, ty * TILE_SIZE + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+            // Visible Tile Range
+            const startCol = Math.max(0, Math.floor(camera.x / TILE_SIZE) - 1);
+            const endCol = Math.min(WORLD_COLS - 1, Math.ceil((camera.x + canvas.width) / TILE_SIZE) + 1);
+            const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 1);
+            const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 1);
 
-                        // Medieval Banner Tooltip
-                        const tw = 220;
-                        const th = 48;
-                        const ttx = tx * TILE_SIZE - (tw / 2) + (TILE_SIZE / 2);
-                        const tty = ty * TILE_SIZE - 56;
+            // 1. Draw Ground (Water, Grass, Paths, Bridges)
+            for (let r = startRow; r <= endRow; r++) {
+                for (let c = startCol; c <= endCol; c++) {
+                    const x = c * TILE_SIZE;
+                    const y = r * TILE_SIZE;
+                    const tile = worldMap[r][c];
 
-                        // Scroll background
-                        ctx.fillStyle = 'rgba(25, 15, 8, 0.94)';
-                        ctx.fillRect(ttx, tty, tw, th);
-                        ctx.strokeStyle = '#dfa143';
-                        ctx.lineWidth = 2;
-                        ctx.strokeRect(ttx, tty, tw, th);
+                    if (tile === WATER) {
+                        // Ocean / River
+                        if (assets.water.complete && assets.water.naturalWidth > 0) {
+                            ctx.drawImage(assets.water, 0, 0, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
+                        } else {
+                            ctx.fillStyle = '#1d556f';
+                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                        }
+                    } else if (tile === BRIDGE) {
+                        // Bridge over water
+                        if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
+                            ctx.drawImage(assets.bridge, 0, 0, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
+                        } else {
+                            ctx.fillStyle = '#8b5a2b';
+                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                        }
+                    } else {
+                        // Grass base
+                        if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
+                            ctx.drawImage(assets.tilemap, 64, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
+                        } else {
+                            ctx.fillStyle = '#4c7b2c';
+                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                        }
 
-                        ctx.fillStyle = '#ffe6a3';
-                        ctx.font = 'bold 12px "MedievalSharp", cursive';
-                        ctx.textAlign = 'left';
-                        ctx.textBaseline = 'top';
-                        const nameStr = game.name.length > 20 ? game.name.substring(0, 18) + '..' : game.name;
-                        ctx.fillText('📜 ' + nameStr, ttx + 8, tty + 8);
-
-                        ctx.fillStyle = '#dfa143';
-                        ctx.font = '10px "Press Start 2P", monospace';
-                        ctx.fillText('[ENTER] Inspeccionar', ttx + 8, tty + 28);
+                        // Road / Path
+                        if (tile === PATH) {
+                            if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
+                                ctx.drawImage(assets.tilemap, 192, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
+                            } else {
+                                ctx.fillStyle = '#b8945a';
+                                ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                            }
+                        }
                     }
                 }
             }
 
-            // Draw Warrior Knight
-            if (assets.warrior.complete && assets.warrior.naturalWidth > 0) {
+            // 2. Draw House Buildings
+            houses.forEach(h => {
+                const hx = h.c * TILE_SIZE;
+                const hy = h.r * TILE_SIZE;
+                const sImg = assets.houses[h.spriteIndex];
+
+                if (sImg && sImg.complete && sImg.naturalWidth > 0) {
+                    ctx.drawImage(sImg, hx - 8, hy - 24, TILE_SIZE * 3 + 16, TILE_SIZE * 3 + 24);
+                } else {
+                    ctx.fillStyle = '#6b3e1b';
+                    ctx.fillRect(hx, hy, TILE_SIZE * 3, TILE_SIZE * 3);
+                }
+
+                // Game Name Plaque on the house
+                const game = gamesData[h.gameIndex];
+                if (game) {
+                    ctx.fillStyle = 'rgba(25, 12, 5, 0.9)';
+                    ctx.fillRect(hx + 10, hy + TILE_SIZE * 2.6, TILE_SIZE * 3 - 20, 20);
+                    ctx.strokeStyle = '#dfa143';
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeRect(hx + 10, hy + TILE_SIZE * 2.6, TILE_SIZE * 3 - 20, 20);
+
+                    ctx.fillStyle = '#ffe6a3';
+                    ctx.font = 'bold 10px "MedievalSharp", cursive';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(game.name.substring(0, 16), hx + (TILE_SIZE * 3) / 2, hy + TILE_SIZE * 2.6 + 14);
+                }
+            });
+
+            // 3. Highlight Target Interaction House
+            const frontC = player.gridX + player.dirX;
+            const frontR = player.gridY + player.dirY;
+            if (frontR >= 0 && frontR < WORLD_ROWS && frontC >= 0 && frontC < WORLD_COLS) {
+                const tTile = worldMap[frontR][frontC];
+                if (tTile >= 10) {
+                    const gIdx = tTile - 10;
+                    const game = gamesData[gIdx];
+                    if (game) {
+                        const fx = frontC * TILE_SIZE;
+                        const fy = frontR * TILE_SIZE;
+
+                        // Golden entrance glow
+                        ctx.strokeStyle = '#ffd700';
+                        ctx.lineWidth = 3;
+                        ctx.strokeRect(fx + 2, fy + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+
+                        // Banner Tooltip
+                        const tw = 240;
+                        const th = 52;
+                        const bx = fx - tw/2 + TILE_SIZE/2;
+                        const by = fy - 65;
+
+                        ctx.fillStyle = 'rgba(20, 10, 5, 0.95)';
+                        ctx.fillRect(bx, by, tw, th);
+                        ctx.strokeStyle = '#dfa143';
+                        ctx.lineWidth = 2.5;
+                        ctx.strokeRect(bx, by, tw, th);
+
+                        ctx.fillStyle = '#ffd700';
+                        ctx.font = 'bold 12px "Cinzel", serif';
+                        ctx.textAlign = 'left';
+                        ctx.fillText('🏰 CASA: ' + game.name.substring(0, 16), bx + 10, by + 18);
+
+                        ctx.fillStyle = '#5bb35b';
+                        ctx.font = '10px "Press Start 2P", monospace';
+                        ctx.fillText('▶ [ENTER] ENTRAR', bx + 10, by + 38);
+                    }
+                }
+            }
+
+            // 4. Draw Chosen Hero
+            const heroImg = assets.heroes[selectedHero.id];
+            if (heroImg && heroImg.complete && heroImg.naturalWidth > 0) {
                 const animRow = player.isMoving ? 1 : 0;
                 const animFrame = Math.floor(player.frame) % 6;
-                const sx = animFrame * 192;
-                const sy = animRow * 192;
+                const sx = animFrame * selectedHero.frameSize;
+                const sy = animRow * selectedHero.frameSize;
 
                 ctx.save();
                 if (player.dirX === -1) {
-                    ctx.translate(px + TILE_SIZE / 2, py + TILE_SIZE / 2);
+                    ctx.translate(player.x + TILE_SIZE/2, player.y + TILE_SIZE/2);
                     ctx.scale(-1, 1);
-                    ctx.drawImage(assets.warrior, sx, sy, 192, 192, -48, -58, 96, 96);
+                    ctx.drawImage(heroImg, sx, sy, 192, 192, -48, -58, 96, 96);
                 } else {
-                    ctx.drawImage(assets.warrior, sx, sy, 192, 192, px - 24, py - 34, 96, 96);
+                    ctx.drawImage(heroImg, sx, sy, 192, 192, player.x - 24, player.y - 34, 96, 96);
                 }
                 ctx.restore();
-            } else {
-                ctx.fillStyle = '#3a6ea5';
-                ctx.fillRect(px + 8, py + 8, TILE_SIZE - 16, TILE_SIZE - 16);
             }
+
+            ctx.restore();
         }
 
         function gameLoop() {
-            player.frame += 0.14;
-            drawMap();
-            drawPlayer();
+            update();
+            draw();
             requestAnimationFrame(gameLoop);
         }
 
         requestAnimationFrame(gameLoop);
 
+        // --- Controls & Collision ---
         window.addEventListener('keydown', (e) => {
-            if (isModalOpen) {
-                if (e.key === 'Escape') closeModal();
+            if (isModalOpen || document.getElementById('char-modal').style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    closeCharModal();
+                }
                 return;
             }
 
             let moved = false;
-            let nx = player.x;
-            let ny = player.y;
+            let nc = player.gridX;
+            let nr = player.gridY;
 
             if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
-                player.dirX = 0; player.dirY = -1; ny--; moved = true;
+                player.dirX = 0; player.dirY = -1; nr--; moved = true;
             } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
-                player.dirX = 0; player.dirY = 1; ny++; moved = true;
+                player.dirX = 0; player.dirY = 1; nr++; moved = true;
             } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-                player.dirX = -1; player.dirY = 0; nx--; moved = true;
+                player.dirX = -1; player.dirY = 0; nc--; moved = true;
             } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-                player.dirX = 1; player.dirY = 0; nx++; moved = true;
+                player.dirX = 1; player.dirY = 0; nc++; moved = true;
             } else if (e.key === 'Enter') {
-                const tx = player.x + player.dirX;
-                const ty = player.y + player.dirY;
-                if (map[ty] && map[ty][tx] >= 10) {
-                    const gameIndex = map[ty][tx] - 10;
-                    if (gamesData[gameIndex]) {
-                        openGameModal(gamesData[gameIndex]);
+                const fc = player.gridX + player.dirX;
+                const fr = player.gridY + player.dirY;
+                if (fr >= 0 && fr < WORLD_ROWS && fc >= 0 && fc < WORLD_COLS) {
+                    const targetTile = worldMap[fr][fc];
+                    if (targetTile >= 10) {
+                        const gIdx = targetTile - 10;
+                        if (gamesData[gIdx]) {
+                            openGameModal(gamesData[gIdx]);
+                        }
                     }
                 }
             }
 
             if (moved) {
-                player.isMoving = true;
-                if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                    if (map[ny][nx] === FLOOR || map[ny][nx] === PATH) {
-                        player.x = nx;
-                        player.y = ny;
+                if (nc >= 0 && nc < WORLD_COLS && nr >= 0 && nr < WORLD_ROWS) {
+                    const nextTile = worldMap[nr][nc];
+                    // Can walk on GRASS, PATH, BRIDGE (Cannot walk on WATER or inside house solid walls)
+                    if (nextTile === GRASS || nextTile === PATH || nextTile === BRIDGE) {
+                        player.gridX = nc;
+                        player.gridY = nr;
+                        player.targetX = nc * TILE_SIZE;
+                        player.targetY = nr * TILE_SIZE;
                     }
                 }
             }
-        });
-
-        window.addEventListener('keyup', () => {
-            player.isMoving = false;
         });
     </script>
 </body>
