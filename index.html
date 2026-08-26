@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Reino Medieval - Ludoteca Quest</title>
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>">
@@ -12,48 +12,27 @@
             box-sizing: border-box;
             user-select: none;
             -webkit-touch-callout: none;
-        }
-        html, body {
             margin: 0;
             padding: 0;
+        }
+        html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: #0d170a;
+            background: #1b2616;
             color: #fff;
             font-family: 'MedievalSharp', cursive, sans-serif;
-            touch-action: manipulation;
+            touch-action: none;
+            position: fixed;
         }
 
-        #app-container {
-            position: relative;
+        #game-container {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100vw;
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-image: radial-gradient(circle, #2d4520 0%, #0e150a 100%);
-        }
-
-        #game-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            max-width: 1200px;
-            max-height: 800px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.9);
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        @media (min-width: 768px) {
-            #game-wrapper {
-                border-radius: 12px;
-                border: 8px solid #5c3a21;
-                box-shadow: 0 15px 45px rgba(0,0,0,0.9), 0 0 0 4px #2b180d, 0 0 30px rgba(223, 161, 67, 0.4);
-            }
         }
 
         canvas {
@@ -61,33 +40,33 @@
             image-rendering: pixelated;
             width: 100%;
             height: 100%;
-            object-fit: contain;
         }
 
         /* UI Top Bar */
         #top-bar {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
+            top: env(safe-area-inset-top, 12px);
+            left: 12px;
+            right: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             pointer-events: none;
-            z-index: 10;
+            z-index: 100;
         }
 
         .ui-ribbon {
-            background: linear-gradient(180deg, #8b5a2b 0%, #4a2810 100%);
+            background: linear-gradient(180deg, rgba(139, 90, 43, 0.92) 0%, rgba(74, 40, 16, 0.92) 100%);
             border: 2px solid #dfa143;
             border-radius: 8px;
-            padding: 6px 14px;
+            padding: 6px 12px;
             font-family: 'Cinzel', serif;
-            font-size: 13px;
+            font-size: 12px;
             color: #ffe6a3;
             text-shadow: 2px 2px 4px #000;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
             pointer-events: auto;
+            backdrop-filter: blur(4px);
         }
 
         .char-select-btn {
@@ -99,45 +78,41 @@
         }
         .char-select-btn:hover, .char-select-btn:active {
             background: linear-gradient(180deg, #a86c35 0%, #613515 100%);
-            transform: scale(1.05);
+            transform: scale(1.04);
             color: #fff;
         }
 
-        /* --- VIRTUAL TOUCH CONTROLS (D-PAD & ACTION BUTTON) --- */
+        /* --- VIRTUAL TOUCH CONTROLS (OPTIMIZED SAFE AREA) --- */
         #touch-controls {
             display: none;
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
+            bottom: calc(env(safe-area-inset-bottom, 15px) + 20px);
+            left: 15px;
+            right: 15px;
             justify-content: space-between;
             align-items: flex-end;
             pointer-events: none;
-            z-index: 20;
+            z-index: 100;
         }
 
-        /* Show touch controls on touch devices or small screens */
         @media (max-width: 1024px), (hover: none) and (pointer: coarse) {
             #touch-controls {
                 display: flex;
-            }
-            #controls-help-pc {
-                display: none;
             }
         }
 
         .dpad-container {
             position: relative;
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             pointer-events: auto;
         }
 
         .dpad-btn {
             position: absolute;
-            width: 46px;
-            height: 46px;
-            background: rgba(45, 25, 10, 0.85);
+            width: 44px;
+            height: 44px;
+            background: rgba(45, 25, 10, 0.82);
             border: 2px solid #dfa143;
             border-radius: 8px;
             display: flex;
@@ -147,28 +122,29 @@
             color: #ffd700;
             box-shadow: 0 4px 10px rgba(0,0,0,0.6);
             touch-action: none;
+            backdrop-filter: blur(4px);
         }
         .dpad-btn:active {
             background: rgba(168, 108, 53, 0.95);
             transform: scale(0.92);
         }
-        .dpad-up    { top: 0; left: 52px; }
-        .dpad-down  { bottom: 0; left: 52px; }
-        .dpad-left  { top: 52px; left: 0; }
-        .dpad-right { top: 52px; right: 0; }
+        .dpad-up    { top: 0; left: 48px; }
+        .dpad-down  { bottom: 0; left: 48px; }
+        .dpad-left  { top: 48px; left: 0; }
+        .dpad-right { top: 48px; right: 0; }
 
         .action-btn-container {
             pointer-events: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .touch-action-btn {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, #a86c35 0%, #4a2810 100%);
+            width: 68px;
+            height: 68px;
+            background: linear-gradient(135deg, rgba(168, 108, 53, 0.92) 0%, rgba(74, 40, 16, 0.92) 100%);
             border: 3px solid #ffd700;
             border-radius: 50%;
             display: flex;
@@ -176,12 +152,13 @@
             justify-content: center;
             align-items: center;
             font-family: 'Cinzel', serif;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             color: #fff;
             text-shadow: 1px 1px 3px #000;
             box-shadow: 0 6px 15px rgba(0,0,0,0.8), inset 0 0 10px rgba(255, 215, 0, 0.5);
             touch-action: none;
+            backdrop-filter: blur(4px);
         }
         .touch-action-btn:active {
             transform: scale(0.9);
@@ -225,15 +202,15 @@
             }
             #modal-img {
                 width: 100% !important;
-                max-width: 240px !important;
-                height: 280px !important;
+                max-width: 220px !important;
+                height: 260px !important;
             }
             .modal-details h2 {
-                font-size: 20px !important;
+                font-size: 18px !important;
                 text-align: center;
             }
             .modal-details p {
-                font-size: 14px !important;
+                font-size: 13px !important;
             }
             .char-grid {
                 grid-template-columns: repeat(2, 1fr) !important;
@@ -278,14 +255,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 16px;
+            padding: 12px 14px;
             border: 2px solid #dfa143;
             border-radius: 6px;
             background: linear-gradient(180deg, #7c4c23 0%, #3e200c 100%);
             color: #ffe6a3;
             text-decoration: none;
             font-family: 'Press Start 2P', monospace;
-            font-size: 10px;
+            font-size: 9px;
             text-shadow: 1px 1px 2px #000;
             box-shadow: 0 4px 8px rgba(0,0,0,0.5);
             transition: all 0.2s;
@@ -300,7 +277,7 @@
         .char-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-top: 15px;
             width: 100%;
         }
@@ -308,7 +285,7 @@
             background: rgba(40, 20, 10, 0.8);
             border: 2px solid #8b5a2b;
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -322,15 +299,15 @@
             box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
         }
         .char-card img {
-            width: 54px;
-            height: 54px;
+            width: 50px;
+            height: 50px;
             object-fit: none;
             object-position: 0 0;
             image-rendering: pixelated;
         }
         .char-card span {
-            margin-top: 8px;
-            font-size: 11px;
+            margin-top: 6px;
+            font-size: 10px;
             color: #ffe6a3;
             font-weight: bold;
             text-align: center;
@@ -339,31 +316,29 @@
 </head>
 <body>
     
-    <div id="app-container">
-        <div id="game-wrapper">
-            <div id="top-bar">
-                <div class="ui-ribbon" style="font-size:12px;">🏰 REINO LUDOTECA ⚔️</div>
-                <div class="ui-ribbon char-select-btn" onclick="openCharModal()">
-                    <span>👤 HÉROE:</span> <strong id="current-hero-name" style="color:#ffd700;">Caballero Azul</strong> ⚙️
-                </div>
+    <div id="game-container">
+        <div id="top-bar">
+            <div class="ui-ribbon">🏰 REINO LUDOTECA ⚔️</div>
+            <div class="ui-ribbon char-select-btn" onclick="openCharModal()">
+                <span>👤</span> <strong id="current-hero-name" style="color:#ffd700;">Caballero Azul</strong> ⚙️
+            </div>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- CONTROLES TACTILES VIRTUALES -->
+        <div id="touch-controls">
+            <div class="dpad-container">
+                <div class="dpad-btn dpad-up" id="btn-up">▲</div>
+                <div class="dpad-btn dpad-left" id="btn-left">◀</div>
+                <div class="dpad-btn dpad-right" id="btn-right">▶</div>
+                <div class="dpad-btn dpad-down" id="btn-down">▼</div>
             </div>
 
-            <canvas id="gameCanvas" width="960" height="600"></canvas>
-
-            <!-- CONTROLES TACTILES VIRTUALES PARA TELEFONOS -->
-            <div id="touch-controls">
-                <div class="dpad-container">
-                    <div class="dpad-btn dpad-up" id="btn-up">▲</div>
-                    <div class="dpad-btn dpad-left" id="btn-left">◀</div>
-                    <div class="dpad-btn dpad-right" id="btn-right">▶</div>
-                    <div class="dpad-btn dpad-down" id="btn-down">▼</div>
-                </div>
-
-                <div class="action-btn-container">
-                    <div class="touch-action-btn" id="btn-action">
-                        <span style="font-size:20px;">⚔️</span>
-                        <span>ENTRAR</span>
-                    </div>
+            <div class="action-btn-container">
+                <div class="touch-action-btn" id="btn-action">
+                    <span style="font-size:18px;">⚔️</span>
+                    <span>ENTRAR</span>
                 </div>
             </div>
         </div>
@@ -378,8 +353,8 @@
                 <h2 id="modal-title">CASA DEL JUEGO</h2>
                 <p id="modal-desc">Detalles del juego...</p>
                 <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:15px;">
-                    <a href="#" id="modal-link" target="_blank" class="btn-action">▶ VER TUTORIAL</a>
-                    <a href="#" id="modal-bgg-link" target="_blank" class="btn-action" style="border-color:#6ba3d6;">▶ VER EN BGG</a>
+                    <a href="#" id="modal-link" target="_blank" class="btn-action">▶ TUTORIAL</a>
+                    <a href="#" id="modal-bgg-link" target="_blank" class="btn-action" style="border-color:#6ba3d6;">▶ VER BGG</a>
                     <label class="btn-action" style="border-color:#5bb35b;">
                         [ SUBIR PORTADA ]
                         <input type="file" id="upload-input" style="display:none;" accept="image/*" onchange="uploadCover(event)">
@@ -466,8 +441,8 @@
                 const card = document.createElement('div');
                 card.className = 'char-card ' + (selectedHero.id === h.id ? 'selected' : '');
                 card.innerHTML = `
-                    <div style="width:48px; height:48px; overflow:hidden; display:flex; justify-content:center; align-items:center;">
-                        <img src="${h.path}" style="transform: scale(0.65) translate(-72px, -72px); transform-origin: 0 0;">
+                    <div style="width:44px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center;">
+                        <img src="${h.path}" style="transform: scale(0.6) translate(-72px, -72px); transform-origin: 0 0;">
                     </div>
                     <span>${h.name}</span>
                 `;
@@ -537,10 +512,10 @@
             }
         }
 
-        // --- WORLD GENERATION: CONNECTED REALM ---
+        // --- WORLD GENERATION ---
         const WORLD_COLS = 54;
         const WORLD_ROWS = 40;
-        const TILE_SIZE = 48;
+        const TILE_SIZE = 54;
 
         const WATER = 0;
         const GRASS = 1;
@@ -641,9 +616,16 @@
             });
         });
 
-        // --- PLAYER & CAMERA ENGINE ---
+        // --- FULLSCREEN CANVAS & RESPONSIVE CAMERA ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         const player = {
             x: 14 * TILE_SIZE,
@@ -715,11 +697,9 @@
                 player.frame += 0.08;
             }
 
-            camera.x += (player.x + TILE_SIZE/2 - canvas.width/2 - camera.x) * 0.12;
-            camera.y += (player.y + TILE_SIZE/2 - canvas.height/2 - camera.y) * 0.12;
-
-            camera.x = Math.max(0, Math.min(camera.x, WORLD_COLS * TILE_SIZE - canvas.width));
-            camera.y = Math.max(0, Math.min(camera.y, WORLD_ROWS * TILE_SIZE - canvas.height));
+            // Center camera around player on any screen resolution
+            camera.x += (player.x + TILE_SIZE/2 - canvas.width/2 - camera.x) * 0.14;
+            camera.y += (player.y + TILE_SIZE/2 - canvas.height/2 - camera.y) * 0.14;
         }
 
         function draw() {
@@ -727,10 +707,10 @@
             ctx.save();
             ctx.translate(-Math.floor(camera.x), -Math.floor(camera.y));
 
-            const startCol = Math.max(0, Math.floor(camera.x / TILE_SIZE) - 1);
-            const endCol = Math.min(WORLD_COLS - 1, Math.ceil((camera.x + canvas.width) / TILE_SIZE) + 1);
-            const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 1);
-            const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 1);
+            const startCol = Math.max(0, Math.floor(camera.x / TILE_SIZE) - 2);
+            const endCol = Math.min(WORLD_COLS - 1, Math.ceil((camera.x + canvas.width) / TILE_SIZE) + 2);
+            const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 2);
+            const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 2);
 
             // 1. Draw Terrain Base
             for (let r = startRow; r <= endRow; r++) {
@@ -739,6 +719,7 @@
                     const y = r * TILE_SIZE;
                     const tile = worldMap[r][c];
 
+                    // Water under rivers and bridges
                     if (tile === WATER || tile === BRIDGE_H || tile === BRIDGE_V) {
                         if (assets.water.complete && assets.water.naturalWidth > 0) {
                             ctx.drawImage(assets.water, 0, 0, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -748,6 +729,7 @@
                         }
                     }
 
+                    // Grass
                     if (tile === GRASS || tile === PATH || tile >= 10) {
                         if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
                             ctx.drawImage(assets.tilemap, 64, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -757,6 +739,7 @@
                         }
                     }
 
+                    // Paths
                     if (tile === PATH) {
                         if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
                             ctx.drawImage(assets.tilemap, 192, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -766,6 +749,7 @@
                         }
                     }
 
+                    // Wood Bridges
                     if (tile === BRIDGE_H) {
                         if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
                             ctx.drawImage(assets.bridge, 64, 0, 64, 64, x, y - 4, TILE_SIZE, TILE_SIZE + 8);
@@ -799,22 +783,22 @@
 
                 const game = gamesData[h.gameIndex];
                 if (game) {
-                    const pw = TILE_SIZE * 3 - 10;
-                    const ph = 22;
-                    const px = hx + 5;
+                    const pw = TILE_SIZE * 3 - 8;
+                    const ph = 24;
+                    const px = hx + 4;
                     const py = hy + TILE_SIZE * 2.7;
 
-                    ctx.fillStyle = 'rgba(28, 14, 6, 0.94)';
+                    ctx.fillStyle = 'rgba(28, 14, 6, 0.95)';
                     ctx.fillRect(px, py, pw, ph);
                     ctx.strokeStyle = '#dfa143';
                     ctx.lineWidth = 1.5;
                     ctx.strokeRect(px, py, pw, ph);
 
                     ctx.fillStyle = '#ffe6a3';
-                    ctx.font = 'bold 11px "MedievalSharp", cursive';
+                    ctx.font = 'bold 12px "MedievalSharp", cursive';
                     ctx.textAlign = 'center';
                     const shortTitle = game.name.length > 18 ? game.name.substring(0, 16) + '..' : game.name;
-                    ctx.fillText(shortTitle, hx + (TILE_SIZE * 3) / 2, py + 15);
+                    ctx.fillText(shortTitle, hx + (TILE_SIZE * 3) / 2, py + 16);
                 }
             });
 
@@ -830,10 +814,10 @@
                         const fx = frontC * TILE_SIZE;
                         const fy = frontR * TILE_SIZE;
 
-                        const tw = 240;
-                        const th = 50;
+                        const tw = 250;
+                        const th = 54;
                         const bx = fx - tw/2 + TILE_SIZE/2;
-                        const by = fy - 68;
+                        const by = fy - 72;
 
                         ctx.fillStyle = 'rgba(20, 10, 5, 0.96)';
                         ctx.fillRect(bx, by, tw, th);
@@ -842,14 +826,14 @@
                         ctx.strokeRect(bx, by, tw, th);
 
                         ctx.fillStyle = '#ffd700';
-                        ctx.font = 'bold 12px "Cinzel", serif';
+                        ctx.font = 'bold 13px "Cinzel", serif';
                         ctx.textAlign = 'left';
                         const titleTxt = game.name.length > 17 ? game.name.substring(0, 16) + '..' : game.name;
-                        ctx.fillText('🏰 ' + titleTxt, bx + 10, by + 18);
+                        ctx.fillText('🏰 ' + titleTxt, bx + 12, by + 20);
 
                         ctx.fillStyle = '#78de78';
-                        ctx.font = '9px "Press Start 2P", monospace';
-                        ctx.fillText('▶ TOCAR PARA ENTRAR', bx + 10, by + 38);
+                        ctx.font = '10px "Press Start 2P", monospace';
+                        ctx.fillText('▶ [ENTRAR]', bx + 12, by + 40);
                     }
                 }
             }
@@ -866,9 +850,9 @@
                 if (player.dirX === -1) {
                     ctx.translate(player.x + TILE_SIZE/2, player.y + TILE_SIZE/2);
                     ctx.scale(-1, 1);
-                    ctx.drawImage(heroImg, sx, sy, 192, 192, -48, -58, 96, 96);
+                    ctx.drawImage(heroImg, sx, sy, 192, 192, -54, -64, 108, 108);
                 } else {
-                    ctx.drawImage(heroImg, sx, sy, 192, 192, player.x - 24, player.y - 34, 96, 96);
+                    ctx.drawImage(heroImg, sx, sy, 192, 192, player.x - 27, player.y - 37, 108, 108);
                 }
                 ctx.restore();
             }
@@ -909,11 +893,13 @@
             
             const start = (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 action();
-                interval = setInterval(action, 140);
+                interval = setInterval(action, 130);
             };
             const stop = (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 if (interval) clearInterval(interval);
             };
 
@@ -933,18 +919,17 @@
         const actBtn = document.getElementById('btn-action');
         actBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             interactAction();
         }, { passive: false });
         actBtn.addEventListener('click', interactAction);
 
-        // Touch on Canvas directly to interact / walk
+        // Touch anywhere on Canvas to interact or walk directly
         canvas.addEventListener('click', (e) => {
             if (isModalOpen) return;
             const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            const clickX = (e.clientX - rect.left) * scaleX + camera.x;
-            const clickY = (e.clientY - rect.top) * scaleY + camera.y;
+            const clickX = e.clientX + camera.x;
+            const clickY = e.clientY + camera.y;
 
             const clickedCol = Math.floor(clickX / TILE_SIZE);
             const clickedRow = Math.floor(clickY / TILE_SIZE);
@@ -952,7 +937,6 @@
             if (clickedRow >= 0 && clickedRow < WORLD_ROWS && clickedCol >= 0 && clickedCol < WORLD_COLS) {
                 const tile = worldMap[clickedRow][clickedCol];
                 if (tile >= 10) {
-                    // Directly open clicked house!
                     const gIdx = tile - 10;
                     if (gamesData[gIdx]) {
                         openGameModal(gamesData[gIdx]);
