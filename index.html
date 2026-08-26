@@ -142,7 +142,7 @@
             color: #fff;
         }
 
-        /* --- FLOATING CONTROLS (ISLAND TELEPORT & MINIMAP) --- */
+        /* --- USER-DEFINED CATEGORIES (FAST TRAVEL BAR) --- */
         #island-selector {
             position: absolute;
             top: calc(env(safe-area-inset-top, 10px) + 52px);
@@ -158,7 +158,7 @@
             background: rgba(45, 25, 12, 0.9);
             border: 1.5px solid #dfa143;
             border-radius: 6px;
-            padding: 4px 8px;
+            padding: 5px 9px;
             font-size: 10px;
             color: #f1dfc5;
             pointer-events: auto;
@@ -502,12 +502,12 @@
             </div>
         </div>
 
-        <!-- FAST TRAVEL ISLAND BAR -->
+        <!-- FAST TRAVEL BAR (PARTY / FACIL / MEDIA / ALTA) -->
         <div id="island-selector">
-            <div class="island-btn" onclick="teleportToIsland(0)">🏡 Familiares</div>
-            <div class="island-btn" onclick="teleportToIsland(1)">🎉 Party Games</div>
-            <div class="island-btn" onclick="teleportToIsland(2)">👑 Expertos</div>
-            <div class="island-btn" onclick="teleportToIsland(3)">🃏 Deducción</div>
+            <div class="island-btn" onclick="teleportToIsland(0)">🎉 Party Games</div>
+            <div class="island-btn" onclick="teleportToIsland(1)">🟢 Dificultad Fácil</div>
+            <div class="island-btn" onclick="teleportToIsland(2)">🟡 Dificultad Media</div>
+            <div class="island-btn" onclick="teleportToIsland(3)">🔴 Dificultad Alta</div>
         </div>
 
         <!-- INTERACTIVE MINIMAP -->
@@ -542,19 +542,19 @@
             <h2 class="guide-title">🏰 GUÍA DEL REINO</h2>
             <div class="guide-text">
                 <strong>¡Bienvenido a la Ludoteca Virtual!</strong><br>
-                Este reino medieval contiene toda tu colección real de juegos de mesa distribuida en 4 distritos temáticos.
+                Este reino medieval contiene toda tu colección real de juegos de mesa distribuida en 4 distritos temáticos por dificultad y estilo.
             </div>
             <div class="guide-text">
-                <strong>🗺️ CÓMO NAVEGAR:</strong><br>
-                • <strong>Miniaturas en Techos</strong>: Identifica las portadas de los juegos directamente mirando los tejados de las casas.<br>
-                • <strong>Clic / Toque (Age of Empires)</strong>: Toca cualquier camino o pasto y tu héroe viajará automáticamente esquivando obstáculos.<br>
-                • <strong>Tocar Casa</strong>: Toca la casa de cualquier juego para entrar a ver su ficha.<br>
-                • <strong>Buscador Rápido</strong>: Escribe arriba para encontrar cualquier juego al instante.<br>
-                • <strong>Viaje Rápido</strong>: Usa los botones de islas para saltar entre distritos.
+                <strong>🗺️ DISTRITOS TEMÁTICOS:</strong><br>
+                • 🎉 <strong>Party Games</strong>: Juegos para grupos, humor y risas.<br>
+                • 🟢 <strong>Dificultad Fácil</strong>: Juegos rápidos de aprender y familiares.<br>
+                • 🟡 <strong>Dificultad Media</strong>: Juegos de estrategia intermedia y gestión.<br>
+                • 🔴 <strong>Dificultad Alta</strong>: Estrategia profunda, wargames y expertos.
             </div>
             <div class="guide-text">
                 <strong>📦 EN CADA CASA ENCONTRARÁS:</strong><br>
-                • <strong>Sinopsis Rápida</strong>: Para qué sirve y de qué trata el juego en 2 líneas.<br>
+                • <strong>Miniatura en el Techo</strong>: Reconoce el juego mirando su caja.<br>
+                • <strong>Sinopsis Rápida</strong>: De qué trata el juego en 2 líneas.<br>
                 • Portada en alta definición.<br>
                 • Puntuación de BoardGameGeek.<br>
                 • Botón para ver el tutorial en VHS/YouTube.<br>
@@ -595,8 +595,8 @@
     </div>
 
     <script>
-        const BUILD_VERSION = '1787761710';
-        const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg", "synopsis": "Juego de roles ocultos y engaño político en la Alemania de 1930. Los liberales intentan aprobar leyes democráticas mientras los fascistas conspiran en secreto.", "islandId": 3, "id": 0}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "synopsis": "Juego social para grupos grandes. Una aldea amenazada por licántropos debe linchar a los sospechosos de día, mientras los lobos devoran inocentes de noche.", "islandId": 3, "id": 1}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg", "synopsis": "Eres un enano minero cavando túneles en busca de oro en la montaña, pero cuidado: entre tus compañeros hay saboteadores secretos que romperán tus herramientas.", "islandId": 3, "id": 2}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg", "synopsis": "Juego de mesa de categoría Roles ocultos / Cartas / Asociación abstracta. Ideal para 3-8 jugadores con dificultad Baja.", "islandId": 3, "id": 3}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "synopsis": "Juego de reflejos y risas frenéticas. Di la secuencia de palabras en voz alta mientras bajas cartas; cuando coincidan palabra y carta, ¡sé el más rápido en palmear el mazo!", "islandId": 1, "id": 4}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg", "synopsis": "Juego de mesa de categoría Reflejos / Velocidad visual / Dados. Ideal para 2-10 jugadores con dificultad Baja.", "islandId": 1, "id": 5}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg", "synopsis": "Juego de adivinanza en equipos contrarreloj: describe personajes de series, cine y cultura pop en 3 rondas (palabras libres, 1 palabra y mímica).", "islandId": 1, "id": 6}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg", "synopsis": "Juego de cartas argentino de humor negro extremo donde no hay límites morales y se premia la incorrección política.", "islandId": 1, "id": 7}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg", "synopsis": "Parodia hilarante de los juegos de rol. Baja a la mazmorra, mata monstruos, róbate los tesoros y traiciona a tus propios amigos para ser el primero en llegar al nivel 10.", "islandId": 1, "id": 8}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg", "synopsis": "Juego de mesa de categoría Gestión de mano / Descarte simultáneo. Ideal para 2-10 jugadores con dificultad Baja.", "islandId": 0, "id": 9}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg", "synopsis": "Trivia donde todas las respuestas son colores. ¿De qué color es la bandera de Suecia o los aros olímpicos? Responde bajando tus cartas de color.", "islandId": 1, "id": 10}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg", "synopsis": "Juego poético de creatividad y deducción con cartas ilustradas de ensueño. Da una pista sutil sobre tu carta para que algunos, pero no todos, la descubran.", "islandId": 3, "id": 11}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg", "synopsis": "La versión expandida de Dixit que permite jugar hasta 12 personas con nuevos modos de votación y un mazo repleto de arte surrealista.", "islandId": 3, "id": 12}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg", "synopsis": "Party game cooperativo de deducción de palabras. Todos los jugadores escriben una pista secreta para el adivinador, pero ¡las pistas idénticas se anulan y borran!", "islandId": 3, "id": 13}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg", "synopsis": "Juego rápido de cartas estilo drafting. Arma los mejores combos de sushi, nigiris y tempuras pasándote las cartas en un restaurante japonés.", "islandId": 0, "id": 14}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg", "synopsis": "El legendario juego de bienes raíces. Compra propiedades, construye casas y hoteles, y cobra alquileres hasta llevar a la bancarrota a tus oponentes.", "islandId": 1, "id": 15}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg", "synopsis": "Juego de fichas tradicional de ingenio donde formas escaleras del mismo palo o tríos de igual número para vaciar tu atril y ganar canastas.", "islandId": 0, "id": 16}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg", "synopsis": "Juego cooperativo donde un equipo de aventureros busca recuperar 4 tesoros sagrados en una isla misteriosa que se hunde bajo el agua con cada turno.", "islandId": 0, "id": 17}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg", "synopsis": "Conecta ciudades reclamando rutas ferroviarias en un mapa con tus cartas de vagón. Cumple tus billetes de destino secretos para ganar la mayor cantidad de puntos.", "islandId": 0, "id": 18}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg", "synopsis": "Juego de colocación de losetas medievales. Construye caminos, ciudades amuralladas, monasterios y campos colocando a tus seguidores (meeples) estratégicamente.", "islandId": 0, "id": 19}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg", "synopsis": "Juego de estrategia abstracto donde eres un artesano decorando las paredes del Palacio Real de Évora con hermosos azulejos de cerámica portuguesa.", "islandId": 0, "id": 20}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg", "synopsis": "Eres un mercader del Renacimiento que compra minas de gemas preciosas, barcos y artesanos para atraer a los nobles más influyentes y ganar prestigio.", "islandId": 2, "id": 21}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg", "synopsis": "Construye la mejor metrópolis en la antigua Grecia colocando losetas de canteras, templos y mercados apilándolas en altura para multiplicar sus puntos.", "islandId": 0, "id": 22}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg", "synopsis": "Lidera una de las 7 grandes civilizaciones del mundo antiguo. Pasa cartas de mano en mano (drafting) para erigir tu Maravilla, desarrollar comercio y poder militar.", "islandId": 0, "id": 23}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg", "synopsis": "Juego de control de áreas tenso y sin azar ambientado en la Gran Bretaña medieval tras la muerte del Rey Arturo. Manipula el poder de ingleses, escoceses y galeses.", "islandId": 2, "id": 24}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg", "synopsis": "El clásico juego táctico de guerra y conquista territorial. Cumple tu objetivo secreto dominando países y continentes mediante tiradas de dados.", "islandId": 1, "id": 25}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg", "synopsis": "Coloniza una isla inexplorada construyendo pueblos y caminos. Negocia recursos (madera, trigo, oveja) con otros jugadores para sumar 10 puntos de victoria antes que nadie.", "islandId": 0, "id": 26}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg", "synopsis": "Estrategia profunda de colocación de dados en el Japón feudal. Gestiona los miembros de tu clan en las salas del Castillo Himeji para ganar influencia ante el Daimyo.", "islandId": 2, "id": 27}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg", "synopsis": "Construye la Catedral de San Basilio en Moscú. Gestiona recursos en el rondel del mercado y decora las torres para ganarte el favor del Zar Iván el Terrible.", "islandId": 2, "id": 28}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg", "synopsis": "Juego de gestión de cartas donde eres un entusiasta de las aves descubriendo y atrayendo las mejores especies a tu red de reservas naturales.", "islandId": 2, "id": 29}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg", "synopsis": "Juego de guerra asimétrico en un bosque medieval donde cada facción (Marquesa felina, Alianza del bosque, Nido de Águilas y el Vagabundo) juega con reglas y objetivos únicos.", "islandId": 2, "id": 30}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg", "synopsis": "Expansión que añade caballeros para defender Catan de los bárbaros invasores, mejorando tus ciudades con metrópolis comerciales, políticas y científicas.", "islandId": 0, "id": 31}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg", "synopsis": "Versión ecológica de Catan donde debes balancear el desarrollo de energías fósiles y renovables sin contaminar la isla ni destruir el medio ambiente.", "islandId": 0, "id": 32}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg", "synopsis": "Juego de mesa de categoría Expansión / Cartas. Ideal para 2-6 jugadores con dificultad Media.", "islandId": 0, "id": 33}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg", "synopsis": "Juego veloz de observación donde amebas mutantes escaparon del laboratorio y debes seguir su rastro a través de rejillas de ventilación y salas de mutación.", "islandId": 1, "id": 34}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg", "synopsis": "Juego de cartas táctico ambientado en la mitología griega donde compites por ganarte la bendición de los dioses del Olimpo.", "islandId": 0, "id": 35}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg", "synopsis": "Juego de faroleo y engaño donde inventas definiciones falsas de palabras extrañas para engañar al resto de la mesa.", "islandId": 3, "id": 36}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg", "synopsis": "Construye un sereno jardín zen colocando estanques koi, bonsáis y linternas de piedra en armonía para conseguir la mayor puntuación de paz.", "islandId": 0, "id": 37}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg", "synopsis": "Juego cooperativo de concentración y sincronización mental donde el grupo debe contar números en orden sin mirarse ni hablar.", "islandId": 0, "id": 38}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg", "synopsis": "Party game cooperativo de comunicación limitada donde deben resolver misiones trabajando en equipo bajo presión de tiempo.", "islandId": 0, "id": 39}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg", "synopsis": "Expansión que añade dragones temibles y tesoros legendarios a tus partidas de Munchkin.", "islandId": 1, "id": 40}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg", "synopsis": "Añade la clase Bardo, la raza Gnomo y nuevas criaturas como el Centauro y el Chicopez a tus mazmorras.", "islandId": 1, "id": 41}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "synopsis": "Permite mezclar barajas de distintos Munchkins, usando trampas dobles y objetos monstruosos sin penalización.", "islandId": 1, "id": 42}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg", "synopsis": "Juego de memoria y agilidad donde debes recordar los pedidos de un restaurante caótico y servirlos a tiempo.", "islandId": 1, "id": 43}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg", "synopsis": "Juego de cartas rápido, absurdo y muy divertido para todas las edades sobre la caca y cómo deshacerte de ella antes que los demás.", "islandId": 1, "id": 44}];
+        const BUILD_VERSION = '1787762458';
+        const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg", "synopsis": "Juego de roles ocultos y engaño político en la Alemania de 1930. Los liberales intentan aprobar leyes democráticas mientras los fascistas conspiran en secreto.", "islandId": 0, "id": 0}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "synopsis": "Juego social para grupos grandes. Una aldea amenazada por licántropos debe linchar a los sospechosos de día, mientras los lobos devoran inocentes de noche.", "islandId": 0, "id": 1}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg", "synopsis": "Eres un enano minero cavando túneles en busca de oro en la montaña, pero cuidado: entre tus compañeros hay saboteadores secretos que romperán tus herramientas.", "islandId": 1, "id": 2}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg", "synopsis": "Juego de deducción psicológica. Una persona tiene múltiples personalidades en su mente, pero una es 'Dany', una personalidad falsa que busca sabotear los recuerdos.", "islandId": 0, "id": 3}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "synopsis": "Juego de reflejos y risas frenéticas. Di la secuencia de palabras en voz alta mientras bajas cartas; cuando coincidan palabra y carta, ¡sé el más rápido en palmear el mazo!", "islandId": 0, "id": 4}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg", "synopsis": "Edición especial del frenético juego de amebas de laboratorio con desafíos de rapidez visual.", "islandId": 0, "id": 5}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg", "synopsis": "Juego de adivinanza en equipos contrarreloj: describe personajes de series, cine y cultura pop en 3 rondas (palabras libres, 1 palabra y mímica).", "islandId": 0, "id": 6}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg", "synopsis": "Juego de cartas argentino de humor negro extremo donde no hay límites morales y se premia la incorrección política.", "islandId": 0, "id": 7}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg", "synopsis": "Parodia hilarante de los juegos de rol. Baja a la mazmorra, mata monstruos, róbate los tesoros y traiciona a tus propios amigos para ser el primero en llegar al nivel 10.", "islandId": 0, "id": 8}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg", "synopsis": "Juego de mesa de categoría Gestión de mano / Descarte simultáneo. Ideal para 2-10 jugadores con dificultad Baja.", "islandId": 1, "id": 9}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg", "synopsis": "Trivia donde todas las respuestas son colores. ¿De qué color es la bandera de Suecia o los aros olímpicos? Responde bajando tus cartas de color.", "islandId": 0, "id": 10}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg", "synopsis": "Juego poético de creatividad y deducción con cartas ilustradas de ensueño. Da una pista sutil sobre tu carta para que algunos, pero no todos, la descubran.", "islandId": 1, "id": 11}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg", "synopsis": "La versión expandida de Dixit que permite jugar hasta 12 personas con nuevos modos de votación y un mazo repleto de arte surrealista.", "islandId": 1, "id": 12}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg", "synopsis": "Party game cooperativo de deducción de palabras. Todos los jugadores escriben una pista secreta para el adivinador, pero ¡las pistas idénticas se anulan y borran!", "islandId": 0, "id": 13}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg", "synopsis": "Juego rápido de cartas estilo drafting. Arma los mejores combos de sushi, nigiris y tempuras pasándote las cartas en un restaurante japonés.", "islandId": 1, "id": 14}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg", "synopsis": "El legendario juego de bienes raíces. Compra propiedades, construye casas y hoteles, y cobra alquileres hasta llevar a la bancarrota a tus oponentes.", "islandId": 1, "id": 15}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg", "synopsis": "Juego de fichas tradicional de ingenio donde formas escaleras del mismo palo o tríos de igual número para vaciar tu atril y ganar canastas.", "islandId": 1, "id": 16}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg", "synopsis": "Juego cooperativo donde un equipo de aventureros busca recuperar 4 tesoros sagrados en una isla misteriosa que se hunde bajo el agua con cada turno.", "islandId": 1, "id": 17}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg", "synopsis": "Conecta ciudades reclamando rutas ferroviarias en un mapa con tus cartas de vagón. Cumple tus billetes de destino secretos para ganar la mayor cantidad de puntos.", "islandId": 2, "id": 18}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg", "synopsis": "Juego de colocación de losetas medievales. Construye caminos, ciudades amuralladas, monasterios y campos colocando a tus seguidores (meeples) estratégicamente.", "islandId": 2, "id": 19}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg", "synopsis": "Juego de estrategia abstracto donde eres un artesano decorando las paredes del Palacio Real de Évora con hermosos azulejos de cerámica portuguesa.", "islandId": 2, "id": 20}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg", "synopsis": "Eres un mercader del Renacimiento que compra minas de gemas preciosas, barcos y artesanos para atraer a los nobles más influyentes y ganar prestigio.", "islandId": 2, "id": 21}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg", "synopsis": "Construye la mejor metrópolis en la antigua Grecia colocando losetas de canteras, templos y mercados apilándolas en altura para multiplicar sus puntos.", "islandId": 2, "id": 22}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg", "synopsis": "Lidera una de las 7 grandes civilizaciones del mundo antiguo. Pasa cartas de mano en mano (drafting) para erigir tu Maravilla, desarrollar comercio y poder militar.", "islandId": 2, "id": 23}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg", "synopsis": "Juego de control de áreas tenso y sin azar ambientado en la Gran Bretaña medieval tras la muerte del Rey Arturo. Manipula el poder de ingleses, escoceses y galeses.", "islandId": 3, "id": 24}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg", "synopsis": "El clásico juego táctico de guerra y conquista territorial. Cumple tu objetivo secreto dominando países y continentes mediante tiradas de dados.", "islandId": 2, "id": 25}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg", "synopsis": "Coloniza una isla inexplorada construyendo pueblos y caminos. Negocia recursos (madera, trigo, oveja) con otros jugadores para sumar 10 puntos de victoria antes que nadie.", "islandId": 2, "id": 26}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg", "synopsis": "Estrategia profunda de colocación de dados en el Japón feudal. Gestiona los miembros de tu clan en las salas del Castillo Himeji para ganar influencia ante el Daimyo.", "islandId": 3, "id": 27}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg", "synopsis": "Construye la Catedral de San Basilio en Moscú. Gestiona recursos en el rondel del mercado y decora las torres para ganarte el favor del Zar Iván el Terrible.", "islandId": 2, "id": 28}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg", "synopsis": "Juego de gestión de cartas donde eres un entusiasta de las aves descubriendo y atrayendo las mejores especies a tu red de reservas naturales.", "islandId": 3, "id": 29}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg", "synopsis": "Juego de guerra asimétrico en un bosque medieval donde cada facción (Marquesa felina, Alianza del bosque, Nido de Águilas y el Vagabundo) juega con reglas y objetivos únicos.", "islandId": 3, "id": 30}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg", "synopsis": "Expansión que añade caballeros para defender Catan de los bárbaros invasores, mejorando tus ciudades con metrópolis comerciales, políticas y científicas.", "islandId": 2, "id": 31}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg", "synopsis": "Versión ecológica de Catan donde debes balancear el desarrollo de energías fósiles y renovables sin contaminar la isla ni destruir el medio ambiente.", "islandId": 2, "id": 32}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg", "synopsis": "El gran juego de trivia y desafíos musicales donde demuestras tus conocimientos de bandas, canciones y letras.", "islandId": 0, "id": 33}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg", "synopsis": "Juego veloz de observación donde amebas mutantes escaparon del laboratorio y debes seguir su rastro a través de rejillas de ventilación y salas de mutación.", "islandId": 0, "id": 34}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg", "synopsis": "Juego de cartas táctico ambientado en la mitología griega donde compites por ganarte la bendición de los dioses del Olimpo.", "islandId": 1, "id": 35}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg", "synopsis": "Juego de faroleo y engaño donde inventas definiciones falsas de palabras extrañas para engañar al resto de la mesa.", "islandId": 0, "id": 36}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg", "synopsis": "Construye un sereno jardín zen colocando estanques koi, bonsáis y linternas de piedra en armonía para conseguir la mayor puntuación de paz.", "islandId": 1, "id": 37}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg", "synopsis": "Juego cooperativo de concentración y sincronización mental donde el grupo debe contar números en orden sin mirarse ni hablar.", "islandId": 0, "id": 38}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg", "synopsis": "Party game cooperativo de comunicación limitada donde deben resolver misiones trabajando en equipo bajo presión de tiempo.", "islandId": 0, "id": 39}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg", "synopsis": "Expansión que añade dragones temibles y tesoros legendarios a tus partidas de Munchkin.", "islandId": 0, "id": 40}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg", "synopsis": "Añade la clase Bardo, la raza Gnomo y nuevas criaturas como el Centauro y el Chicopez a tus mazmorras.", "islandId": 0, "id": 41}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "synopsis": "Permite mezclar barajas de distintos Munchkins, usando trampas dobles y objetos monstruosos sin penalización.", "islandId": 0, "id": 42}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg", "synopsis": "Juego de memoria y agilidad donde debes recordar los pedidos de un restaurante caótico y servirlos a tiempo.", "islandId": 0, "id": 43}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg", "synopsis": "Juego de cartas rápido, absurdo y muy divertido para todas las edades sobre la caca y cómo deshacerte de ella antes que los demás.", "islandId": 0, "id": 44}];
 
         function bustCache(url) {
             if (!url) return '';
@@ -660,14 +660,13 @@
             assets.houses.push(img);
         });
 
-        // Preload cover thumbnails for the rooftops
         gamesData.forEach(g => {
             const cImg = new Image();
             cImg.src = bustCache(g.image);
             assets.coverThumbnails[g.id] = cImg;
         });
 
-        // --- UI TOGGLES (GUIDE & CHAR MODAL) ---
+        // --- UI TOGGLES ---
         function toggleGuide() {
             const el = document.getElementById('guide-panel');
             el.classList.toggle('open');
@@ -746,7 +745,6 @@
             setTimeout(() => { isModalOpen = false; }, 100);
         }
 
-        // Universal Upload function (Works on Hostinger upload.php AND local server.py)
         async function uploadCover(event) {
             if (!activeGameForUpload) return;
             const file = event.target.files[0];
@@ -754,7 +752,6 @@
 
             const filename = activeGameForUpload.image.split('/').pop().split('?')[0];
 
-            // Try relative upload.php first (for production hosting), then fallback to local server.py
             const endpoints = [
                 'upload.php?filename=' + encodeURIComponent(filename),
                 'http://127.0.0.1:7560/upload?filename=' + encodeURIComponent(filename)
@@ -772,7 +769,6 @@
                         break;
                     }
                 } catch (e) {
-                    // Try next endpoint
                 }
             }
 
@@ -784,11 +780,11 @@
                 }
                 alert('¡Portada actualizada con éxito!');
             } else {
-                alert('Error al subir la imagen. Verifica la conexión del servidor.');
+                alert('Error al subir la imagen.');
             }
         }
 
-        // --- WORLD GENERATION: 4 THEMATIC ISLANDS ---
+        // --- WORLD GENERATION: USER DEFINED CATEGORIES ---
         const WORLD_COLS = 54;
         const WORLD_ROWS = 40;
         const TILE_SIZE = 54;
@@ -808,11 +804,12 @@
             worldMap.push(row);
         }
 
+        // 4 Districts based exactly on user requirement
         const islands = [
-            { id: 0, name: "Distrito Familiar", desc: "Juegos Familiares & Estrategia", c1: 3, c2: 24, r1: 3, r2: 17, spawn: { c: 13, r: 9 } },
-            { id: 1, name: "Distrito Party", desc: "Party Games & Humor", c1: 29, c2: 50, r1: 3, r2: 17, spawn: { c: 39, r: 9 } },
-            { id: 2, name: "Distrito Real", desc: "Juegos Expertos & Estrategia", c1: 3, c2: 24, r1: 22, r2: 36, spawn: { c: 13, r: 29 } },
-            { id: 3, name: "Distrito Secreto", desc: "Cartas & Deducción", c1: 29, c2: 50, r1: 22, r2: 36, spawn: { c: 39, r: 29 } }
+            { id: 0, name: "Party Games", desc: "Juegos de risas, humor y grupos", c1: 3, c2: 24, r1: 3, r2: 17, spawn: { c: 13, r: 9 } },
+            { id: 1, name: "Dificultad Fácil", desc: "Juegos rápidos y familiares", c1: 29, c2: 50, r1: 3, r2: 17, spawn: { c: 39, r: 9 } },
+            { id: 2, name: "Dificultad Media", desc: "Estrategia intermedia y gestión", c1: 3, c2: 24, r1: 22, r2: 36, spawn: { c: 13, r: 29 } },
+            { id: 3, name: "Dificultad Alta", desc: "Estrategia profunda y expertos", c1: 29, c2: 50, r1: 22, r2: 36, spawn: { c: 39, r: 29 } }
         ];
 
         islands.forEach(isl => {
@@ -823,7 +820,7 @@
             }
             const midR1 = isl.r1 + 4;
             const midR2 = isl.r1 + 9;
-            const midC = Math.floor((isl.c1 + isl.c2) / 2); // col 13 & col 39
+            const midC = Math.floor((isl.c1 + isl.c2) / 2);
             for (let c = isl.c1; c <= isl.c2; c++) {
                 worldMap[midR1][c] = PATH;
                 worldMap[midR2][c] = PATH;
@@ -833,7 +830,6 @@
             }
         });
 
-        // Horizontal bridges (West to East)
         for (let c = 24; c <= 29; c++) {
             worldMap[7][c] = BRIDGE_H;
             worldMap[12][c] = BRIDGE_H;
@@ -841,13 +837,11 @@
             worldMap[31][c] = BRIDGE_H;
         }
 
-        // Vertical bridges EXACTLY ALIGNED to central avenues (col 13 and col 39)
         for (let r = 17; r <= 22; r++) {
             worldMap[r][13] = BRIDGE_V;
             worldMap[r][39] = BRIDGE_V;
         }
 
-        // Distribute categorized houses
         const houses = [];
         const islandHouseSpots = [
             [
@@ -989,7 +983,7 @@
             return [];
         }
 
-        // --- PLAYER, CAMERA & CLICK-TO-MOVE ENGINE ---
+        // --- PLAYER & CAMERA ENGINE ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -1124,7 +1118,7 @@
             const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 2);
             const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 2);
 
-            // 1. Draw Terrain (Water, Grass, Paths, Solid Continuous Bridges)
+            // 1. Draw Terrain Base
             for (let r = startRow; r <= endRow; r++) {
                 for (let c = startCol; c <= endCol; c++) {
                     const x = c * TILE_SIZE;
@@ -1158,7 +1152,6 @@
                         }
                     }
 
-                    // Continuous Solid Wood Bridges
                     if (tile === BRIDGE_H) {
                         if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
                             ctx.drawImage(assets.bridge, 64, 0, 64, 64, x, y - 4, TILE_SIZE, TILE_SIZE + 8);
@@ -1168,7 +1161,6 @@
                         }
                     } else if (tile === BRIDGE_V) {
                         if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
-                            // Continuous vertical middle plank (row 1, col 1 in Bridge_All)
                             ctx.drawImage(assets.bridge, 64, 64, 64, 64, x - 4, y, TILE_SIZE + 8, TILE_SIZE);
                         } else {
                             ctx.fillStyle = '#8b5a2b';
@@ -1194,7 +1186,7 @@
                 ctx.fillText('🚩 ' + isl.name.toUpperCase(), ix + 10, iy + 16);
             });
 
-            // 2. Draw Click Marker (Age of Empires Target Ring)
+            // 2. Draw Click Marker
             if (player.clickMarker) {
                 const mx = player.clickMarker.c * TILE_SIZE + TILE_SIZE/2;
                 const my = player.clickMarker.r * TILE_SIZE + TILE_SIZE/2;
@@ -1205,7 +1197,7 @@
                 ctx.stroke();
             }
 
-            // 3. Draw House Buildings & COVER THUMBNAILS ON ROOFTOPS
+            // 3. Draw House Buildings & ROOFTOP THUMBNAILS
             houses.forEach(h => {
                 const hx = h.c * TILE_SIZE;
                 const hy = h.r * TILE_SIZE;
@@ -1220,14 +1212,12 @@
 
                 const game = gamesData[h.gameIndex];
                 if (game) {
-                    // --- ROOFTOP COVER THUMBNAIL ---
                     const thumbImg = assets.coverThumbnails[game.id];
                     const tw = 44;
                     const th = 56;
                     const tx = hx + (TILE_SIZE * 3)/2 - tw/2;
-                    const ty = hy - 48; // Floating over roof
+                    const ty = hy - 48;
 
-                    // Wooden Picture Frame on Roof
                     ctx.fillStyle = 'rgba(15, 8, 4, 0.95)';
                     ctx.fillRect(tx - 3, ty - 3, tw + 6, th + 6);
                     ctx.strokeStyle = '#dfa143';
@@ -1243,7 +1233,6 @@
                         ctx.fillText('📦', tx + tw/2, ty + th/2 + 6);
                     }
 
-                    // Plaque below house
                     const pw = TILE_SIZE * 3 - 8;
                     const ph = 24;
                     const px = hx + 4;
