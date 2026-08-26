@@ -4,7 +4,7 @@
     "players": "5-10",
     "difficulty": "Baja",
     "type": "Deducción social / Roles ocultos / Farol",
-    "image": "https://cf.geekdo-images.com/rO7-vqwKvs47i27k1-B4FA__itemrep/img/bO6yq53q6q62Z0Q_0d_0jT_1wG8=/fit-in/246x300/filters:strip_icc()/pic2840020.jpg",
+    "image": "portadas/Secret_Hitler.jpg",
     "rating": "7.5",
     "local_image": "portadas/Secret_Hitler.jpg",
     "bgg_id": 188834,
@@ -14,14 +14,15 @@
     "age": "13+",
     "synopsis": "Juego de deducción social y engaño político en la Alemania de 1930. Los liberales intentan aprobar leyes democráticas mientras los fascistas conspiran en secreto para colocar a su líder en el poder.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 0
   },
   {
     "name": "Los Hombres Lobo de Castronegro",
     "players": "8-18",
     "difficulty": "Baja",
     "type": "Roles ocultos / Deducción social / Eliminación",
-    "image": "https://cf.geekdo-images.com/39_XqI6G4DIfu58eB8E_BA__itemrep/img/3yX_wD6O_2N3hT78_sV_4Q7R3o0=/fit-in/246x300/filters:strip_icc()/pic1140984.jpg",
+    "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg",
     "rating": "7.0",
     "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg",
     "bgg_id": 25821,
@@ -31,14 +32,15 @@
     "age": "10+",
     "synopsis": "Juego social para grupos grandes. Una aldea amenazada por licántropos debe debatir y linchar a los sospechosos de día, mientras los lobos devoran inocentes en secreto durante la noche.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 1
   },
   {
     "name": "Saboteur",
     "players": "3-10",
     "difficulty": "Baja",
     "type": "Roles ocultos / Farol / Construcción de caminos",
-    "image": "https://cf.geekdo-images.com/3_3F4V9L5Q4o5d8R5x_z5Q__itemrep/img/5z4_5x9T_1x_2q7F9_w9J_3J_4=/fit-in/246x300/filters:strip_icc()/pic166436.jpg",
+    "image": "portadas/Saboteur.jpg",
     "rating": "6.6",
     "local_image": "portadas/Saboteur.jpg",
     "bgg_id": 9220,
@@ -48,14 +50,15 @@
     "age": "8+",
     "synopsis": "Eres un enano minero cavando túneles en busca de oro en la montaña, pero cuidado: entre tus compañeros hay saboteadores secretos que romperán tus herramientas y bloquearán los caminos.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 2
   },
   {
     "name": "Dany (Buró)",
     "players": "3-8",
     "difficulty": "Baja",
     "type": "Roles ocultos / Cartas / Asociación abstracta",
-    "image": "https://cf.geekdo-images.com/d9j84V_u7q_x_O3Y5Y7_tQ__itemrep/img/1u_5T6_4f_5v_7t_6_t6P9_9_v4=/fit-in/246x300/filters:strip_icc()/pic4583856.png",
+    "image": "portadas/Dany_Buró.jpg",
     "rating": "6.6",
     "local_image": "portadas/Dany_Buró.jpg",
     "bgg_id": 286694,
@@ -65,14 +68,15 @@
     "age": "16+",
     "synopsis": "Juego de deducción psicológica y cartas abstractas. Todos representan personalidades en la mente de Dany intentando comunicarse con recuerdos visuales, mientras una personalidad falsa sabotea las ideas.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 3
   },
   {
     "name": "Taco Gato Cabra Queso Pizza",
     "players": "2-8",
     "difficulty": "Baja",
     "type": "Reflejos / Velocidad de reacción / Cartas",
-    "image": "https://cf.geekdo-images.com/F_E4g5u8b_5q_2_6q_u_gQ__itemrep/img/8u7_6y_6Z_6v_5n_3K_4m_8M_6E=/fit-in/246x300/filters:strip_icc()/pic4611599.png",
+    "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg",
     "rating": "6.6",
     "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg",
     "bgg_id": 253344,
@@ -82,14 +86,15 @@
     "age": "8+",
     "synopsis": "Frenético juego de reflejos y velocidad de reacción. Di la secuencia de palabras en voz alta mientras bajas cartas; en cuanto coincidan la palabra y la carta, ¡sé el más rápido en palmear el mazo!",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 4
   },
   {
     "name": "Panic Lab",
     "players": "2-10",
     "difficulty": "Baja",
     "type": "Reflejos / Velocidad visual / Dados",
-    "image": "https://cf.geekdo-images.com/Y5V9N_3D6H_6V_4Q_3D_9A__itemrep/img/9M8_4V9H5F7P3M1S2N5T8Q6M1S2N5T8=/fit-in/246x300/filters:strip_icc()/pic1347647.jpg",
+    "image": "portadas/Panic_Lab_Maldón.jpg",
     "rating": "6.4",
     "local_image": "portadas/Panic_Lab_Maldón.jpg",
     "bgg_id": 121073,
@@ -99,14 +104,15 @@
     "age": "8+",
     "synopsis": "Juego de agilidad visual donde amebas mutantes escaparon del laboratorio y debes seguir su rastro a través de rejillas de ventilación y salas de mutación para atrapar a la correcta.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 5
   },
   {
     "name": "Say My Name",
     "players": "4-12",
     "difficulty": "Baja",
     "type": "Party / Adivinanzas / Mímica",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Say%20My%20Name",
+    "image": "portadas/Say_My_Name.jpg",
     "rating": "7.5",
     "local_image": "portadas/Say_My_Name.jpg",
     "bgg_id": 344849,
@@ -116,14 +122,15 @@
     "age": "10+",
     "synopsis": "Party game de adivinanzas por equipos contrarreloj: describe personajes de series, películas, música y cultura pop a lo largo de 3 rondas (palabras libres, 1 sola palabra y mímica pura).",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 6
   },
   {
     "name": "Con Eso No Se Jode",
     "players": "3-10",
     "difficulty": "Baja",
     "type": "Party / Humor negro / Cartas",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Con%20Eso%20No%20Se%20Jode",
+    "image": "portadas/Con_Eso_No_Se_Jode.jpg",
     "rating": "6.3",
     "local_image": "portadas/Con_Eso_No_Se_Jode.jpg",
     "bgg_id": 266472,
@@ -133,14 +140,15 @@
     "age": "18+",
     "synopsis": "Juego de cartas argentino de humor negro y desafíos extremos sin límites morales ni censura, donde gana quien sume más puntos por sus decisiones incorrectas.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 7
   },
   {
     "name": "Munchkin",
     "players": "3-6",
     "difficulty": "Baja",
     "type": "Cartas / Farol / Mazmorreo humorístico",
-    "image": "https://cf.geekdo-images.com/9g_0V_3F6X_3Q_2G_2Q_1g__itemrep/img/6X_5Y_3R_4H_2F_1G_9D_3C_2=/fit-in/246x300/filters:strip_icc()/pic1876483.jpg",
+    "image": "portadas/Munchkin.jpg",
     "rating": "6.0",
     "local_image": "portadas/Munchkin.jpg",
     "bgg_id": 1927,
@@ -150,14 +158,15 @@
     "age": "10+",
     "synopsis": "Parodia hilarante de los juegos de rol. Abre puertas de mazmorra, derrota monstruos ridículos, róbate los tesoros y traiciona a tus propios amigos para ser el primero en alcanzar el nivel 10.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 8
   },
   {
     "name": "Toma 6 (6 nimmt!)",
     "players": "2-10",
     "difficulty": "Baja",
     "type": "Gestión de mano / Descarte simultáneo",
-    "image": "https://cf.geekdo-images.com/6_8M_5C_5N_2M_1H_4P_1A__itemrep/img/3_8X_2D_4F_1G_5K_2H_1=/fit-in/246x300/filters:strip_icc()/pic1332219.jpg",
+    "image": "portadas/Toma_6_6_nimmt.jpg",
     "rating": "7.0",
     "local_image": "portadas/Toma_6_6_nimmt.jpg",
     "bgg_id": 432,
@@ -167,14 +176,15 @@
     "age": "8+",
     "synopsis": "Juego de cartas brillante y adictivo. Todos bajan un número a la vez en 4 filas; si tu carta es la sexta de una fila, ¡estás obligado a comerte todas las cabezas de buey con puntos negativos!",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 9
   },
   {
     "name": "Color Brain",
     "players": "2-12",
     "difficulty": "Baja",
     "type": "Trivia de colores / Party",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Color%20Brain",
+    "image": "portadas/Color_Brain.jpg",
     "rating": "6.6",
     "local_image": "portadas/Color_Brain.jpg",
     "bgg_id": 235549,
@@ -184,14 +194,15 @@
     "age": "12+",
     "synopsis": "Juego de preguntas donde todas las respuestas son colores. ¿De qué color son los anillos olímpicos o el sombrero de Mario? Responde bajando tus cartas de color antes que tus rivales.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 10
   },
   {
     "name": "Dixit Clásico",
     "players": "3-8",
     "difficulty": "Baja",
     "type": "Deducción / Creatividad / Asociación",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic6744047.png",
+    "image": "portadas/Dixit_Clásico.jpg",
     "rating": "7.2",
     "local_image": "portadas/Dixit_Clásico.jpg",
     "bgg_id": 39856,
@@ -201,14 +212,15 @@
     "age": "8+",
     "synopsis": "Juego poético de creatividad e intuición. El cuentacuentos da una pista sutil sobre su carta ilustrada; los demás votan cuál creen que es la correcta entre las cartas trampas.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 11
   },
   {
     "name": "Dixit Odyssey",
     "players": "3-12",
     "difficulty": "Baja",
     "type": "Deducción / Creatividad / Modos por equipos",
-    "image": "https://cf.geekdo-images.com/6C_4N_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1108745.jpg",
+    "image": "portadas/Dixit_Odyssey.jpg",
     "rating": "7.3",
     "local_image": "portadas/Dixit_Odyssey.jpg",
     "bgg_id": 92828,
@@ -218,14 +230,15 @@
     "age": "8+",
     "synopsis": "Versión ampliada de Dixit que permite jugar hasta a 12 personas a la vez con nuevos tableros de votación por clavijas y 84 nuevas cartas de arte surrealista.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 12
   },
   {
     "name": "Just One",
     "players": "3-7",
     "difficulty": "Baja",
     "type": "Cooperativo / Deducción de palabras",
-    "image": "https://cf.geekdo-images.com/1G_4H_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4254509.jpg",
+    "image": "portadas/Just_One.jpg",
     "rating": "7.6",
     "local_image": "portadas/Just_One.jpg",
     "bgg_id": 254640,
@@ -235,14 +248,15 @@
     "age": "8+",
     "synopsis": "Party game cooperativo ganador del Spiel des Jahres. Todos escriben en secreto una palabra pista para el adivinador, pero ¡las pistas repetidas se anulan y se borran antes de mostrarse!",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 13
   },
   {
     "name": "Sushi Go!",
     "players": "2-5",
     "difficulty": "Baja",
     "type": "Card drafting / Colección de sets",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1900075.jpg",
+    "image": "portadas/Sushi_Go.jpg",
     "rating": "7.0",
     "local_image": "portadas/Sushi_Go.jpg",
     "bgg_id": 133473,
@@ -252,14 +266,15 @@
     "age": "8+",
     "synopsis": "Juego rápido de cartas estilo drafting. Elige una carta de sushi de tu mano y pásale el resto al de al lado. Junta combos de nigiris con wasabi, makis y puddings para sumar puntos.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 14
   },
   {
     "name": "Monopoly",
     "players": "2-8",
     "difficulty": "Media",
     "type": "Negociación / Gestión económica / Dados",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic5786884.png",
+    "image": "portadas/Monopoly.jpg",
     "rating": "4.4",
     "local_image": "portadas/Monopoly.jpg",
     "bgg_id": 1406,
@@ -269,14 +284,15 @@
     "age": "8+",
     "synopsis": "El clásico juego de bienes raíces. Compra calles, construye casas y hoteles de lujo, y cobra alquileres a los demás jugadores hasta dejarlos en bancarrota total.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 15
   },
   {
     "name": "Burako",
     "players": "2-4",
     "difficulty": "Media",
     "type": "Combinaciones / Gestión de fichas (Rummy)",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Burako",
+    "image": "portadas/Burako.jpg",
     "rating": "6.3",
     "local_image": "portadas/Burako.jpg",
     "bgg_id": 4042,
@@ -286,14 +302,15 @@
     "age": "8+",
     "synopsis": "Juego de fichas tradicional de agilidad mental. Forma escaleras del mismo color o grupos de números iguales para vaciar tu atril y cerrar la partida con canastas.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 16
   },
   {
     "name": "La Isla Prohibida",
     "players": "2-4",
     "difficulty": "Media",
     "type": "Cooperativo / Gestión de acciones / Escape",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic670845.jpg",
+    "image": "portadas/La_Isla_Prohibida.jpg",
     "rating": "6.7",
     "local_image": "portadas/La_Isla_Prohibida.jpg",
     "bgg_id": 65244,
@@ -303,14 +320,15 @@
     "age": "10+",
     "synopsis": "Aventura cooperativa donde un equipo de arqueólogos debe recuperar 4 tesoros sagrados en una isla misteriosa cuyas losetas de terreno se van inundando y hundiendo con cada turno.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 17
   },
   {
     "name": "¡Aventureros al Tren!",
     "players": "2-5",
     "difficulty": "Media",
     "type": "Gestión de rutas / Colección de cartas",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic38668.jpg",
+    "image": "portadas/Aventureros_al_Tren.jpg",
     "rating": "7.4",
     "local_image": "portadas/Aventureros_al_Tren.jpg",
     "bgg_id": 9209,
@@ -320,14 +338,15 @@
     "age": "8+",
     "synopsis": "Conecta ciudades reclamando rutas ferroviarias en un mapa con tus cartas de vagón. Cumple tus billetes de destino secretos para ganar la mayor cantidad de puntos antes que se acaben los trenes.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 18
   },
   {
     "name": "Carcassonne",
     "players": "2-5",
     "difficulty": "Media",
     "type": "Colocación de losetas / Control de áreas",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic6544250.png",
+    "image": "portadas/Carcassonne.jpg",
     "rating": "7.4",
     "local_image": "portadas/Carcassonne.jpg",
     "bgg_id": 822,
@@ -337,14 +356,15 @@
     "age": "7+",
     "synopsis": "Juego maestro de colocación de losetas. Construye el paisaje medieval del sur de Francia levantando ciudades amuralladas, caminos, monasterios y campos puntuando con tus seguidores (meeples).",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 19
   },
   {
     "name": "Azul",
     "players": "2-4",
     "difficulty": "Media",
     "type": "Abstracto / Formación de patrones",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic3718275.jpg",
+    "image": "portadas/Azul.jpg",
     "rating": "7.7",
     "local_image": "portadas/Azul.jpg",
     "bgg_id": 230802,
@@ -354,14 +374,15 @@
     "age": "8+",
     "synopsis": "Juego de estrategia abstracto donde eres un maestro artesano decorando las paredes del Palacio Real de Évora con hermosos azulejos de cerámica portuguesa formando patrones elegantes.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 20
   },
   {
     "name": "Splendor",
     "players": "2-4",
     "difficulty": "Media",
     "type": "Engine building de fichas / Optimización",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1904079.jpg",
+    "image": "portadas/Splendor.jpg",
     "rating": "7.4",
     "local_image": "portadas/Splendor.jpg",
     "bgg_id": 148228,
@@ -371,14 +392,15 @@
     "age": "10+",
     "synopsis": "Eres un mercader del Renacimiento que recolecta fichas de gemas para adquirir minas, barcos comerciales y artesanos que abaratan tus compras futuras y atraen a nobles influyentes.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 21
   },
   {
     "name": "Akropolis",
     "players": "2-4",
     "difficulty": "Media",
     "type": "Colocación de losetas 3D / Puntuación",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Akropolis",
+    "image": "portadas/Akropolis.jpg",
     "rating": "7.5",
     "local_image": "portadas/Akropolis.jpg",
     "bgg_id": 352484,
@@ -388,14 +410,15 @@
     "age": "8+",
     "synopsis": "Construye la mejor metrópolis en la antigua Grecia colocando losetas hexagonales de templos, mercados y jardines, apilándolas en altura para multiplicar su valor en puntos.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 22
   },
   {
     "name": "7 Wonders",
     "players": "2-7",
     "difficulty": "Media",
     "type": "Card drafting / Gestión de recursos / Civilización",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic860217.jpg",
+    "image": "portadas/7_Wonders.jpg",
     "rating": "7.7",
     "local_image": "portadas/7_Wonders.jpg",
     "bgg_id": 68448,
@@ -405,14 +428,15 @@
     "age": "10+",
     "synopsis": "Lidera una de las 7 grandes civilizaciones del mundo antiguo. Pasa cartas de mano en mano a lo largo de 3 Eras para construir tu Maravilla arquitectónica, desarrollar ciencia y poderío militar.",
     "rank": "Beginner",
-    "islandId": 1
+    "islandId": 1,
+    "id": 23
   },
   {
     "name": "The King is Dead",
     "players": "2-4",
     "difficulty": "Media",
     "type": "Control de áreas / Táctico puro / Sin azar",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=The%20King%20is%20Dead",
+    "image": "portadas/The_King_is_Dead.jpg",
     "rating": "7.5",
     "local_image": "portadas/The_King_is_Dead.jpg",
     "bgg_id": 319966,
@@ -422,14 +446,15 @@
     "age": "14+",
     "synopsis": "Juego de control de áreas tenso y sin azar ambientado en la Gran Bretaña medieval tras la muerte del Rey Arturo. Con solo 8 cartas para toda la partida, manipula las facciones para tomar el trono.",
     "rank": "Beginner",
-    "islandId": 1
+    "islandId": 1,
+    "id": 24
   },
   {
     "name": "TEG Tradicional",
     "players": "2-6",
     "difficulty": "Media",
     "type": "Control de áreas / Táctico / Dados",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=TEG%20Tradicional",
+    "image": "portadas/TEG_Tradicional.jpg",
     "rating": "6.0",
     "local_image": "portadas/TEG_Tradicional.jpg",
     "bgg_id": 22392,
@@ -439,14 +464,15 @@
     "age": "12+",
     "synopsis": "El legendario juego de táctica bélica y conquista territorial. Cumple tu objetivo secreto dominando países y continentes mediante pactos, refuerzos y tiradas de dados.",
     "rank": "Beginner",
-    "islandId": 1
+    "islandId": 1,
+    "id": 25
   },
   {
     "name": "Catan",
     "players": "3-4",
     "difficulty": "Media",
     "type": "Negociación / Comercio / Gestión de recursos",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic2419375.jpg",
+    "image": "portadas/Catan.jpg",
     "rating": "7.1",
     "local_image": "portadas/Catan.jpg",
     "bgg_id": 13,
@@ -456,31 +482,33 @@
     "age": "10+",
     "synopsis": "Coloniza una isla inexplorada construyendo poblados, ciudades y caminos. Negocia recursos esenciales (madera, trigo, oveja, ladrillo, mineral) para alcanzar 10 puntos de victoria.",
     "rank": "Beginner",
-    "islandId": 1
+    "islandId": 1,
+    "id": 26
   },
   {
     "name": "The White Castle",
     "players": "1-4",
     "difficulty": "Alta",
     "type": "Gestión de dados / Colocación de trabajadores",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=The%20White%20Castle",
-    "rating": "7.8",
+    "image": "portadas/The_White_Castle.jpg",
+    "rating": "8.0",
     "local_image": "portadas/The_White_Castle.jpg",
     "bgg_id": 371942,
     "bgg_url": "https://boardgamegeek.com/boardgame/371942/the-white-castle",
-    "weight": 2.7,
-    "playing_time": "60-90 Min",
+    "weight": 3.07,
+    "playing_time": "80 Min",
     "age": "12+",
     "synopsis": "Estrategia profunda y compacta de gestión de dados en el Japón feudal. Gestiona los miembros de tu clan (guerreros, cortesanos y jardineros) en las salas del Castillo Himeji para ganar influencia ante el Daimyo.",
-    "rank": "Beginner",
-    "islandId": 1
+    "rank": "Advance",
+    "islandId": 2,
+    "id": 27
   },
   {
     "name": "The Red Cathedral",
     "players": "1-4",
     "difficulty": "Alta",
     "type": "Rondel / Control de área / Optimización",
-    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=The%20Red%20Cathedral",
+    "image": "portadas/The_Red_Cathedral.jpg",
     "rating": "7.6",
     "local_image": "portadas/The_Red_Cathedral.jpg",
     "bgg_id": 227224,
@@ -490,14 +518,15 @@
     "age": "10+",
     "synopsis": "Construye la icónica Catedral de San Basilio en Moscú. Gestiona recursos en el rondel del mercado y levanta secciones y cúpulas doradas para ganarte el favor del Zar Iván el Terrible.",
     "rank": "Beginner",
-    "islandId": 1
+    "islandId": 1,
+    "id": 28
   },
   {
     "name": "Wingspan",
     "players": "1-5",
     "difficulty": "Alta",
     "type": "Engine building / Gestión de cartas y recursos",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4458123.jpg",
+    "image": "portadas/Wingspan.jpg",
     "rating": "8.0",
     "local_image": "portadas/Wingspan.jpg",
     "bgg_id": 266192,
@@ -507,14 +536,15 @@
     "age": "10+",
     "synopsis": "Juego aclamado de construcción de motores de cartas donde eres un investigador o coleccionista de aves descubriendo y atrayendo las mejores especies a tus hábitats naturales para encadenar combos.",
     "rank": "Beginner",
-    "islandId": 1
+    "islandId": 1,
+    "id": 29
   },
   {
     "name": "Root",
     "players": "2-4",
     "difficulty": "Alta",
     "type": "Asimétrico / Control de áreas / Wargame",
-    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4254509.jpg",
+    "image": "portadas/Root.jpg",
     "rating": "8.1",
     "local_image": "portadas/Root.jpg",
     "bgg_id": 237182,
@@ -524,7 +554,8 @@
     "age": "10+",
     "synopsis": "Juego de guerra y control de áreas totalmente asimétrico ambientado en un bosque encantado. Cada facción (Marquesa felina, Dinastía del Nido, Alianza del Bosque y el Vagabundo) se juega con reglas y metas totalmente distintas.",
     "rank": "Advance",
-    "islandId": 2
+    "islandId": 2,
+    "id": 30
   },
   {
     "name": "Catan Mercaderes y Barbaros",
@@ -541,7 +572,8 @@
     "age": "10+",
     "synopsis": "Expansión modular de Catan que incluye 5 escenarios y 4 variantes: transporta mercancías en carretas, pesca en los ríos, comercia con nómadas y defiende la costa de las incursiones bárbaras.",
     "rank": "Beginner",
-    "islandId": 1
+    "islandId": 1,
+    "id": 31
   },
   {
     "name": "Catan Energias renovables",
@@ -558,7 +590,8 @@
     "age": "12+",
     "synopsis": "Edición moderna e independiente de Catan ambientada en el siglo XXI. Construye plantas de energía fósil o limpia, balanceando la producción industrial sin desatar catástrofes por contaminación.",
     "rank": "Beginner",
-    "islandId": 1
+    "islandId": 1,
+    "id": 32
   },
   {
     "name": "El Melómano",
@@ -575,7 +608,8 @@
     "age": "12+",
     "synopsis": "Juego de mesa argentino de trivia y desafíos musicales para grupos. Adivina bandas, completa letras de canciones icónicas y canta melodías para sumar discos de oro.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 33
   },
   {
     "name": "Atenea",
@@ -592,7 +626,8 @@
     "age": "10+",
     "synopsis": "Juego de cartas táctico ambientado en la mitología griega donde compites por ganarte la bendición de los dioses del Olimpo.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 34
   },
   {
     "name": "Bleef",
@@ -609,7 +644,8 @@
     "age": "12+",
     "synopsis": "Juego de faroleo y engaño ingenioso. Inventa definiciones falsas pero creíbles para palabras insólitas de diccionario y vota para descubrir quién dice la verdad.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 35
   },
   {
     "name": "Jardín Japonés",
@@ -626,7 +662,8 @@
     "age": "8+",
     "synopsis": "Construye un sereno jardín zen colocando losetas de estanques con peces koi, bonsáis y linternas de piedra en armonía para conseguir la mayor puntuación estética.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 36
   },
   {
     "name": "Count up",
@@ -643,7 +680,8 @@
     "age": "8+",
     "synopsis": "Juego cooperativo de concentración y sincronización mental donde los jugadores deben bajar cartas en orden ascendente sin mirarse ni comunicarse verbalmente.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 37
   },
   {
     "name": "Equipazo",
@@ -660,7 +698,8 @@
     "age": "8+",
     "synopsis": "Party game cooperativo de comunicación y coordinación en equipo donde resuelven desafíos de palabras y conceptos bajo presión de tiempo.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 38
   },
   {
     "name": "Munchkin: Dragones molones",
@@ -677,7 +716,8 @@
     "age": "10+",
     "synopsis": "Expansión que introduce feroces y cómicos dragones a tus mazmorras de Munchkin, con tesoros legendarios y potenciadores dracónicos.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 39
   },
   {
     "name": "Munchkin 3: Errores clericales",
@@ -694,7 +734,8 @@
     "age": "10+",
     "synopsis": "Añade la clase Bardo, la raza Gnomo y nuevas criaturas como el Centauro y el Chicopez para ampliar y caotizar tus partidas de Munchkin.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 40
   },
   {
     "name": "Munchkin 7: Trampas a dos manos",
@@ -711,7 +752,8 @@
     "age": "10+",
     "synopsis": "Diseñado para mezclar múltiples cajas de Munchkin, permitiendo equipar más objetos poderosos y usar trampas dobles sin penalización.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 41
   },
   {
     "name": "El Camarero",
@@ -728,7 +770,8 @@
     "age": "7+",
     "synopsis": "Juego veloz de memoria y agilidad mental donde debes memorizar los pedidos de un restaurante caótico y servirlos a tiempo sin equivocarte en los ingredientes.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 42
   },
   {
     "name": "CACA",
@@ -745,7 +788,8 @@
     "age": "6+",
     "synopsis": "Juego de cartas rápido, absurdo y lleno de risas para todas las edades donde debes bajar cartas sin desbordar el inodoro y deshacerte de tu mano antes que nadie.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 43
   },
   {
     "name": "Akropolis: Athena",
@@ -762,6 +806,7 @@
     "age": "8+",
     "synopsis": "Expansión para Akropolis que introduce la estatua de Atenea y nuevas cartas de misión de la diosa para ganar templos y losetas sagradas.",
     "rank": "Rookie",
-    "islandId": 0
+    "islandId": 0,
+    "id": 44
   }
 ]
