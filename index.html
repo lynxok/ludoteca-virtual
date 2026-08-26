@@ -3,134 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Ludoteca - RPG Engine</title>
-    <!-- Favicon retro para eliminar el error 404 -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Ludoteca Medieval - Agent Quest Style</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=MedievalSharp&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
         body {
-            background-color: #050510;
+            background: #1b2616;
             color: #fff;
-            font-family: 'Press Start 2P', monospace;
+            font-family: 'MedievalSharp', cursive, sans-serif;
             margin: 0;
-            overflow: hidden; /* Prevent scrolling */
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            background-image: radial-gradient(circle, #2d4520 0%, #0e150a 100%);
         }
 
-        #game-container {
+        #game-wrapper {
             position: relative;
-            box-shadow: 0 0 20px var(--neon-blue);
-            border: 4px solid var(--neon-pink);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 0 8px #5c3a21, 0 0 0 12px #2b180d, 0 0 25px rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         canvas {
             display: block;
-            image-rendering: pixelated; /* Retro look */
+            image-rendering: pixelated;
         }
 
-        /* Scanline Overlay */
-        .scanlines {
+        /* UI Overlay Ribbon at the top */
+        #top-header {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 3px 100%;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg, #8b5a2b 0%, #4a2810 100%);
+            border: 3px solid #dfa143;
+            border-radius: 8px;
+            padding: 8px 24px;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            color: #ffe6a3;
+            text-shadow: 2px 2px 4px #000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 5;
             pointer-events: none;
-            z-index: 10;
         }
 
-        /* Neon Variables */
-        :root {
-            --neon-blue: #0ff;
-            --neon-pink: #f0f;
-            --neon-yellow: #ff0;
+        #controls-help {
+            margin-top: 15px;
+            color: #e2c08d;
+            font-size: 14px;
+            font-family: 'Press Start 2P', monospace;
+            text-shadow: 2px 2px 3px #000;
+            letter-spacing: 1px;
         }
 
-        /* Modal Styles from previous version */
+        /* Modal Styles */
         #game-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(10, 8, 5, 0.85);
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(6px);
         }
         .modal-content {
-            background: #111;
-            border: 3px solid var(--neon-pink);
+            background: linear-gradient(135deg, #2c1b10 0%, #150c07 100%);
+            border: 4px solid #dfa143;
+            border-radius: 14px;
             padding: 30px;
-            max-width: 1000px;
+            max-width: 900px;
+            width: 90%;
             display: flex;
             gap: 30px;
-            box-shadow: 0 0 30px var(--neon-pink);
+            box-shadow: 0 0 40px rgba(223, 161, 67, 0.4), inset 0 0 25px rgba(0,0,0,0.8);
             position: relative;
         }
         .close-btn {
             position: absolute;
-            top: 10px; right: 15px;
-            color: var(--neon-pink);
-            font-size: 1.5em;
+            top: 12px; right: 18px;
+            color: #dfa143;
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .close-btn:hover {
+            color: #fff;
+            transform: scale(1.15);
+        }
+        .modal-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .modal-details h2 {
+            color: #ffd276;
+            font-family: 'Cinzel', serif;
+            text-shadow: 2px 2px 6px #000;
+            margin-top: 0;
+            font-size: 26px;
+            border-bottom: 2px solid #5c3a21;
+            padding-bottom: 8px;
+        }
+        .modal-details p {
+            line-height: 1.8;
+            font-size: 16px;
+            color: #f1dfc5;
+        }
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border: 2px solid #dfa143;
+            border-radius: 6px;
+            background: linear-gradient(180deg, #7c4c23 0%, #3e200c 100%);
+            color: #ffe6a3;
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            text-shadow: 1px 1px 2px #000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: all 0.2s;
             cursor: pointer;
         }
-        .close-btn:hover { color: #fff; }
-        .modal-details h2 {
-            color: var(--neon-yellow);
-            text-shadow: 0 0 10px var(--neon-yellow);
-            margin-top: 0;
-            font-size: 1.5em;
-        }
-        .modal-details p { line-height: 1.8; }
-        .btn-action {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            border: 2px solid var(--neon-pink);
-            color: var(--neon-pink);
-            text-decoration: none;
-            text-shadow: 0 0 5px var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink) inset;
-            transition: 0.2s;
-            font-size: 0.8em;
-        }
         .btn-action:hover {
-            background: var(--neon-pink);
-            color: #000;
-        }
-        
-        #controls-help {
-            margin-top: 20px;
-            color: var(--neon-blue);
-            font-size: 0.8em;
-            text-shadow: 0 0 5px var(--neon-blue);
+            background: linear-gradient(180deg, #9d612e 0%, #542b10 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(223, 161, 67, 0.4);
+            color: #fff;
         }
     </style>
 </head>
 <body>
     
-    <div id="game-container">
-        <canvas id="gameCanvas" width="800" height="600"></canvas>
-        <div class="scanlines"></div>
+    <div id="game-wrapper">
+        <div id="top-header">🏰 ALDEA LUDOTECA REAL ⚔️</div>
+        <canvas id="gameCanvas" width="960" height="624"></canvas>
     </div>
-    <div id="controls-help">WASD / FLECHAS: Moverse | ENTER: Abrir Estante</div>
+    <div id="controls-help">⚔️ WASD / FLECHAS: Explorar | ENTER: Inspeccionar Juego</div>
 
     <!-- Modal -->
     <div id="game-modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">X</span>
-            <img id="modal-img" src="" alt="Cover" style="width: 350px; height: auto; max-height: 500px; object-fit: contain; border: 2px solid var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue);">
+            <span class="close-btn" onclick="closeModal()">✕</span>
+            <img id="modal-img" src="" alt="Cover" style="width: 320px; height: 420px; object-fit: contain; border-radius: 8px; border: 3px solid #dfa143; box-shadow: 0 8px 20px rgba(0,0,0,0.8); background: #000;">
             <div class="modal-details">
-                <h2 id="modal-title">TITLE</h2>
-                <p id="modal-desc">Details</p>
-                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;">
-                    <a href="#" id="modal-link" target="_blank" class="btn-action" style="margin-top:0;">▶ TUTORIAL VHS</a>
-                    <a href="#" id="modal-bgg-link" target="_blank" class="btn-action" style="margin-top:0; border-color:var(--neon-blue); color:var(--neon-blue);">▶ VER EN BGG</a>
-                    <label class="btn-action" style="cursor:pointer; margin-top:0; border-color: var(--neon-yellow); color: var(--neon-yellow);">
-                        [ UPLOAD COVER ]
+                <h2 id="modal-title">TITULO DEL JUEGO</h2>
+                <p id="modal-desc">Detalles del juego...</p>
+                <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:20px;">
+                    <a href="#" id="modal-link" target="_blank" class="btn-action">▶ VER TUTORIAL</a>
+                    <a href="#" id="modal-bgg-link" target="_blank" class="btn-action" style="border-color:#6ba3d6;">▶ VER EN BGG</a>
+                    <label class="btn-action" style="border-color:#5bb35b;">
+                        [ SUBIR PORTADA ]
                         <input type="file" id="upload-input" style="display:none;" accept="image/*" onchange="uploadCover(event)">
                     </label>
                 </div>
@@ -140,7 +179,7 @@
 
     <script>
         const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg"}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg"}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg"}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg"}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg"}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg"}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg"}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg"}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg"}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg"}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg"}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg"}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg"}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg"}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg"}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg"}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg"}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg"}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg"}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg"}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg"}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg"}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg"}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg"}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg"}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg"}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg"}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg"}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg"}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg"}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg"}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg"}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg"}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg"}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg"}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg"}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg"}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg"}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg"}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg"}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg"}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg"}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg"}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg"}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg"}];
-        
+
         // --- Modal Logic ---
         let activeGameForUpload = null;
         let isModalOpen = false;
@@ -151,10 +190,10 @@
             document.getElementById('modal-title').innerText = game.name;
             document.getElementById('modal-img').src = game.image + '?v=' + new Date().getTime();
             document.getElementById('modal-desc').innerHTML = `
-                <span style="color:var(--neon-yellow); font-size:1.2em; text-shadow: 0 0 5px var(--neon-yellow);">⭐ BGG RATING: ${game.rating || 'N/A'}/10</span><br><br>
-                <span style="color:var(--neon-blue)">PLAYERS:</span> ${game.players}<br>
-                <span style="color:var(--neon-blue)">DIFF:</span> ${game.difficulty}<br>
-                <span style="color:var(--neon-blue)">TYPE:</span> ${game.type}
+                <span style="color:#ffd276; font-size:1.1em; font-weight:bold;">⭐ VALORACIÓN BGG: ${game.rating || 'N/A'}/10</span><br><br>
+                <span style="color:#dfa143; font-weight:bold;">JUGADORES:</span> ${game.players}<br>
+                <span style="color:#dfa143; font-weight:bold;">DIFICULTAD:</span> ${game.difficulty}<br>
+                <span style="color:#dfa143; font-weight:bold;">CATEGORÍA:</span> ${game.type}
             `;
             const searchUrl = 'https://www.youtube.com/results?search_query=como+jugar+' + encodeURIComponent(game.name + ' juego de mesa tutorial');
             document.getElementById('modal-link').href = searchUrl;
@@ -167,7 +206,6 @@
 
         function closeModal() {
             document.getElementById('game-modal').style.display = 'none';
-            // Slight delay so they don't immediately interact again if they hit enter to close
             setTimeout(() => { isModalOpen = false; }, 100);
         }
 
@@ -194,76 +232,160 @@
             }
         }
 
-        // --- RPG Engine Logic ---
+        // --- ASSET LOADER (Tiny Swords CC0) ---
+        const assets = {
+            warrior: new Image(),
+            tilemap: new Image(),
+            castle: new Image(),
+            house: new Image(),
+            tower: new Image(),
+            tree: new Image(),
+            banner: new Image(),
+            barrel: new Image()
+        };
+
+        assets.warrior.src = 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png';
+        assets.tilemap.src = 'assets/tiny-swords/Terrain/Ground/Tilemap_Flat.png';
+        assets.castle.src = 'assets/tiny-swords/Factions/Knights/Buildings/Castle/Castle_Blue.png';
+        assets.house.src = 'assets/tiny-swords/Factions/Knights/Buildings/House/House_Blue.png';
+        assets.tower.src = 'assets/tiny-swords/Factions/Knights/Buildings/Tower/Tower_Blue.png';
+        assets.tree.src = 'assets/tiny-swords/Resources/Trees/Tree.png';
+        assets.banner.src = 'assets/tiny-swords/UI/Banners/Banner_Horizontal.png';
+        assets.barrel.src = 'assets/tiny-swords/Factions/Goblins/Troops/Barrel/Blue/Barrel_Blue.png';
+
+        // --- Medieval RPG Engine Logic ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        
-        const TILE_SIZE = 40;
-        const COLS = canvas.width / TILE_SIZE; // 20
-        const ROWS = canvas.height / TILE_SIZE; // 15
-        
+
+        const TILE_SIZE = 48;
+        const COLS = Math.floor(canvas.width / TILE_SIZE); // 20 cols
+        const ROWS = Math.floor(canvas.height / TILE_SIZE); // 13 rows
+
         const FLOOR = 0;
         const WALL = 1;
-        
+        const PATH = 2;
+
         let map = [];
-        for(let r=0; r<ROWS; r++) {
+        for (let r = 0; r < ROWS; r++) {
             let row = [];
-            for(let c=0; c<COLS; c++) {
-                if(r===0 || r===ROWS-1 || c===0 || c===COLS-1) row.push(WALL);
-                else row.push(FLOOR);
+            for (let c = 0; c < COLS; c++) {
+                if (r === 0 || r === ROWS - 1 || c === 0 || c === COLS - 1) {
+                    row.push(WALL);
+                } else {
+                    row.push(FLOOR);
+                }
             }
             map.push(row);
         }
-        
+
+        // Create cobblestone paths in the middle and between stalls
+        for (let c = 1; c < COLS - 1; c++) {
+            map[6][c] = PATH;
+            map[11][c] = PATH;
+        }
+        for (let r = 1; r < ROWS - 1; r++) {
+            map[r][1] = PATH;
+            map[r][6] = PATH;
+            map[r][11] = PATH;
+            map[r][16] = PATH;
+            map[r][18] = PATH;
+        }
+
+        // Distribute game stalls/shelves
+        // Stalls at cols (3,4), (8,9), (13,14)
         let gameIndex = 0;
-        // Shelves at columns 3-4, 8-9, 13-14.
-        const shelfCols = [3, 4,  8, 9,  13, 14]; 
-        for(let r=2; r<ROWS-2; r++) {
-            for(let c of shelfCols) {
-                if (r % 4 === 0) continue; // Horizontal paths breaking up shelves
+        const stallCols = [3, 4, 8, 9, 13, 14];
+        for (let r = 2; r <= 10; r++) {
+            if (r === 6) continue; // Walkway break
+            for (let c of stallCols) {
                 if (gameIndex < gamesData.length) {
-                    map[r][c] = 10 + gameIndex; // 10 offset to distinguish from walls
+                    map[r][c] = 10 + gameIndex;
                     gameIndex++;
                 } else {
-                    map[r][c] = WALL; // Empty shelf
+                    map[r][c] = WALL;
                 }
             }
         }
 
+        // Player State (Warrior Knight)
         const player = {
-            x: 10,
-            y: 13,
-            dirX: 0,
-            dirY: -1,
-            color: '#0f0'
+            x: 1,
+            y: 6,
+            dirX: 1,
+            dirY: 0,
+            frame: 0,
+            animTimer: 0,
+            isMoving: false
         };
 
+        // Palette for game flags/carpets
+        const bannerColors = [
+            '#e6194B', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', 
+            '#42d4f4', '#f032e6', '#bfef45', '#fabed4', '#469990', '#dcbeff', 
+            '#9A6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#6ba3d6'
+        ];
+
         function drawMap() {
-            ctx.fillStyle = '#050510';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            for(let r=0; r<ROWS; r++) {
-                for(let c=0; c<COLS; c++) {
-                    let tile = map[r][c];
-                    
-                    if (tile === FLOOR) {
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-                        ctx.strokeRect(c*TILE_SIZE, r*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                    } else if (tile === WALL) {
-                        ctx.fillStyle = '#333';
-                        ctx.fillRect(c*TILE_SIZE, r*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                        ctx.strokeStyle = '#f0f';
-                        ctx.strokeRect(c*TILE_SIZE, r*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                    } else if (tile >= 10) {
-                        ctx.fillStyle = '#114';
-                        ctx.fillRect(c*TILE_SIZE, r*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                        
-                        ctx.strokeStyle = '#0ff';
+            // 1. Draw Grass Base
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    const x = c * TILE_SIZE;
+                    const y = r * TILE_SIZE;
+                    const tile = map[r][c];
+
+                    // Draw grass tile from Tilemap_Flat
+                    if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
+                        ctx.drawImage(assets.tilemap, 64, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
+                    } else {
+                        ctx.fillStyle = '#4c7b2c';
+                        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                    }
+
+                    // Cobblestone / Dirt Path
+                    if (tile === PATH) {
+                        if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
+                            ctx.drawImage(assets.tilemap, 192, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
+                        } else {
+                            ctx.fillStyle = '#b8945a';
+                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                        }
+                    }
+
+                    // Boundary Trees / Forest Wall
+                    if (tile === WALL && (r === 0 || r === ROWS - 1 || c === 0 || c === COLS - 1)) {
+                        if (assets.tree.complete && assets.tree.naturalWidth > 0) {
+                            ctx.drawImage(assets.tree, 0, 0, 192, 192, x - 12, y - 24, TILE_SIZE + 24, TILE_SIZE + 32);
+                        } else {
+                            ctx.fillStyle = '#1c3612';
+                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                        }
+                    }
+
+                    // Game Stalls (Wooden Shop / Library Booths)
+                    if (tile >= 10) {
+                        const gIdx = tile - 10;
+                        const colHex = bannerColors[gIdx % bannerColors.length];
+
+                        // Wooden platform base
+                        ctx.fillStyle = '#5c3a21';
+                        ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+                        ctx.strokeStyle = '#2b180d';
                         ctx.lineWidth = 2;
-                        ctx.strokeRect(c*TILE_SIZE+2, r*TILE_SIZE+2, TILE_SIZE-4, TILE_SIZE-4);
-                        
-                        ctx.fillStyle = '#ff0';
-                        ctx.fillRect(c*TILE_SIZE+10, r*TILE_SIZE+10, TILE_SIZE-20, TILE_SIZE-20);
+                        ctx.strokeRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+
+                        // Banner / Velvet mat for the game
+                        ctx.fillStyle = colHex;
+                        ctx.fillRect(x + 8, y + 8, TILE_SIZE - 16, TILE_SIZE - 16);
+                        ctx.strokeStyle = '#dfa143';
+                        ctx.lineWidth = 1.5;
+                        ctx.strokeRect(x + 8, y + 8, TILE_SIZE - 16, TILE_SIZE - 16);
+
+                        // Golden game box icon
+                        ctx.fillStyle = '#ffd700';
+                        ctx.font = '14px serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('📦', x + TILE_SIZE / 2, y + TILE_SIZE / 2);
                     }
                 }
             }
@@ -272,114 +394,84 @@
         function drawPlayer() {
             const px = player.x * TILE_SIZE;
             const py = player.y * TILE_SIZE;
-            
-            ctx.shadowBlur = 0; 
-            
-            const dirX = player.dirX;
-            const dirY = player.dirY;
 
-            // Make Sonic 16-bit and slightly larger than a tile
-            const drawX = px; 
-            const drawY = py - 12; // Taller offset
-
-            // Sonic Blue Body & Head
-            ctx.fillStyle = '#0026e6';
-            ctx.fillRect(drawX + 8, drawY + 2, 24, 20); // Head
-            ctx.fillRect(drawX + 12, drawY + 22, 16, 14); // Body
-
-            // Spikes (16-bit style sharper triangles)
-            if (dirX === 1) { 
-                ctx.beginPath(); ctx.moveTo(drawX+8, drawY+2); ctx.lineTo(drawX-4, drawY+8); ctx.lineTo(drawX+8, drawY+14); ctx.fill();
-                ctx.beginPath(); ctx.moveTo(drawX+8, drawY+10); ctx.lineTo(drawX-6, drawY+16); ctx.lineTo(drawX+8, drawY+22); ctx.fill();
-                ctx.beginPath(); ctx.moveTo(drawX+10, drawY+18); ctx.lineTo(drawX-2, drawY+24); ctx.lineTo(drawX+10, drawY+28); ctx.fill();
-            } else if (dirX === -1) { 
-                ctx.beginPath(); ctx.moveTo(drawX+32, drawY+2); ctx.lineTo(drawX+44, drawY+8); ctx.lineTo(drawX+32, drawY+14); ctx.fill();
-                ctx.beginPath(); ctx.moveTo(drawX+32, drawY+10); ctx.lineTo(drawX+46, drawY+16); ctx.lineTo(drawX+32, drawY+22); ctx.fill();
-                ctx.beginPath(); ctx.moveTo(drawX+30, drawY+18); ctx.lineTo(drawX+42, drawY+24); ctx.lineTo(drawX+30, drawY+28); ctx.fill();
-            }
-
-            // Face / Belly
-            ctx.fillStyle = '#ffcc99';
-            if (dirY === 1 || dirX !== 0) { 
-                ctx.fillRect(drawX + 12, drawY + 10, 16, 12); // Snout/Face
-                ctx.beginPath(); ctx.arc(drawX+20, drawY+29, 6, 0, 2*Math.PI); ctx.fill(); // Belly
-            }
-
-            // Eyes 
-            if (dirY === 1) { 
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(drawX + 13, drawY + 10, 6, 8);
-                ctx.fillRect(drawX + 21, drawY + 10, 6, 8);
-                ctx.fillStyle = '#000';
-                ctx.fillRect(drawX + 16, drawY + 13, 3, 4);
-                ctx.fillRect(drawX + 21, drawY + 13, 3, 4);
-            } else if (dirX === 1) { 
-                ctx.fillStyle = '#fff'; ctx.fillRect(drawX + 18, drawY + 10, 10, 8);
-                ctx.fillStyle = '#000'; ctx.fillRect(drawX + 24, drawY + 13, 4, 4);
-            } else if (dirX === -1) { 
-                ctx.fillStyle = '#fff'; ctx.fillRect(drawX + 12, drawY + 10, 10, 8);
-                ctx.fillStyle = '#000'; ctx.fillRect(drawX + 12, drawY + 13, 4, 4);
-            }
-
-            // Shoes (Red & White)
-            ctx.fillStyle = '#ff0000';
-            ctx.fillRect(drawX + 4, drawY + 36, 14, 10); 
-            ctx.fillRect(drawX + 22, drawY + 36, 14, 10); 
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(drawX + 10, drawY + 36, 4, 10);
-            ctx.fillRect(drawX + 28, drawY + 36, 4, 10);
-
-            // Highlight interaction target
+            // Highlight target interaction tile
             const tx = player.x + player.dirX;
             const ty = player.y + player.dirY;
-            if(tx >=0 && tx < COLS && ty >= 0 && ty < ROWS) {
+            if (tx >= 0 && tx < COLS && ty >= 0 && ty < ROWS) {
                 const targetTile = map[ty][tx];
                 if (targetTile >= 10) {
-                    ctx.strokeStyle = '#f0f';
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(tx*TILE_SIZE, ty*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                    
-                    const gameIndex = targetTile - 10;
-                    const game = gamesData[gameIndex];
+                    const game = gamesData[targetTile - 10];
                     if (game) {
-                        const tooltipWidth = 180;
-                        const tooltipHeight = 40;
-                        const tooltipX = tx*TILE_SIZE - (tooltipWidth/2) + (TILE_SIZE/2);
-                        const tooltipY = ty*TILE_SIZE - 50;
+                        // Golden medieval selection ring
+                        ctx.strokeStyle = '#ffd700';
+                        ctx.lineWidth = 3;
+                        ctx.strokeRect(tx * TILE_SIZE + 2, ty * TILE_SIZE + 2, TILE_SIZE - 4, TILE_SIZE - 4);
 
-                        ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
-                        ctx.fillRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
-                        ctx.strokeStyle = '#0ff';
+                        // Medieval Banner Tooltip
+                        const tw = 220;
+                        const th = 48;
+                        const ttx = tx * TILE_SIZE - (tw / 2) + (TILE_SIZE / 2);
+                        const tty = ty * TILE_SIZE - 56;
+
+                        // Scroll background
+                        ctx.fillStyle = 'rgba(25, 15, 8, 0.94)';
+                        ctx.fillRect(ttx, tty, tw, th);
+                        ctx.strokeStyle = '#dfa143';
                         ctx.lineWidth = 2;
-                        ctx.strokeRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
-                        
-                        ctx.fillStyle = '#ff0';
-                        ctx.font = "9px 'Press Start 2P'";
-                        const shortName = game.name.length > 15 ? game.name.substring(0, 14) + '..' : game.name;
-                        ctx.fillText(shortName, tooltipX + 8, tooltipY + 15);
-                        
-                        ctx.fillStyle = '#f0f';
-                        ctx.font = "8px 'Press Start 2P'";
-                        ctx.fillText("[ENTER] Abrir", tooltipX + 8, tooltipY + 30);
+                        ctx.strokeRect(ttx, tty, tw, th);
+
+                        ctx.fillStyle = '#ffe6a3';
+                        ctx.font = 'bold 12px "MedievalSharp", cursive';
+                        ctx.textAlign = 'left';
+                        ctx.textBaseline = 'top';
+                        const nameStr = game.name.length > 20 ? game.name.substring(0, 18) + '..' : game.name;
+                        ctx.fillText('📜 ' + nameStr, ttx + 8, tty + 8);
+
+                        ctx.fillStyle = '#dfa143';
+                        ctx.font = '10px "Press Start 2P", monospace';
+                        ctx.fillText('[ENTER] Inspeccionar', ttx + 8, tty + 28);
                     }
                 }
             }
+
+            // Draw Warrior Knight
+            if (assets.warrior.complete && assets.warrior.naturalWidth > 0) {
+                const animRow = player.isMoving ? 1 : 0;
+                const animFrame = Math.floor(player.frame) % 6;
+                const sx = animFrame * 192;
+                const sy = animRow * 192;
+
+                ctx.save();
+                if (player.dirX === -1) {
+                    ctx.translate(px + TILE_SIZE / 2, py + TILE_SIZE / 2);
+                    ctx.scale(-1, 1);
+                    ctx.drawImage(assets.warrior, sx, sy, 192, 192, -48, -58, 96, 96);
+                } else {
+                    ctx.drawImage(assets.warrior, sx, sy, 192, 192, px - 24, py - 34, 96, 96);
+                }
+                ctx.restore();
+            } else {
+                ctx.fillStyle = '#3a6ea5';
+                ctx.fillRect(px + 8, py + 8, TILE_SIZE - 16, TILE_SIZE - 16);
+            }
         }
 
-        function render() {
+        function gameLoop() {
+            player.frame += 0.14;
             drawMap();
             drawPlayer();
+            requestAnimationFrame(gameLoop);
         }
-        
-        render();
+
+        requestAnimationFrame(gameLoop);
 
         window.addEventListener('keydown', (e) => {
             if (isModalOpen) {
                 if (e.key === 'Escape') closeModal();
-                // We don't want enter to immediately re-trigger interaction, so modal close logic is separate
                 return;
             }
-            
+
             let moved = false;
             let nx = player.x;
             let ny = player.y;
@@ -395,23 +487,27 @@
             } else if (e.key === 'Enter') {
                 const tx = player.x + player.dirX;
                 const ty = player.y + player.dirY;
-                if(map[ty] && map[ty][tx] >= 10) {
+                if (map[ty] && map[ty][tx] >= 10) {
                     const gameIndex = map[ty][tx] - 10;
-                    if(gamesData[gameIndex]) {
+                    if (gamesData[gameIndex]) {
                         openGameModal(gamesData[gameIndex]);
                     }
                 }
             }
 
             if (moved) {
+                player.isMoving = true;
                 if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                    if (map[ny][nx] === FLOOR) {
+                    if (map[ny][nx] === FLOOR || map[ny][nx] === PATH) {
                         player.x = nx;
                         player.y = ny;
                     }
                 }
-                render();
             }
+        });
+
+        window.addEventListener('keyup', () => {
+            player.isMoving = false;
         });
     </script>
 </body>
