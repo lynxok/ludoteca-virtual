@@ -3,13 +3,22 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 import urllib.parse
 
 class UploadHandler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Range')
+        super().end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.end_headers()
+
     def do_POST(self):
         parsed_path = urllib.parse.urlparse(self.path)
         if parsed_path.path == '/upload':
             query = urllib.parse.parse_qs(parsed_path.query)
             if 'filename' in query:
                 filename = query['filename'][0]
-                # Ensure the filename is safe and goes to portadas/
                 filename = os.path.basename(filename)
                 
                 content_length = int(self.headers.get('Content-Length', 0))
@@ -34,6 +43,6 @@ class UploadHandler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     port = 7560
-    server = HTTPServer(('127.0.0.1', port), UploadHandler)
-    print(f"Server listening on port {port}...")
+    server = HTTPServer(('0.0.0.0', port), UploadHandler)
+    print(f"Server with full CORS listening on port {port}...")
     server.serve_forever()

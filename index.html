@@ -402,6 +402,17 @@
             border-bottom: 2px solid #5c3a21;
             padding-bottom: 8px;
         }
+        .synopsis-box {
+            background: rgba(15, 8, 4, 0.65);
+            border-left: 3px solid #dfa143;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-style: italic;
+            color: #ffe6a3;
+            font-size: 13px;
+            line-height: 1.5;
+        }
         .modal-details p {
             line-height: 1.6;
             font-size: 14px;
@@ -535,13 +546,15 @@
             </div>
             <div class="guide-text">
                 <strong>🗺️ CÓMO NAVEGAR:</strong><br>
-                • <strong>Clic / Toque (Estilo Age of Empires)</strong>: Toca cualquier camino o pasto y tu héroe viajará automáticamente esquivando obstáculos.<br>
-                • <strong>Tocar Casa</strong>: Toca la casa de cualquier juego para entrar a ver su portada y detalles.<br>
+                • <strong>Miniaturas en Techos</strong>: Identifica las portadas de los juegos directamente mirando los tejados de las casas.<br>
+                • <strong>Clic / Toque (Age of Empires)</strong>: Toca cualquier camino o pasto y tu héroe viajará automáticamente esquivando obstáculos.<br>
+                • <strong>Tocar Casa</strong>: Toca la casa de cualquier juego para entrar a ver su ficha.<br>
                 • <strong>Buscador Rápido</strong>: Escribe arriba para encontrar cualquier juego al instante.<br>
                 • <strong>Viaje Rápido</strong>: Usa los botones de islas para saltar entre distritos.
             </div>
             <div class="guide-text">
                 <strong>📦 EN CADA CASA ENCONTRARÁS:</strong><br>
+                • <strong>Sinopsis Rápida</strong>: Para qué sirve y de qué trata el juego en 2 líneas.<br>
                 • Portada en alta definición.<br>
                 • Puntuación de BoardGameGeek.<br>
                 • Botón para ver el tutorial en VHS/YouTube.<br>
@@ -557,6 +570,7 @@
             <img id="modal-img" src="" alt="Cover" style="width: 300px; height: 400px; object-fit: contain; border-radius: 8px; border: 3px solid #dfa143; box-shadow: 0 8px 20px rgba(0,0,0,0.8); background: #000;">
             <div class="modal-details">
                 <h2 id="modal-title">CASA DEL JUEGO</h2>
+                <div class="synopsis-box" id="modal-synopsis">Sinopsis del juego...</div>
                 <p id="modal-desc">Detalles del juego...</p>
                 <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:15px;">
                     <a href="#" id="modal-link" target="_blank" class="btn-action">▶ TUTORIAL</a>
@@ -581,8 +595,8 @@
     </div>
 
     <script>
-        const BUILD_VERSION = '1787759660';
-        const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg", "islandId": 3, "id": 0}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "islandId": 3, "id": 1}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg", "islandId": 3, "id": 2}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg", "islandId": 3, "id": 3}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "islandId": 1, "id": 4}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg", "islandId": 1, "id": 5}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg", "islandId": 1, "id": 6}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg", "islandId": 1, "id": 7}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg", "islandId": 1, "id": 8}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg", "islandId": 0, "id": 9}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg", "islandId": 1, "id": 10}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg", "islandId": 3, "id": 11}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg", "islandId": 3, "id": 12}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg", "islandId": 3, "id": 13}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg", "islandId": 0, "id": 14}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg", "islandId": 1, "id": 15}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg", "islandId": 0, "id": 16}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg", "islandId": 0, "id": 17}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg", "islandId": 0, "id": 18}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg", "islandId": 0, "id": 19}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg", "islandId": 0, "id": 20}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg", "islandId": 2, "id": 21}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg", "islandId": 0, "id": 22}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg", "islandId": 0, "id": 23}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg", "islandId": 2, "id": 24}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg", "islandId": 1, "id": 25}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg", "islandId": 0, "id": 26}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg", "islandId": 2, "id": 27}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg", "islandId": 2, "id": 28}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg", "islandId": 2, "id": 29}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg", "islandId": 2, "id": 30}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg", "islandId": 0, "id": 31}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg", "islandId": 0, "id": 32}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg", "islandId": 0, "id": 33}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg", "islandId": 1, "id": 34}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg", "islandId": 0, "id": 35}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg", "islandId": 3, "id": 36}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg", "islandId": 0, "id": 37}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg", "islandId": 0, "id": 38}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg", "islandId": 0, "id": 39}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg", "islandId": 1, "id": 40}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg", "islandId": 1, "id": 41}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "islandId": 1, "id": 42}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg", "islandId": 1, "id": 43}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg", "islandId": 1, "id": 44}];
+        const BUILD_VERSION = '1787761710';
+        const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg", "synopsis": "Juego de roles ocultos y engaño político en la Alemania de 1930. Los liberales intentan aprobar leyes democráticas mientras los fascistas conspiran en secreto.", "islandId": 3, "id": 0}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "synopsis": "Juego social para grupos grandes. Una aldea amenazada por licántropos debe linchar a los sospechosos de día, mientras los lobos devoran inocentes de noche.", "islandId": 3, "id": 1}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg", "synopsis": "Eres un enano minero cavando túneles en busca de oro en la montaña, pero cuidado: entre tus compañeros hay saboteadores secretos que romperán tus herramientas.", "islandId": 3, "id": 2}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg", "synopsis": "Juego de mesa de categoría Roles ocultos / Cartas / Asociación abstracta. Ideal para 3-8 jugadores con dificultad Baja.", "islandId": 3, "id": 3}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "synopsis": "Juego de reflejos y risas frenéticas. Di la secuencia de palabras en voz alta mientras bajas cartas; cuando coincidan palabra y carta, ¡sé el más rápido en palmear el mazo!", "islandId": 1, "id": 4}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg", "synopsis": "Juego de mesa de categoría Reflejos / Velocidad visual / Dados. Ideal para 2-10 jugadores con dificultad Baja.", "islandId": 1, "id": 5}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg", "synopsis": "Juego de adivinanza en equipos contrarreloj: describe personajes de series, cine y cultura pop en 3 rondas (palabras libres, 1 palabra y mímica).", "islandId": 1, "id": 6}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg", "synopsis": "Juego de cartas argentino de humor negro extremo donde no hay límites morales y se premia la incorrección política.", "islandId": 1, "id": 7}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg", "synopsis": "Parodia hilarante de los juegos de rol. Baja a la mazmorra, mata monstruos, róbate los tesoros y traiciona a tus propios amigos para ser el primero en llegar al nivel 10.", "islandId": 1, "id": 8}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg", "synopsis": "Juego de mesa de categoría Gestión de mano / Descarte simultáneo. Ideal para 2-10 jugadores con dificultad Baja.", "islandId": 0, "id": 9}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg", "synopsis": "Trivia donde todas las respuestas son colores. ¿De qué color es la bandera de Suecia o los aros olímpicos? Responde bajando tus cartas de color.", "islandId": 1, "id": 10}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg", "synopsis": "Juego poético de creatividad y deducción con cartas ilustradas de ensueño. Da una pista sutil sobre tu carta para que algunos, pero no todos, la descubran.", "islandId": 3, "id": 11}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg", "synopsis": "La versión expandida de Dixit que permite jugar hasta 12 personas con nuevos modos de votación y un mazo repleto de arte surrealista.", "islandId": 3, "id": 12}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg", "synopsis": "Party game cooperativo de deducción de palabras. Todos los jugadores escriben una pista secreta para el adivinador, pero ¡las pistas idénticas se anulan y borran!", "islandId": 3, "id": 13}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg", "synopsis": "Juego rápido de cartas estilo drafting. Arma los mejores combos de sushi, nigiris y tempuras pasándote las cartas en un restaurante japonés.", "islandId": 0, "id": 14}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg", "synopsis": "El legendario juego de bienes raíces. Compra propiedades, construye casas y hoteles, y cobra alquileres hasta llevar a la bancarrota a tus oponentes.", "islandId": 1, "id": 15}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg", "synopsis": "Juego de fichas tradicional de ingenio donde formas escaleras del mismo palo o tríos de igual número para vaciar tu atril y ganar canastas.", "islandId": 0, "id": 16}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg", "synopsis": "Juego cooperativo donde un equipo de aventureros busca recuperar 4 tesoros sagrados en una isla misteriosa que se hunde bajo el agua con cada turno.", "islandId": 0, "id": 17}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg", "synopsis": "Conecta ciudades reclamando rutas ferroviarias en un mapa con tus cartas de vagón. Cumple tus billetes de destino secretos para ganar la mayor cantidad de puntos.", "islandId": 0, "id": 18}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg", "synopsis": "Juego de colocación de losetas medievales. Construye caminos, ciudades amuralladas, monasterios y campos colocando a tus seguidores (meeples) estratégicamente.", "islandId": 0, "id": 19}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg", "synopsis": "Juego de estrategia abstracto donde eres un artesano decorando las paredes del Palacio Real de Évora con hermosos azulejos de cerámica portuguesa.", "islandId": 0, "id": 20}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg", "synopsis": "Eres un mercader del Renacimiento que compra minas de gemas preciosas, barcos y artesanos para atraer a los nobles más influyentes y ganar prestigio.", "islandId": 2, "id": 21}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg", "synopsis": "Construye la mejor metrópolis en la antigua Grecia colocando losetas de canteras, templos y mercados apilándolas en altura para multiplicar sus puntos.", "islandId": 0, "id": 22}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg", "synopsis": "Lidera una de las 7 grandes civilizaciones del mundo antiguo. Pasa cartas de mano en mano (drafting) para erigir tu Maravilla, desarrollar comercio y poder militar.", "islandId": 0, "id": 23}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg", "synopsis": "Juego de control de áreas tenso y sin azar ambientado en la Gran Bretaña medieval tras la muerte del Rey Arturo. Manipula el poder de ingleses, escoceses y galeses.", "islandId": 2, "id": 24}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg", "synopsis": "El clásico juego táctico de guerra y conquista territorial. Cumple tu objetivo secreto dominando países y continentes mediante tiradas de dados.", "islandId": 1, "id": 25}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg", "synopsis": "Coloniza una isla inexplorada construyendo pueblos y caminos. Negocia recursos (madera, trigo, oveja) con otros jugadores para sumar 10 puntos de victoria antes que nadie.", "islandId": 0, "id": 26}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg", "synopsis": "Estrategia profunda de colocación de dados en el Japón feudal. Gestiona los miembros de tu clan en las salas del Castillo Himeji para ganar influencia ante el Daimyo.", "islandId": 2, "id": 27}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg", "synopsis": "Construye la Catedral de San Basilio en Moscú. Gestiona recursos en el rondel del mercado y decora las torres para ganarte el favor del Zar Iván el Terrible.", "islandId": 2, "id": 28}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg", "synopsis": "Juego de gestión de cartas donde eres un entusiasta de las aves descubriendo y atrayendo las mejores especies a tu red de reservas naturales.", "islandId": 2, "id": 29}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg", "synopsis": "Juego de guerra asimétrico en un bosque medieval donde cada facción (Marquesa felina, Alianza del bosque, Nido de Águilas y el Vagabundo) juega con reglas y objetivos únicos.", "islandId": 2, "id": 30}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg", "synopsis": "Expansión que añade caballeros para defender Catan de los bárbaros invasores, mejorando tus ciudades con metrópolis comerciales, políticas y científicas.", "islandId": 0, "id": 31}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg", "synopsis": "Versión ecológica de Catan donde debes balancear el desarrollo de energías fósiles y renovables sin contaminar la isla ni destruir el medio ambiente.", "islandId": 0, "id": 32}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg", "synopsis": "Juego de mesa de categoría Expansión / Cartas. Ideal para 2-6 jugadores con dificultad Media.", "islandId": 0, "id": 33}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg", "synopsis": "Juego veloz de observación donde amebas mutantes escaparon del laboratorio y debes seguir su rastro a través de rejillas de ventilación y salas de mutación.", "islandId": 1, "id": 34}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg", "synopsis": "Juego de cartas táctico ambientado en la mitología griega donde compites por ganarte la bendición de los dioses del Olimpo.", "islandId": 0, "id": 35}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg", "synopsis": "Juego de faroleo y engaño donde inventas definiciones falsas de palabras extrañas para engañar al resto de la mesa.", "islandId": 3, "id": 36}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg", "synopsis": "Construye un sereno jardín zen colocando estanques koi, bonsáis y linternas de piedra en armonía para conseguir la mayor puntuación de paz.", "islandId": 0, "id": 37}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg", "synopsis": "Juego cooperativo de concentración y sincronización mental donde el grupo debe contar números en orden sin mirarse ni hablar.", "islandId": 0, "id": 38}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg", "synopsis": "Party game cooperativo de comunicación limitada donde deben resolver misiones trabajando en equipo bajo presión de tiempo.", "islandId": 0, "id": 39}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg", "synopsis": "Expansión que añade dragones temibles y tesoros legendarios a tus partidas de Munchkin.", "islandId": 1, "id": 40}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg", "synopsis": "Añade la clase Bardo, la raza Gnomo y nuevas criaturas como el Centauro y el Chicopez a tus mazmorras.", "islandId": 1, "id": 41}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "synopsis": "Permite mezclar barajas de distintos Munchkins, usando trampas dobles y objetos monstruosos sin penalización.", "islandId": 1, "id": 42}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg", "synopsis": "Juego de memoria y agilidad donde debes recordar los pedidos de un restaurante caótico y servirlos a tiempo.", "islandId": 1, "id": 43}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg", "synopsis": "Juego de cartas rápido, absurdo y muy divertido para todas las edades sobre la caca y cómo deshacerte de ella antes que los demás.", "islandId": 1, "id": 44}];
 
         function bustCache(url) {
             if (!url) return '';
@@ -610,7 +624,8 @@
             water: new Image(),
             bridge: new Image(),
             tree: new Image(),
-            houses: []
+            houses: [],
+            coverThumbnails: {}
         };
 
         HERO_CLASSES.forEach(h => {
@@ -643,6 +658,13 @@
             const img = new Image();
             img.src = bustCache(p);
             assets.houses.push(img);
+        });
+
+        // Preload cover thumbnails for the rooftops
+        gamesData.forEach(g => {
+            const cImg = new Image();
+            cImg.src = bustCache(g.image);
+            assets.coverThumbnails[g.id] = cImg;
         });
 
         // --- UI TOGGLES (GUIDE & CHAR MODAL) ---
@@ -702,6 +724,7 @@
             activeGameForUpload = game;
             isModalOpen = true;
             document.getElementById('modal-title').innerText = '🏠 ' + game.name;
+            document.getElementById('modal-synopsis').innerText = game.synopsis || 'Juego de mesa clásico.';
             document.getElementById('modal-img').src = bustCache(game.image);
             document.getElementById('modal-desc').innerHTML = `
                 <span style="color:#ffd276; font-size:1.1em; font-weight:bold;">⭐ BGG: ${game.rating || 'N/A'}/10</span><br><br>
@@ -723,6 +746,7 @@
             setTimeout(() => { isModalOpen = false; }, 100);
         }
 
+        // Universal Upload function (Works on Hostinger upload.php AND local server.py)
         async function uploadCover(event) {
             if (!activeGameForUpload) return;
             const file = event.target.files[0];
@@ -730,19 +754,37 @@
 
             const filename = activeGameForUpload.image.split('/').pop().split('?')[0];
 
-            try {
-                const res = await fetch('http://127.0.0.1:7560/upload?filename=' + encodeURIComponent(filename), {
-                    method: 'POST',
-                    body: file
-                });
-                
-                if(res.ok) {
-                    document.getElementById('modal-img').src = bustCache(activeGameForUpload.image);
-                } else {
-                    alert('Error subiendo imagen');
+            // Try relative upload.php first (for production hosting), then fallback to local server.py
+            const endpoints = [
+                'upload.php?filename=' + encodeURIComponent(filename),
+                'http://127.0.0.1:7560/upload?filename=' + encodeURIComponent(filename)
+            ];
+
+            let success = false;
+            for (let url of endpoints) {
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        body: file
+                    });
+                    if (res.ok) {
+                        success = true;
+                        break;
+                    }
+                } catch (e) {
+                    // Try next endpoint
                 }
-            } catch (e) {
-                alert('Error de conexión al servidor local.');
+            }
+
+            if (success) {
+                const newSrc = bustCache(activeGameForUpload.image);
+                document.getElementById('modal-img').src = newSrc;
+                if (assets.coverThumbnails[activeGameForUpload.id]) {
+                    assets.coverThumbnails[activeGameForUpload.id].src = newSrc;
+                }
+                alert('¡Portada actualizada con éxito!');
+            } else {
+                alert('Error al subir la imagen. Verifica la conexión del servidor.');
             }
         }
 
@@ -767,10 +809,10 @@
         }
 
         const islands = [
-            { id: 0, name: "Distrito Familiar", desc: "Juegos Familiares & Estrategia Ligera", c1: 3, c2: 24, r1: 3, r2: 17, spawn: { c: 14, r: 9 } },
-            { id: 1, name: "Distrito Party", desc: "Party Games, Risas & Humor", c1: 29, c2: 50, r1: 3, r2: 17, spawn: { c: 40, r: 9 } },
-            { id: 2, name: "Distrito Real", desc: "Juegos Expertos & Estrategia Pesada", c1: 3, c2: 24, r1: 22, r2: 36, spawn: { c: 14, r: 29 } },
-            { id: 3, name: "Distrito Secreto", desc: "Cartas, Deducción & Roles Ocultos", c1: 29, c2: 50, r1: 22, r2: 36, spawn: { c: 40, r: 29 } }
+            { id: 0, name: "Distrito Familiar", desc: "Juegos Familiares & Estrategia", c1: 3, c2: 24, r1: 3, r2: 17, spawn: { c: 13, r: 9 } },
+            { id: 1, name: "Distrito Party", desc: "Party Games & Humor", c1: 29, c2: 50, r1: 3, r2: 17, spawn: { c: 39, r: 9 } },
+            { id: 2, name: "Distrito Real", desc: "Juegos Expertos & Estrategia", c1: 3, c2: 24, r1: 22, r2: 36, spawn: { c: 13, r: 29 } },
+            { id: 3, name: "Distrito Secreto", desc: "Cartas & Deducción", c1: 29, c2: 50, r1: 22, r2: 36, spawn: { c: 39, r: 29 } }
         ];
 
         islands.forEach(isl => {
@@ -781,7 +823,7 @@
             }
             const midR1 = isl.r1 + 4;
             const midR2 = isl.r1 + 9;
-            const midC = Math.floor((isl.c1 + isl.c2) / 2);
+            const midC = Math.floor((isl.c1 + isl.c2) / 2); // col 13 & col 39
             for (let c = isl.c1; c <= isl.c2; c++) {
                 worldMap[midR1][c] = PATH;
                 worldMap[midR2][c] = PATH;
@@ -791,7 +833,7 @@
             }
         });
 
-        // Multiple direct horizontal bridges
+        // Horizontal bridges (West to East)
         for (let c = 24; c <= 29; c++) {
             worldMap[7][c] = BRIDGE_H;
             worldMap[12][c] = BRIDGE_H;
@@ -799,39 +841,34 @@
             worldMap[31][c] = BRIDGE_H;
         }
 
-        // Multiple direct vertical bridges
+        // Vertical bridges EXACTLY ALIGNED to central avenues (col 13 and col 39)
         for (let r = 17; r <= 22; r++) {
-            worldMap[r][8] = BRIDGE_V;
-            worldMap[r][14] = BRIDGE_V;
-            worldMap[r][20] = BRIDGE_V;
-            worldMap[r][34] = BRIDGE_V;
-            worldMap[r][40] = BRIDGE_V;
-            worldMap[r][46] = BRIDGE_V;
+            worldMap[r][13] = BRIDGE_V;
+            worldMap[r][39] = BRIDGE_V;
         }
 
-        // Distribute categorized houses in their respective islands
+        // Distribute categorized houses
         const houses = [];
         const islandHouseSpots = [
-            // Spots template for each island
             [
-                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 11, dr: 1 }, { dc: 16, dr: 1 },
-                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 11, dr: 6 }, { dc: 16, dr: 6 },
-                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 11, dr: 11 }, { dc: 16, dr: 11 }
+                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 15, dr: 1 }, { dc: 18, dr: 1 },
+                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 15, dr: 6 }, { dc: 18, dr: 6 },
+                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 15, dr: 11 }, { dc: 18, dr: 11 }
             ],
             [
-                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 11, dr: 1 }, { dc: 16, dr: 1 },
-                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 11, dr: 6 }, { dc: 16, dr: 6 },
-                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 11, dr: 11 }, { dc: 16, dr: 11 }
+                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 15, dr: 1 }, { dc: 18, dr: 1 },
+                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 15, dr: 6 }, { dc: 18, dr: 6 },
+                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 15, dr: 11 }, { dc: 18, dr: 11 }
             ],
             [
-                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 11, dr: 1 }, { dc: 16, dr: 1 },
-                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 11, dr: 6 }, { dc: 16, dr: 6 },
-                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 11, dr: 11 }, { dc: 16, dr: 11 }
+                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 15, dr: 1 }, { dc: 18, dr: 1 },
+                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 15, dr: 6 }, { dc: 18, dr: 6 },
+                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 15, dr: 11 }, { dc: 18, dr: 11 }
             ],
             [
-                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 11, dr: 1 }, { dc: 16, dr: 1 },
-                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 11, dr: 6 }, { dc: 16, dr: 6 },
-                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 11, dr: 11 }, { dc: 16, dr: 11 }
+                { dc: 1, dr: 1 }, { dc: 6, dr: 1 }, { dc: 15, dr: 1 }, { dc: 18, dr: 1 },
+                { dc: 1, dr: 6 }, { dc: 6, dr: 6 }, { dc: 15, dr: 6 }, { dc: 18, dr: 6 },
+                { dc: 1, dr: 11 }, { dc: 6, dr: 11 }, { dc: 15, dr: 11 }, { dc: 18, dr: 11 }
             ]
         ];
 
@@ -841,8 +878,6 @@
             const islId = game.islandId !== undefined ? game.islandId : 0;
             const isl = islands[islId];
             let spotIdx = islandSpotCounters[islId];
-            
-            // If island spots full, wrap around
             const spot = islandHouseSpots[islId][spotIdx % islandHouseSpots[islId].length];
             islandSpotCounters[islId]++;
 
@@ -870,9 +905,8 @@
             }
         });
 
-        // --- PATHFINDING A* (AGE OF EMPIRES CLICK TO WALK) ---
+        // --- PATHFINDING A* ---
         function findPath(startC, startR, targetC, targetR) {
-            // If target is inside a house or water, find nearest walkable neighbor
             const isWalkable = (c, r) => {
                 if (c < 0 || c >= WORLD_COLS || r < 0 || r >= WORLD_ROWS) return false;
                 const t = worldMap[r][c];
@@ -967,11 +1001,11 @@
         resizeCanvas();
 
         const player = {
-            x: 14 * TILE_SIZE,
+            x: 13 * TILE_SIZE,
             y: 9 * TILE_SIZE,
-            targetX: 14 * TILE_SIZE,
+            targetX: 13 * TILE_SIZE,
             targetY: 9 * TILE_SIZE,
-            gridX: 14,
+            gridX: 13,
             gridY: 9,
             dirX: 0,
             dirY: 1,
@@ -1043,7 +1077,6 @@
         }
 
         function update() {
-            // Process A* Path queue
             const dx = player.targetX - player.x;
             const dy = player.targetY - player.y;
             const dist = Math.hypot(dx, dy);
@@ -1082,7 +1115,6 @@
         }
 
         function draw() {
-            // Clean whole buffer perfectly to eliminate ghost sprites
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
             ctx.translate(-Math.floor(camera.x), -Math.floor(camera.y));
@@ -1092,7 +1124,7 @@
             const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 2);
             const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 2);
 
-            // 1. Draw Ground (Water, Grass, Roads, Bridges)
+            // 1. Draw Terrain (Water, Grass, Paths, Solid Continuous Bridges)
             for (let r = startRow; r <= endRow; r++) {
                 for (let c = startCol; c <= endCol; c++) {
                     const x = c * TILE_SIZE;
@@ -1126,6 +1158,7 @@
                         }
                     }
 
+                    // Continuous Solid Wood Bridges
                     if (tile === BRIDGE_H) {
                         if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
                             ctx.drawImage(assets.bridge, 64, 0, 64, 64, x, y - 4, TILE_SIZE, TILE_SIZE + 8);
@@ -1135,7 +1168,8 @@
                         }
                     } else if (tile === BRIDGE_V) {
                         if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
-                            ctx.drawImage(assets.bridge, 0, 64, 64, 64, x - 4, y, TILE_SIZE + 8, TILE_SIZE);
+                            // Continuous vertical middle plank (row 1, col 1 in Bridge_All)
+                            ctx.drawImage(assets.bridge, 64, 64, 64, 64, x - 4, y, TILE_SIZE + 8, TILE_SIZE);
                         } else {
                             ctx.fillStyle = '#8b5a2b';
                             ctx.fillRect(x + 8, y, TILE_SIZE - 16, TILE_SIZE);
@@ -1144,7 +1178,7 @@
                 }
             }
 
-            // Draw Big Thematic Island Title Banners on Grass
+            // Draw Island Title Banners
             islands.forEach(isl => {
                 const ix = isl.c1 * TILE_SIZE + 20;
                 const iy = isl.r1 * TILE_SIZE + 10;
@@ -1171,7 +1205,7 @@
                 ctx.stroke();
             }
 
-            // 3. Draw House Buildings
+            // 3. Draw House Buildings & COVER THUMBNAILS ON ROOFTOPS
             houses.forEach(h => {
                 const hx = h.c * TILE_SIZE;
                 const hy = h.r * TILE_SIZE;
@@ -1186,6 +1220,30 @@
 
                 const game = gamesData[h.gameIndex];
                 if (game) {
+                    // --- ROOFTOP COVER THUMBNAIL ---
+                    const thumbImg = assets.coverThumbnails[game.id];
+                    const tw = 44;
+                    const th = 56;
+                    const tx = hx + (TILE_SIZE * 3)/2 - tw/2;
+                    const ty = hy - 48; // Floating over roof
+
+                    // Wooden Picture Frame on Roof
+                    ctx.fillStyle = 'rgba(15, 8, 4, 0.95)';
+                    ctx.fillRect(tx - 3, ty - 3, tw + 6, th + 6);
+                    ctx.strokeStyle = '#dfa143';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(tx - 3, ty - 3, tw + 6, th + 6);
+
+                    if (thumbImg && thumbImg.complete && thumbImg.naturalWidth > 0) {
+                        ctx.drawImage(thumbImg, tx, ty, tw, th);
+                    } else {
+                        ctx.fillStyle = '#ffcc00';
+                        ctx.font = '16px serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText('📦', tx + tw/2, ty + th/2 + 6);
+                    }
+
+                    // Plaque below house
                     const pw = TILE_SIZE * 3 - 8;
                     const ph = 24;
                     const px = hx + 4;
@@ -1261,8 +1319,6 @@
             }
 
             ctx.restore();
-
-            // Draw Minimap
             drawMinimap();
         }
 
@@ -1275,7 +1331,6 @@
             const scaleX = minimapCanvas.width / WORLD_COLS;
             const scaleY = minimapCanvas.height / WORLD_ROWS;
 
-            // Draw water & grass
             mCtx.fillStyle = '#1d556f';
             mCtx.fillRect(0, 0, minimapCanvas.width, minimapCanvas.height);
 
@@ -1284,14 +1339,12 @@
                 mCtx.fillRect(isl.c1 * scaleX, isl.r1 * scaleY, (isl.c2 - isl.c1) * scaleX, (isl.r2 - isl.r1) * scaleY);
             });
 
-            // Draw bridges
             mCtx.fillStyle = '#dfa143';
             mCtx.fillRect(24 * scaleX, 7 * scaleY, 5 * scaleX, 2 * scaleY);
             mCtx.fillRect(24 * scaleX, 26 * scaleY, 5 * scaleX, 2 * scaleY);
-            mCtx.fillRect(14 * scaleX, 17 * scaleY, 2 * scaleX, 5 * scaleY);
-            mCtx.fillRect(40 * scaleX, 17 * scaleY, 2 * scaleX, 5 * scaleY);
+            mCtx.fillRect(13 * scaleX, 17 * scaleY, 2 * scaleX, 5 * scaleY);
+            mCtx.fillRect(39 * scaleX, 17 * scaleY, 2 * scaleX, 5 * scaleY);
 
-            // Draw Player Blip
             mCtx.fillStyle = '#ff0000';
             mCtx.beginPath();
             mCtx.arc(player.gridX * scaleX, player.gridY * scaleY, 3, 0, 2 * Math.PI);
@@ -1299,7 +1352,6 @@
         }
 
         function toggleMinimapSize() {
-            // Teleport to next island on minimap tap
             const nextIsl = (Math.floor(player.gridX / 27) + (player.gridY > 18 ? 2 : 0) + 1) % 4;
             teleportToIsland(nextIsl);
         }
@@ -1367,7 +1419,7 @@
         }, { passive: false });
         actBtn.addEventListener('click', interactAction);
 
-        // --- AGE OF EMPIRES CLICK TO MOVE & TOUCH PATHFINDING ---
+        // --- CLICK TO MOVE & TOUCH PATHFINDING ---
         canvas.addEventListener('click', (e) => {
             if (isModalOpen || document.getElementById('guide-panel').classList.contains('open')) return;
             const rect = canvas.getBoundingClientRect();
@@ -1381,7 +1433,6 @@
                 const tile = worldMap[targetR][targetC];
                 
                 if (tile >= 10) {
-                    // Clicked on a House!
                     const game = gamesData[tile - 10];
                     if (game && game.house) {
                         const path = findPath(player.gridX, player.gridY, game.house.doorC, game.house.doorR);
@@ -1390,12 +1441,10 @@
                             player.clickMarker = { c: game.house.doorC, r: game.house.doorR };
                             player.targetGameToOpen = game;
                         } else {
-                            // Direct open if adjacent or path not needed
                             openGameModal(game);
                         }
                     }
                 } else {
-                    // Clicked on Ground/Path/Bridge
                     const path = findPath(player.gridX, player.gridY, targetC, targetR);
                     if (path.length > 0) {
                         player.pathQueue = path;
@@ -1435,7 +1484,6 @@
                         searchResults.style.display = 'none';
                         searchInput.value = '';
                         if (g.house) {
-                            // Teleport camera and open game modal
                             player.pathQueue = [];
                             player.gridX = g.house.doorC;
                             player.gridY = g.house.doorR;
