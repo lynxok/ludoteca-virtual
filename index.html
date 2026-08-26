@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- ETIQUETAS ANTI-CACHE TOTAL (Para Smartphones / Safari / Chrome) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <title>Reino Medieval - Ludoteca Quest</title>
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>">
@@ -56,7 +61,7 @@
         }
 
         .ui-ribbon {
-            background: linear-gradient(180deg, rgba(139, 90, 43, 0.92) 0%, rgba(74, 40, 16, 0.92) 100%);
+            background: linear-gradient(180deg, rgba(139, 90, 43, 0.94) 0%, rgba(74, 40, 16, 0.94) 100%);
             border: 2px solid #dfa143;
             border-radius: 8px;
             padding: 6px 12px;
@@ -82,7 +87,7 @@
             color: #fff;
         }
 
-        /* --- VIRTUAL TOUCH CONTROLS (OPTIMIZED SAFE AREA) --- */
+        /* --- VIRTUAL TOUCH CONTROLS --- */
         #touch-controls {
             display: none;
             position: absolute;
@@ -112,7 +117,7 @@
             position: absolute;
             width: 44px;
             height: 44px;
-            background: rgba(45, 25, 10, 0.82);
+            background: rgba(45, 25, 10, 0.85);
             border: 2px solid #dfa143;
             border-radius: 8px;
             display: flex;
@@ -144,7 +149,7 @@
         .touch-action-btn {
             width: 68px;
             height: 68px;
-            background: linear-gradient(135deg, rgba(168, 108, 53, 0.92) 0%, rgba(74, 40, 16, 0.92) 100%);
+            background: linear-gradient(135deg, rgba(168, 108, 53, 0.95) 0%, rgba(74, 40, 16, 0.95) 100%);
             border: 3px solid #ffd700;
             border-radius: 50%;
             display: flex;
@@ -166,7 +171,7 @@
             color: #000;
         }
 
-        /* Modal Styles (Mobile Responsive) */
+        /* Modal Styles */
         #game-modal, #char-modal {
             display: none;
             position: fixed;
@@ -277,15 +282,15 @@
         .char-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 12px;
             margin-top: 15px;
             width: 100%;
         }
         .char-card {
-            background: rgba(40, 20, 10, 0.8);
+            background: rgba(40, 20, 10, 0.85);
             border: 2px solid #8b5a2b;
             border-radius: 8px;
-            padding: 8px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -294,20 +299,18 @@
         }
         .char-card:hover, .char-card:active, .char-card.selected {
             border-color: #ffd700;
-            background: rgba(90, 45, 20, 0.9);
-            transform: scale(1.03);
-            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+            background: rgba(90, 45, 20, 0.95);
+            transform: scale(1.04);
+            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.35);
         }
-        .char-card img {
-            width: 50px;
-            height: 50px;
-            object-fit: none;
-            object-position: 0 0;
+        .char-card canvas {
+            width: 64px !important;
+            height: 64px !important;
             image-rendering: pixelated;
         }
         .char-card span {
             margin-top: 6px;
-            font-size: 10px;
+            font-size: 11px;
             color: #ffe6a3;
             font-weight: bold;
             text-align: center;
@@ -375,18 +378,25 @@
     </div>
 
     <script>
+        const BUILD_VERSION = '1787758152';
         const gamesData = [{"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.7", "local_image": "portadas/Secret_Hitler.jpg"}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.1", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg"}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg"}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "8.2", "local_image": "portadas/Dany_Buró.jpg"}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "7.0", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg"}, {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "7.2", "local_image": "portadas/Panic_Lab_Maldón.jpg"}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "8.5", "local_image": "portadas/Say_My_Name.jpg"}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "7.9", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg"}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "8.1", "local_image": "portadas/Munchkin.jpg"}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.9", "local_image": "portadas/Toma_6_6_nimmt.jpg"}, {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "8.2", "local_image": "portadas/Color_Brain.jpg"}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "8.8", "local_image": "portadas/Dixit_Clásico.jpg"}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.6", "local_image": "portadas/Dixit_Odyssey.jpg"}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "8.0", "local_image": "portadas/Just_One.jpg"}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "8.3", "local_image": "portadas/Sushi_Go.jpg"}, {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "7.5", "local_image": "portadas/Monopoly.jpg"}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "7.7", "local_image": "portadas/Burako.jpg"}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "7.6", "local_image": "portadas/La_Isla_Prohibida.jpg"}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "8.7", "local_image": "portadas/Aventureros_al_Tren.jpg"}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "8.1", "local_image": "portadas/Carcassonne.jpg"}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.6", "local_image": "portadas/Azul.jpg"}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.3", "local_image": "portadas/Splendor.jpg"}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "6.6", "local_image": "portadas/Akropolis.jpg"}, {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "6.7", "local_image": "portadas/7_Wonders.jpg"}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "8.7", "local_image": "portadas/The_King_is_Dead.jpg"}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "8.6", "local_image": "portadas/TEG_Tradicional.jpg"}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.4", "local_image": "portadas/Catan.jpg"}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.8", "local_image": "portadas/The_White_Castle.jpg"}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "8.8", "local_image": "portadas/The_Red_Cathedral.jpg"}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.4", "local_image": "portadas/Wingspan.jpg"}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "6.8", "local_image": "portadas/Root.jpg"}, {"name": "Catan ciudades y caballeros", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.1", "image": "portadas/Catan_ciudades_y_caballeros.jpg", "local_image": "portadas/Catan_ciudades_y_caballeros.jpg"}, {"name": "Catan Energias renovables", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.7", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg"}, {"name": "Melomano", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg"}, {"name": "Panic Lab", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.9", "image": "portadas/Panic_Lab.jpg", "local_image": "portadas/Panic_Lab.jpg"}, {"name": "Atenea", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.2", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg"}, {"name": "Bleef", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.4", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg"}, {"name": "Jardin japones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.3", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg"}, {"name": "Count up", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.5", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg"}, {"name": "Equipazo", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg"}, {"name": "Munchkin: Dragones molones", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg"}, {"name": "Munchkin 3: Errores clericales", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.5", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg"}, {"name": "Munchkin 7: Trampas a dos manos", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.4", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg"}, {"name": "Camarero", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.3", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg"}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "8.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg"}];
+
+        // Anti-cache image helper
+        function bustCache(url) {
+            if (!url) return '';
+            return url + (url.includes('?') ? '&' : '?') + 'v=' + BUILD_VERSION;
+        }
 
         // --- HERO CLASSES DEFINITIONS ---
         const HERO_CLASSES = [
-            { id: 'warrior_blue', name: 'Caballero Azul', path: 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png', frameSize: 192 },
-            { id: 'warrior_red', name: 'Caballero Rojo', path: 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Red/Warrior_Red.png', frameSize: 192 },
-            { id: 'warrior_purple', name: 'Paladín Púrpura', path: 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Purple/Warrior_Purple.png', frameSize: 192 },
-            { id: 'warrior_yellow', name: 'Guerrero Dorado', path: 'assets/tiny-swords/Factions/Knights/Troops/Warrior/Yellow/Warrior_Yellow.png', frameSize: 192 },
-            { id: 'archer_blue', name: 'Arquero Azul', path: 'assets/tiny-swords/Factions/Knights/Troops/Archer/Blue/Archer_Blue.png', frameSize: 192 },
-            { id: 'archer_red', name: 'Arquero Rojo', path: 'assets/tiny-swords/Factions/Knights/Troops/Archer/Red/Archer_Red.png', frameSize: 192 },
-            { id: 'pawn_blue', name: 'Explorador Azul', path: 'assets/tiny-swords/Factions/Knights/Troops/Pawn/Blue/Pawn_Blue.png', frameSize: 192 },
-            { id: 'pawn_purple', name: 'Explorador Místico', path: 'assets/tiny-swords/Factions/Knights/Troops/Pawn/Purple/Pawn_Purple.png', frameSize: 192 }
+            { id: 'warrior_blue', name: 'Caballero Azul', path: bustCache('assets/tiny-swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png'), frameSize: 192 },
+            { id: 'warrior_red', name: 'Caballero Rojo', path: bustCache('assets/tiny-swords/Factions/Knights/Troops/Warrior/Red/Warrior_Red.png'), frameSize: 192 },
+            { id: 'warrior_purple', name: 'Paladín Púrpura', path: bustCache('assets/tiny-swords/Factions/Knights/Troops/Warrior/Purple/Warrior_Purple.png'), frameSize: 192 },
+            { id: 'warrior_yellow', name: 'Guerrero Dorado', path: bustCache('assets/tiny-swords/Factions/Knights/Troops/Warrior/Yellow/Warrior_Yellow.png'), frameSize: 192 },
+            { id: 'archer_blue', name: 'Arquero Azul', path: bustCache('assets/tiny-swords/Factions/Knights/Troops/Archer/Blue/Archer_Blue.png'), frameSize: 192 },
+            { id: 'archer_red', name: 'Arquero Rojo', path: bustCache('assets/tiny-swords/Factions/Knights/Troops/Archer/Red/Archer_Red.png'), frameSize: 192 },
+            { id: 'pawn_blue', name: 'Explorador Azul', path: bustCache('assets/tiny-swords/Factions/Knights/Troops/Pawn/Blue/Pawn_Blue.png'), frameSize: 192 },
+            { id: 'pawn_purple', name: 'Explorador Místico', path: bustCache('assets/tiny-swords/Factions/Knights/Troops/Pawn/Purple/Pawn_Purple.png'), frameSize: 192 }
         ];
 
         let selectedHero = HERO_CLASSES[0];
@@ -407,10 +417,10 @@
             assets.heroes[h.id] = img;
         });
 
-        assets.tilemap.src = 'assets/tiny-swords/Terrain/Ground/Tilemap_Flat.png';
-        assets.water.src = 'assets/tiny-swords/Terrain/Water/Water.png';
-        assets.bridge.src = 'assets/tiny-swords/Terrain/Bridge/Bridge_All.png';
-        assets.tree.src = 'assets/tiny-swords/Resources/Trees/Tree.png';
+        assets.tilemap.src = bustCache('assets/tiny-swords/Terrain/Ground/Tilemap_Flat.png');
+        assets.water.src = bustCache('assets/tiny-swords/Terrain/Water/Water.png');
+        assets.bridge.src = bustCache('assets/tiny-swords/Terrain/Bridge/Bridge_All.png');
+        assets.tree.src = bustCache('assets/tiny-swords/Resources/Trees/Tree.png');
 
         const HOUSE_SPRITE_PATHS = [
             'assets/tiny-swords/Factions/Knights/Buildings/House/House_Blue.png',
@@ -429,23 +439,41 @@
 
         HOUSE_SPRITE_PATHS.forEach(p => {
             const img = new Image();
-            img.src = p;
+            img.src = bustCache(p);
             assets.houses.push(img);
         });
 
-        // --- Character Modal UI ---
+        // --- Character Modal UI with Live Canvas Previews ---
         function openCharModal() {
             const container = document.getElementById('char-grid-container');
             container.innerHTML = '';
             HERO_CLASSES.forEach(h => {
                 const card = document.createElement('div');
                 card.className = 'char-card ' + (selectedHero.id === h.id ? 'selected' : '');
-                card.innerHTML = `
-                    <div style="width:44px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center;">
-                        <img src="${h.path}" style="transform: scale(0.6) translate(-72px, -72px); transform-origin: 0 0;">
-                    </div>
-                    <span>${h.name}</span>
-                `;
+                
+                const pCanvas = document.createElement('canvas');
+                pCanvas.width = 64;
+                pCanvas.height = 64;
+                const pCtx = pCanvas.getContext('2d');
+
+                const drawPreview = () => {
+                    const hImg = assets.heroes[h.id];
+                    if (hImg && hImg.complete && hImg.naturalWidth > 0) {
+                        pCtx.clearRect(0, 0, 64, 64);
+                        // Center warrior frame in 64x64 preview
+                        pCtx.drawImage(hImg, 0, 0, 192, 192, -16, -18, 96, 96);
+                    } else {
+                        setTimeout(drawPreview, 50);
+                    }
+                };
+                drawPreview();
+
+                const nameLabel = document.createElement('span');
+                nameLabel.innerText = h.name;
+
+                card.appendChild(pCanvas);
+                card.appendChild(nameLabel);
+
                 card.onclick = () => {
                     selectedHero = h;
                     document.getElementById('current-hero-name').innerText = h.name;
@@ -468,7 +496,7 @@
             activeGameForUpload = game;
             isModalOpen = true;
             document.getElementById('modal-title').innerText = '🏠 ' + game.name;
-            document.getElementById('modal-img').src = game.image + '?v=' + new Date().getTime();
+            document.getElementById('modal-img').src = bustCache(game.image);
             document.getElementById('modal-desc').innerHTML = `
                 <span style="color:#ffd276; font-size:1.1em; font-weight:bold;">⭐ BGG: ${game.rating || 'N/A'}/10</span><br><br>
                 <span style="color:#dfa143; font-weight:bold;">JUGADORES:</span> ${game.players}<br>
@@ -503,7 +531,7 @@
                 });
                 
                 if(res.ok) {
-                    document.getElementById('modal-img').src = activeGameForUpload.image + '?v=' + new Date().getTime();
+                    document.getElementById('modal-img').src = bustCache(activeGameForUpload.image);
                 } else {
                     alert('Error subiendo imagen');
                 }
@@ -557,7 +585,6 @@
             }
         });
 
-        // Multiple direct horizontal bridges
         for (let c = 24; c <= 29; c++) {
             worldMap[7][c] = BRIDGE_H;
             worldMap[12][c] = BRIDGE_H;
@@ -565,7 +592,6 @@
             worldMap[31][c] = BRIDGE_H;
         }
 
-        // Multiple direct vertical bridges
         for (let r = 17; r <= 22; r++) {
             worldMap[r][8] = BRIDGE_V;
             worldMap[r][14] = BRIDGE_V;
@@ -575,7 +601,6 @@
             worldMap[r][46] = BRIDGE_V;
         }
 
-        // Houses for all games
         const houses = [];
         let gIndex = 0;
 
@@ -697,7 +722,6 @@
                 player.frame += 0.08;
             }
 
-            // Center camera around player on any screen resolution
             camera.x += (player.x + TILE_SIZE/2 - canvas.width/2 - camera.x) * 0.14;
             camera.y += (player.y + TILE_SIZE/2 - canvas.height/2 - camera.y) * 0.14;
         }
@@ -719,7 +743,6 @@
                     const y = r * TILE_SIZE;
                     const tile = worldMap[r][c];
 
-                    // Water under rivers and bridges
                     if (tile === WATER || tile === BRIDGE_H || tile === BRIDGE_V) {
                         if (assets.water.complete && assets.water.naturalWidth > 0) {
                             ctx.drawImage(assets.water, 0, 0, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -729,7 +752,6 @@
                         }
                     }
 
-                    // Grass
                     if (tile === GRASS || tile === PATH || tile >= 10) {
                         if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
                             ctx.drawImage(assets.tilemap, 64, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -739,7 +761,6 @@
                         }
                     }
 
-                    // Paths
                     if (tile === PATH) {
                         if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
                             ctx.drawImage(assets.tilemap, 192, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -749,7 +770,6 @@
                         }
                     }
 
-                    // Wood Bridges
                     if (tile === BRIDGE_H) {
                         if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
                             ctx.drawImage(assets.bridge, 64, 0, 64, 64, x, y - 4, TILE_SIZE, TILE_SIZE + 8);
@@ -852,7 +872,7 @@
                     ctx.scale(-1, 1);
                     ctx.drawImage(heroImg, sx, sy, 192, 192, -54, -64, 108, 108);
                 } else {
-                    ctx.drawImage(heroImg, sx, sy, 192, 192, player.x - 27, player.y - 37, 108, 108);
+                    ctx.drawImage(heroImg, sx, sy, 192, 192, player.x - 24, player.y - 34, 108, 108);
                 }
                 ctx.restore();
             }
@@ -924,7 +944,6 @@
         }, { passive: false });
         actBtn.addEventListener('click', interactAction);
 
-        // Touch anywhere on Canvas to interact or walk directly
         canvas.addEventListener('click', (e) => {
             if (isModalOpen) return;
             const rect = canvas.getBoundingClientRect();
