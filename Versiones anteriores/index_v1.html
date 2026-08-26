@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUDOTECA - Estilo Blockbuster</title>
+    <style>
+        :root {
+            --bb-blue: #011C6B;
+            --bb-yellow: #FFCC00;
+            --text-light: #f5f5f5;
+        }
+
+        body {
+            background-color: var(--bb-blue);
+            color: var(--text-light);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--bb-yellow);
+            color: var(--bb-blue);
+            padding: 20px;
+            text-align: center;
+            font-family: 'Impact', sans-serif;
+            font-size: 3em;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-title {
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .btn-recommend {
+            background-color: var(--bb-blue);
+            color: var(--bb-yellow);
+            border: 2px solid var(--bb-blue);
+            padding: 10px 20px;
+            font-size: 0.4em;
+            font-family: 'Arial Black', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            border-radius: 5px;
+        }
+
+        .btn-recommend:hover {
+            background-color: var(--text-light);
+            color: var(--bb-blue);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .filters {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background-color: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .filters select, .filters input {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid var(--bb-yellow);
+            background-color: #fff;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .vhs-card {
+            background-color: #222;
+            border: 4px solid var(--bb-yellow);
+            border-radius: 5px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.7);
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vhs-card::before {
+            content: "FAVORITO";
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            display: none;
+        }
+        .vhs-card.alta::before { content: "HARDCORE"; display: block; background-color: darkred; }
+        .vhs-card.baja::before { content: "PARTY"; display: block; background-color: #ff007f; }
+
+        .vhs-card:hover {
+            transform: scale(1.05);
+            border-color: white;
+        }
+
+        .vhs-title {
+            background-color: white;
+            color: black;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px;
+            border-radius: 3px;
+            border: 2px solid #ccc;
+            margin-bottom: 10px;
+            font-family: 'Arial Black', sans-serif;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vhs-details {
+            font-size: 0.85em;
+            color: #aaa;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .vhs-details span {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .vhs-details strong {
+            color: var(--bb-yellow);
+        }
+
+        .vhs-footer {
+            text-align: center;
+            background-color: var(--bb-yellow);
+            color: var(--bb-blue);
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--bb-blue);
+            border: 5px solid var(--bb-yellow);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            color: var(--bb-yellow);
+            font-size: 24px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-content h2 { color: var(--bb-yellow); margin-top: 0;}
+        .modal-content p { font-size: 1.1em; margin-bottom: 20px;}
+        
+        .btn-action {
+            display: inline-block;
+            background-color: var(--bb-yellow);
+            color: var(--bb-blue);
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: 0.2s;
+        }
+        .btn-action:hover { background-color: white; }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .quiz-btn {
+            background-color: transparent;
+            color: white;
+            border: 2px solid var(--bb-yellow);
+            padding: 15px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: left;
+        }
+        .quiz-btn:hover {
+            background-color: var(--bb-yellow);
+            color: var(--bb-blue);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">BLOCKGAMER</div>
+        <button class="btn-recommend" onclick="openQuizModal()">¿Qué comprar ahora?</button>
+    </header>
+
+    <div class="container">
+        <div class="filters">
+            <label for="search">Buscar:</label>
+            <input type="text" id="search" placeholder="Nombre del juego..." onkeyup="filterGames()">
+            
+            <label for="diff-filter">Dificultad:</label>
+            <select id="diff-filter" onchange="filterGames()">
+                <option value="all">Todas</option>
+                <option value="Baja">Baja</option>
+                <option value="Media">Media</option>
+                <option value="Alta">Alta</option>
+            </select>
+        </div>
+
+        <div class="grid" id="games-grid">
+            <!-- Games injected here via JS -->
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div class="modal-overlay" id="game-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('game-modal')">&times;</span>
+            <h2 id="modal-title">Título</h2>
+            <p id="modal-desc">Detalles del juego...</p>
+            <a href="#" id="modal-link" target="_blank" class="btn-action">▶ VER CÓMO JUGAR (YOUTUBE)</a>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div class="modal-overlay" id="quiz-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('quiz-modal')">&times;</span>
+            <h2 id="quiz-title">Encuentra tu próximo juego</h2>
+            <div id="quiz-body">
+                <p>¿Qué tipo de experiencia estás buscando para agregar a tu colección?</p>
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="showRecommendation('party')">🎉 Algo rápido, gracioso y para mucha gente (Party)</button>
+                    <button class="quiz-btn" onclick="showRecommendation('strategy')">🧠 Un desafío mental profundo y estratégico (Eurogames)</button>
+                    <button class="quiz-btn" onclick="showRecommendation('family')">👨‍👩‍👧‍👦 Algo fácil de aprender pero con buena estrategia (Familiar)</button>
+                    <button class="quiz-btn" onclick="showRecommendation('coop')">🤝 Una aventura épica para jugar en equipo (Cooperativo/Temático)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gamesData = [
+            {"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol"},
+            {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación"},
+            {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos"},
+            {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta"},
+            {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas"},
+            {"name": "Panic Lab (Maldón)", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados"},
+            {"name": "Esquinados (Maldón)", "players": "2-6", "difficulty": "Baja", "type": "Reconocimiento de patrones / Familiar"},
+            {"name": "Camarero (Maldón)", "players": "2-6", "difficulty": "Baja", "type": "Memoria / Reflejos / Party"},
+            {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica"},
+            {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas"},
+            {"name": "Dígalo con Lápiz", "players": "3-10+", "difficulty": "Baja", "type": "Dibujo rápido / Adivinanzas por equipos"},
+            {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico"},
+            {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo"},
+            {"name": "Caca: El Juego", "players": "2-5", "difficulty": "Baja", "type": "Party / Descarte rápido / Humor"},
+            {"name": "Color Brain", "players": "2-20", "difficulty": "Baja", "type": "Trivia de colores / Party"},
+            {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación"},
+            {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos"},
+            {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras"},
+            {"name": "Unánimo Party", "players": "3-8", "difficulty": "Baja", "type": "Asociación de ideas / Party"},
+            {"name": "Bleff", "players": "2-8", "difficulty": "Baja", "type": "Farol / Vocabulario"},
+            {"name": "Melómano", "players": "2-6", "difficulty": "Baja", "type": "Trivia musical"},
+            {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets"},
+            {"name": "Equipajes", "players": "2-6", "difficulty": "Baja", "type": "Familiar / Party"},
+            {"name": "Count Up", "players": "2-6", "difficulty": "Baja", "type": "Push your luck / Conteo simultáneo"},
+            {"name": "Figo", "players": "2-6", "difficulty": "Baja", "type": "Familiar / Cartas"},
+            {"name": "Monopoly", "players": "2-6", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados"},
+            {"name": "Misterio", "players": "2-6", "difficulty": "Media", "type": "Deducción clásica / Tablero"},
+            {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)"},
+            {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape"},
+            {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas"},
+            {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas"},
+            {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones"},
+            {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización"},
+            {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación"},
+            {"name": "Jardín Japonés", "players": "2-4", "difficulty": "Media", "type": "Draft / Optimización liviana"},
+            {"name": "Atenea / Athena", "players": "2-4", "difficulty": "Media", "type": "Estrategia táctica liviana"},
+            {"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización"},
+            {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar"},
+            {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados"},
+            {"name": "TEG La Revancha", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Misiles"},
+            {"name": "TEG Independencia", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico histórico"},
+            {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos"},
+            {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores"},
+            {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización"},
+            {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos"},
+            {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame"}
+        ];
+
+        const recommendations = {
+            party: {
+                title: "Recomendaciones: Party Games",
+                text: "Basado en tu ludoteca, te recomendamos:<br><br><b>1. Codenames (Código Secreto):</b> El rey indiscutido de los juegos de palabras por equipos.<br><b>2. The Resistance: Avalon:</b> Si te gusta Secret Hitler, este te volará la cabeza.<br><b>3. Wavelength:</b> Excelente para reírse debatiendo ideas abstractas."
+            },
+            strategy: {
+                title: "Recomendaciones: Eurogames Estratégicos",
+                text: "Para jugadores que buscan quemar neuronas:<br><br><b>1. Terraforming Mars:</b> Construcción de motores y combos de cartas épicos.<br><b>2. Scythe:</b> Control de áreas y gestión de recursos en un mundo dieselpunk alternativo.<br><b>3. Brass: Birmingham:</b> Considerado uno de los mejores juegos económicos y estratégicos del mundo."
+            },
+            family: {
+                title: "Recomendaciones: Familiares",
+                text: "Fáciles de aprender, difíciles de dominar:<br><br><b>1. Cascadia:</b> Colocación de losetas relajante con animales de Norteamérica.<br><b>2. Ticket to Ride: Europe:</b> La versión mejorada de Aventureros al Tren.<br><b>3. Patchwork:</b> Un puzzle increíble para exactamente 2 jugadores."
+            },
+            coop: {
+                title: "Recomendaciones: Cooperativos & Temáticos",
+                text: "Para vivir una aventura unidos:<br><br><b>1. Pandemic:</b> El clásico de curar enfermedades salvando al mundo juntos.<br><b>2. Gloomhaven: Jaws of the Lion:</b> Un juego de rol de tablero en caja, espectacular campaña.<br><b>3. Mansiones de la Locura:</b> Misterio, terror cósmico y una app que dirige el juego."
+            }
+        };
+
+        function renderGames(games) {
+            const grid = document.getElementById('games-grid');
+            grid.innerHTML = '';
+            games.forEach(game => {
+                const card = document.createElement('div');
+                let cssClass = "";
+                if(game.difficulty.includes("Alta")) cssClass = "alta";
+                if(game.difficulty.includes("Baja")) cssClass = "baja";
+
+                card.className = `vhs-card ${cssClass}`;
+                card.onclick = () => openGameModal(game);
+
+                card.innerHTML = `
+                    <div class="vhs-title">${game.name}</div>
+                    <div class="vhs-details">
+                        <span><strong>Jugadores:</strong> ${game.players}</span>
+                        <span><strong>Dificultad:</strong> ${game.difficulty}</span>
+                        <span><strong>Tipo:</strong> ${game.type}</span>
+                    </div>
+                    <div class="vhs-footer">PLAY VIDEO</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterGames() {
+            const searchText = document.getElementById('search').value.toLowerCase();
+            const diffFilter = document.getElementById('diff-filter').value;
+
+            const filtered = gamesData.filter(g => {
+                const matchName = g.name.toLowerCase().includes(searchText);
+                const matchDiff = diffFilter === 'all' || g.difficulty.includes(diffFilter);
+                return matchName && matchDiff;
+            });
+            renderGames(filtered);
+        }
+
+        function openGameModal(game) {
+            document.getElementById('modal-title').innerText = game.name;
+            document.getElementById('modal-desc').innerHTML = `
+                <b>Jugadores:</b> ${game.players}<br>
+                <b>Dificultad:</b> ${game.difficulty}<br>
+                <b>Mecánicas:</b> ${game.type}
+            `;
+            const searchUrl = 'https://www.youtube.com/results?search_query=como+jugar+' + encodeURIComponent(game.name + ' juego de mesa tutorial');
+            document.getElementById('modal-link').href = searchUrl;
+            document.getElementById('game-modal').style.display = 'flex';
+        }
+
+        function openQuizModal() {
+            const quizBody = document.getElementById('quiz-body');
+            document.getElementById('quiz-title').innerText = "Encuentra tu próximo juego";
+            quizBody.innerHTML = `
+                <p>¿Qué tipo de experiencia estás buscando para agregar a tu colección?</p>
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="showRecommendation('party')">🎉 Algo rápido, gracioso y para mucha gente (Party)</button>
+                    <button class="quiz-btn" onclick="showRecommendation('strategy')">🧠 Un desafío mental profundo y estratégico (Eurogames)</button>
+                    <button class="quiz-btn" onclick="showRecommendation('family')">👨‍👩‍👧‍👦 Algo fácil de aprender pero con buena estrategia (Familiar)</button>
+                    <button class="quiz-btn" onclick="showRecommendation('coop')">🤝 Una aventura épica para jugar en equipo (Cooperativo/Temático)</button>
+                </div>
+            `;
+            document.getElementById('quiz-modal').style.display = 'flex';
+        }
+
+        function showRecommendation(category) {
+            const rec = recommendations[category];
+            document.getElementById('quiz-title').innerText = rec.title;
+            document.getElementById('quiz-body').innerHTML = `
+                <p style="text-align: left; font-size: 1.1em; line-height: 1.5;">${rec.text}</p>
+                <button class="btn-action" style="margin-top:20px;" onclick="openQuizModal()">⬅ Volver atrás</button>
+            `;
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Initialize
+        renderGames(gamesData);
+    </script>
+</body>
+</html>

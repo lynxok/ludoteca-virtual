@@ -1,0 +1,241 @@
+[
+  {
+    "name": "Secret Hitler",
+    "players": "5-10",
+    "difficulty": "Baja",
+    "type": "Deducción social / Roles ocultos / Farol",
+    "image": "https://cf.geekdo-images.com/rO7-vqwKvs47i27k1-B4FA__itemrep/img/bO6yq53q6q62Z0Q_0d_0jT_1wG8=/fit-in/246x300/filters:strip_icc()/pic2840020.jpg",
+    "local_image": "https://cf.geekdo-images.com/rO7-vqwKvs47i27k1-B4FA__itemrep/img/bO6yq53q6q62Z0Q_0d_0jT_1wG8=/fit-in/246x300/filters:strip_icc()/pic2840020.jpg"
+  },
+  {
+    "name": "Los Hombres Lobo de Castronegro",
+    "players": "8-18",
+    "difficulty": "Baja",
+    "type": "Roles ocultos / Deducción social / Eliminación",
+    "image": "https://cf.geekdo-images.com/39_XqI6G4DIfu58eB8E_BA__itemrep/img/3yX_wD6O_2N3hT78_sV_4Q7R3o0=/fit-in/246x300/filters:strip_icc()/pic1140984.jpg",
+    "local_image": "https://cf.geekdo-images.com/39_XqI6G4DIfu58eB8E_BA__itemrep/img/3yX_wD6O_2N3hT78_sV_4Q7R3o0=/fit-in/246x300/filters:strip_icc()/pic1140984.jpg"
+  },
+  {
+    "name": "Saboteur",
+    "players": "3-10",
+    "difficulty": "Baja",
+    "type": "Roles ocultos / Farol / Construcción de caminos",
+    "image": "https://cf.geekdo-images.com/3_3F4V9L5Q4o5d8R5x_z5Q__itemrep/img/5z4_5x9T_1x_2q7F9_w9J_3J_4=/fit-in/246x300/filters:strip_icc()/pic166436.jpg",
+    "local_image": "https://cf.geekdo-images.com/3_3F4V9L5Q4o5d8R5x_z5Q__itemrep/img/5z4_5x9T_1x_2q7F9_w9J_3J_4=/fit-in/246x300/filters:strip_icc()/pic166436.jpg"
+  },
+  {
+    "name": "Dany (Buró)",
+    "players": "3-8",
+    "difficulty": "Baja",
+    "type": "Roles ocultos / Cartas / Asociación abstracta",
+    "image": "https://cf.geekdo-images.com/d9j84V_u7q_x_O3Y5Y7_tQ__itemrep/img/1u_5T6_4f_5v_7t_6_t6P9_9_v4=/fit-in/246x300/filters:strip_icc()/pic4583856.png",
+    "local_image": "https://cf.geekdo-images.com/d9j84V_u7q_x_O3Y5Y7_tQ__itemrep/img/1u_5T6_4f_5v_7t_6_t6P9_9_v4=/fit-in/246x300/filters:strip_icc()/pic4583856.png"
+  },
+  {
+    "name": "Taco Gato Cabra Queso Pizza",
+    "players": "2-8",
+    "difficulty": "Baja",
+    "type": "Reflejos / Velocidad de reacción / Cartas",
+    "image": "https://cf.geekdo-images.com/F_E4g5u8b_5q_2_6q_u_gQ__itemrep/img/8u7_6y_6Z_6v_5n_3K_4m_8M_6E=/fit-in/246x300/filters:strip_icc()/pic4611599.png",
+    "local_image": "https://cf.geekdo-images.com/F_E4g5u8b_5q_2_6q_u_gQ__itemrep/img/8u7_6y_6Z_6v_5n_3K_4m_8M_6E=/fit-in/246x300/filters:strip_icc()/pic4611599.png"
+  },
+  {
+    "name": "Panic Lab (Maldón)",
+    "players": "2-10",
+    "difficulty": "Baja",
+    "type": "Reflejos / Velocidad visual / Dados",
+    "image": "https://cf.geekdo-images.com/Y5V9N_3D6H_6V_4Q_3D_9A__itemrep/img/9M8_4V9H5F7P3M1S2N5T8Q6M1S2N5T8=/fit-in/246x300/filters:strip_icc()/pic1347647.jpg",
+    "local_image": "https://cf.geekdo-images.com/Y5V9N_3D6H_6V_4Q_3D_9A__itemrep/img/9M8_4V9H5F7P3M1S2N5T8Q6M1S2N5T8=/fit-in/246x300/filters:strip_icc()/pic1347647.jpg"
+  },
+  {
+    "name": "Say My Name",
+    "players": "4-12",
+    "difficulty": "Baja",
+    "type": "Party / Adivinanzas / Mímica",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Say%20My%20Name"
+  },
+  {
+    "name": "Con Eso No Se Jode",
+    "players": "3-10",
+    "difficulty": "Baja",
+    "type": "Party / Humor negro / Cartas",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Con%20Eso%20No%20Se%20Jode"
+  },
+  {
+    "name": "Munchkin",
+    "players": "3-6",
+    "difficulty": "Baja",
+    "type": "Cartas / Farol / Mazmorreo humorístico",
+    "image": "https://cf.geekdo-images.com/9g_0V_3F6X_3Q_2G_2Q_1g__itemrep/img/6X_5Y_3R_4H_2F_1G_9D_3C_2=/fit-in/246x300/filters:strip_icc()/pic1876483.jpg",
+    "local_image": "https://cf.geekdo-images.com/9g_0V_3F6X_3Q_2G_2Q_1g__itemrep/img/6X_5Y_3R_4H_2F_1G_9D_3C_2=/fit-in/246x300/filters:strip_icc()/pic1876483.jpg"
+  },
+  {
+    "name": "Toma 6 (6 nimmt!)",
+    "players": "2-10",
+    "difficulty": "Baja",
+    "type": "Gestión de mano / Descarte simultáneo",
+    "image": "https://cf.geekdo-images.com/6_8M_5C_5N_2M_1H_4P_1A__itemrep/img/3_8X_2D_4F_1G_5K_2H_1=/fit-in/246x300/filters:strip_icc()/pic1332219.jpg",
+    "local_image": "https://cf.geekdo-images.com/6_8M_5C_5N_2M_1H_4P_1A__itemrep/img/3_8X_2D_4F_1G_5K_2H_1=/fit-in/246x300/filters:strip_icc()/pic1332219.jpg"
+  },
+  {
+    "name": "Color Brain",
+    "players": "2-20",
+    "difficulty": "Baja",
+    "type": "Trivia de colores / Party",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Color%20Brain"
+  },
+  {
+    "name": "Dixit Clásico",
+    "players": "3-8",
+    "difficulty": "Baja",
+    "type": "Deducción / Creatividad / Asociación",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic6744047.png",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic6744047.png"
+  },
+  {
+    "name": "Dixit Odyssey",
+    "players": "3-12",
+    "difficulty": "Baja",
+    "type": "Deducción / Creatividad / Modos por equipos",
+    "image": "https://cf.geekdo-images.com/6C_4N_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1108745.jpg",
+    "local_image": "https://cf.geekdo-images.com/6C_4N_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1108745.jpg"
+  },
+  {
+    "name": "Just One",
+    "players": "3-7",
+    "difficulty": "Baja",
+    "type": "Cooperativo / Deducción de palabras",
+    "image": "https://cf.geekdo-images.com/1G_4H_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4254509.jpg",
+    "local_image": "https://cf.geekdo-images.com/1G_4H_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4254509.jpg"
+  },
+  {
+    "name": "Sushi Go!",
+    "players": "2-5",
+    "difficulty": "Baja",
+    "type": "Card drafting / Colección de sets",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1900075.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1900075.jpg"
+  },
+  {
+    "name": "Monopoly",
+    "players": "2-6",
+    "difficulty": "Media",
+    "type": "Negociación / Gestión económica / Dados",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic5786884.png",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic5786884.png"
+  },
+  {
+    "name": "Burako",
+    "players": "2-4",
+    "difficulty": "Media",
+    "type": "Combinaciones / Gestión de fichas (Rummy)",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Burako"
+  },
+  {
+    "name": "La Isla Prohibida",
+    "players": "2-4",
+    "difficulty": "Media",
+    "type": "Cooperativo / Gestión de acciones / Escape",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic670845.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic670845.jpg"
+  },
+  {
+    "name": "¡Aventureros al Tren!",
+    "players": "2-5",
+    "difficulty": "Media",
+    "type": "Gestión de rutas / Colección de cartas",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic38668.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic38668.jpg"
+  },
+  {
+    "name": "Carcassonne",
+    "players": "2-5",
+    "difficulty": "Media",
+    "type": "Colocación de losetas / Control de áreas",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic6544250.png",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic6544250.png"
+  },
+  {
+    "name": "Azul",
+    "players": "2-4",
+    "difficulty": "Media",
+    "type": "Abstracto / Formación de patrones",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic3718275.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic3718275.jpg"
+  },
+  {
+    "name": "Splendor",
+    "players": "2-4",
+    "difficulty": "Media",
+    "type": "Engine building de fichas / Optimización",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1904079.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic1904079.jpg"
+  },
+  {
+    "name": "Akropolis",
+    "players": "2-4",
+    "difficulty": "Media",
+    "type": "Colocación de losetas 3D / Puntuación",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=Akropolis"
+  },
+  {
+    "name": "7 Wonders",
+    "players": "2-7",
+    "difficulty": "Media",
+    "type": "Card drafting / Gestión de recursos / Civilización",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic860217.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic860217.jpg"
+  },
+  {
+    "name": "The King is Dead",
+    "players": "2-4",
+    "difficulty": "Media",
+    "type": "Control de áreas / Táctico puro / Sin azar",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=The%20King%20is%20Dead"
+  },
+  {
+    "name": "TEG Tradicional",
+    "players": "2-6",
+    "difficulty": "Media",
+    "type": "Control de áreas / Táctico / Dados",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=TEG%20Tradicional"
+  },
+  {
+    "name": "Catan",
+    "players": "3-4",
+    "difficulty": "Media",
+    "type": "Negociación / Comercio / Gestión de recursos",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic2419375.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic2419375.jpg"
+  },
+  {
+    "name": "The White Castle",
+    "players": "1-4",
+    "difficulty": "Alta",
+    "type": "Gestión de dados / Colocación de trabajadores",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=The%20White%20Castle"
+  },
+  {
+    "name": "The Red Cathedral",
+    "players": "1-4",
+    "difficulty": "Alta",
+    "type": "Rondel / Control de área / Optimización",
+    "image": "https://via.placeholder.com/246x300/011C6B/FFCC00?text=The%20Red%20Cathedral"
+  },
+  {
+    "name": "Wingspan",
+    "players": "1-5",
+    "difficulty": "Alta",
+    "type": "Engine building / Gestión de cartas y recursos",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4458123.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4458123.jpg"
+  },
+  {
+    "name": "Root",
+    "players": "2-4",
+    "difficulty": "Alta",
+    "type": "Asimétrico / Control de áreas / Wargame",
+    "image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4254509.jpg",
+    "local_image": "https://cf.geekdo-images.com/8X_4Y_2M_1K_5G_6C_7H_9=/fit-in/246x300/filters:strip_icc()/pic4254509.jpg"
+  }
+]
