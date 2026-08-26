@@ -209,12 +209,12 @@
         <div id="top-bar">
             <div class="ui-ribbon">🏰 REINO LUDOTECA: ISLAS & CASAS ⚔️</div>
             <div class="ui-ribbon char-select-btn" onclick="openCharModal()">
-                <span>👤 HÉROE:</span> <strong id="current-hero-name" style="color:#ffd700;">Guerrero Azul</strong> ⚙️
+                <span>👤 HÉROE:</span> <strong id="current-hero-name" style="color:#ffd700;">Caballero Azul</strong> ⚙️
             </div>
         </div>
         <canvas id="gameCanvas" width="1024" height="640"></canvas>
     </div>
-    <div id="controls-help">⚔️ FLECHAS/WASD: Moverse | CRUZA LOS PUENTES ENTRE ISLAS | ENTER: Entrar a la Casa</div>
+    <div id="controls-help">⚔️ FLECHAS/WASD: Caminar | PUENTES DIRECTOS | ENTER: Entrar a la Casa</div>
 
     <!-- Modal Juego -->
     <div id="game-modal">
@@ -242,7 +242,6 @@
             <span class="close-btn" onclick="closeCharModal()">✕</span>
             <h2 style="margin:0; color:#ffd276; font-family:'Cinzel',serif; border-bottom:2px solid #5c3a21; padding-bottom:8px;">⚔️ SELECCIONA TU HÉROE</h2>
             <div class="char-grid" id="char-grid-container">
-                <!-- Se llena con JS -->
             </div>
         </div>
     </div>
@@ -274,7 +273,6 @@
             houses: []
         };
 
-        // Load all hero sprites
         HERO_CLASSES.forEach(h => {
             const img = new Image();
             img.src = h.path;
@@ -286,7 +284,6 @@
         assets.bridge.src = 'assets/tiny-swords/Terrain/Bridge/Bridge_All.png';
         assets.tree.src = 'assets/tiny-swords/Resources/Trees/Tree.png';
 
-        // Load Building Varieties for each house
         const HOUSE_SPRITE_PATHS = [
             'assets/tiny-swords/Factions/Knights/Buildings/House/House_Blue.png',
             'assets/tiny-swords/Factions/Knights/Buildings/House/House_Red.png',
@@ -387,16 +384,16 @@
             }
         }
 
-        // --- WORLD GENERATION: 4 ISLANDS CONNECTED BY BRIDGES ---
-        const WORLD_COLS = 50;
-        const WORLD_ROWS = 36;
+        // --- WORLD GENERATION: CONNECTED REALM ---
+        const WORLD_COLS = 54;
+        const WORLD_ROWS = 40;
         const TILE_SIZE = 48;
 
         const WATER = 0;
         const GRASS = 1;
         const PATH = 2;
-        const BRIDGE = 3;
-        const TREE = 4;
+        const BRIDGE_H = 3;
+        const BRIDGE_V = 4;
 
         // Initialize World with Water
         let worldMap = [];
@@ -408,77 +405,90 @@
             worldMap.push(row);
         }
 
-        // Island definitions [startCol, endCol, startRow, endRow]
+        // 4 Large Islands with spacious layouts
         const islands = [
-            { name: "Isla del Bosque (Juegos Familiares)", c1: 3, c2: 22, r1: 3, r2: 15 },
-            { name: "Isla del Valle (Juegos Estratégicos)", c1: 27, c2: 46, r1: 3, r2: 15 },
-            { name: "Isla de la Costa (Party Games)", c1: 3, c2: 22, r1: 20, r2: 32 },
-            { name: "Isla Real (Juegos Expertos)", c1: 27, c2: 46, r1: 20, r2: 32 }
+            { name: "Distrito Norte-Oeste", c1: 3, c2: 24, r1: 3, r2: 17 },
+            { name: "Distrito Norte-Este", c1: 29, c2: 50, r1: 3, r2: 17 },
+            { name: "Distrito Sur-Oeste",  c1: 3, c2: 24, r1: 22, r2: 36 },
+            { name: "Distrito Sur-Este",   c1: 29, c2: 50, r1: 22, r2: 36 }
         ];
 
-        // Paint Grass Islands & Roads
+        // Paint Grass & Inner Paths
         islands.forEach(isl => {
             for (let r = isl.r1; r <= isl.r2; r++) {
                 for (let c = isl.c1; c <= isl.c2; c++) {
                     worldMap[r][c] = GRASS;
                 }
             }
-            // Main Central Avenues inside each island
-            const midR = Math.floor((isl.r1 + isl.r2) / 2);
+            // Island central streets (horizontal & vertical)
+            const midR1 = isl.r1 + 4;
+            const midR2 = isl.r1 + 9;
             const midC = Math.floor((isl.c1 + isl.c2) / 2);
-            for (let c = isl.c1 + 1; c <= isl.c2 - 1; c++) worldMap[midR][c] = PATH;
-            for (let r = isl.r1 + 1; r <= isl.r2 - 1; r++) worldMap[r][midC] = PATH;
+            for (let c = isl.c1; c <= isl.c2; c++) {
+                worldMap[midR1][c] = PATH;
+                worldMap[midR2][c] = PATH;
+            }
+            for (let r = isl.r1; r <= isl.r2; r++) {
+                worldMap[r][midC] = PATH;
+            }
         });
 
-        // Paint Bridges connecting Islands
-        // 1. Horizontal Bridges (Left islands to Right islands)
-        for (let c = 22; c <= 27; c++) {
-            worldMap[9][c] = BRIDGE;
-            worldMap[26][c] = BRIDGE;
-        }
-        // 2. Vertical Bridges (Top islands to Bottom islands)
-        for (let r = 15; r <= 20; r++) {
-            worldMap[r][12] = BRIDGE;
-            worldMap[r][36] = BRIDGE;
+        // Multiple direct horizontal bridges directly connecting streets
+        // Connecting top islands at row 7 & 12
+        for (let c = 24; c <= 29; c++) {
+            worldMap[7][c] = BRIDGE_H;
+            worldMap[12][c] = BRIDGE_H;
+            // Connecting bottom islands at row 26 & 31
+            worldMap[26][c] = BRIDGE_H;
+            worldMap[31][c] = BRIDGE_H;
         }
 
-        // Place Houses for every game (Each game gets its own house with an entrance door)
-        // Store houses: { gameIndex, x, y, spriteIndex, doorX, doorY }
+        // Multiple direct vertical bridges connecting streets
+        // Connecting left islands at col 8, 14, 20
+        for (let r = 17; r <= 22; r++) {
+            worldMap[r][8] = BRIDGE_V;
+            worldMap[r][14] = BRIDGE_V;
+            worldMap[r][20] = BRIDGE_V;
+            // Connecting right islands at col 34, 40, 46
+            worldMap[r][34] = BRIDGE_V;
+            worldMap[r][40] = BRIDGE_V;
+            worldMap[r][46] = BRIDGE_V;
+        }
+
+        // Separate, well-spaced Houses for all 44 games
         const houses = [];
         let gIndex = 0;
 
-        islands.forEach((isl, iIdx) => {
-            // Place houses in rows above and below the main avenues
-            const houseSpots = [
-                // Upper row
-                { c: isl.c1 + 2, r: isl.r1 + 2 },
-                { c: isl.c1 + 6, r: isl.r1 + 2 },
-                { c: isl.c1 + 10, r: isl.r1 + 2 },
-                { c: isl.c1 + 14, r: isl.r1 + 2 },
-                // Lower row
-                { c: isl.c1 + 2, r: isl.r2 - 4 },
-                { c: isl.c1 + 6, r: isl.r2 - 4 },
-                { c: isl.c1 + 10, r: isl.r2 - 4 },
-                { c: isl.c1 + 14, r: isl.r2 - 4 },
-                // Side spots
-                { c: isl.c1 + 2, r: isl.r1 + 6 },
-                { c: isl.c2 - 4, r: isl.r1 + 6 },
-                { c: isl.c1 + 2, r: isl.r2 - 7 },
-                { c: isl.c2 - 4, r: isl.r2 - 7 }
+        islands.forEach((isl) => {
+            // Spacious spots with plenty of clearance (4-5 tiles apart)
+            const spots = [
+                // Top row in island
+                { c: isl.c1 + 1, r: isl.r1 + 1 },
+                { c: isl.c1 + 6, r: isl.r1 + 1 },
+                { c: isl.c1 + 11, r: isl.r1 + 1 },
+                { c: isl.c1 + 16, r: isl.r1 + 1 },
+                // Middle row in island
+                { c: isl.c1 + 1, r: isl.r1 + 6 },
+                { c: isl.c1 + 6, r: isl.r1 + 6 },
+                { c: isl.c1 + 11, r: isl.r1 + 6 },
+                { c: isl.c1 + 16, r: isl.r1 + 6 },
+                // Bottom row in island
+                { c: isl.c1 + 1, r: isl.r1 + 11 },
+                { c: isl.c1 + 6, r: isl.r1 + 11 },
+                { c: isl.c1 + 11, r: isl.r1 + 11 },
+                { c: isl.c1 + 16, r: isl.r1 + 11 }
             ];
 
-            houseSpots.forEach(spot => {
+            spots.forEach(spot => {
                 if (gIndex < gamesData.length) {
                     const sIdx = gIndex % assets.houses.length;
                     houses.push({
                         gameIndex: gIndex,
                         c: spot.c,
                         r: spot.r,
-                        spriteIndex: sIdx,
-                        doorC: spot.c + 1,
-                        doorR: spot.r + 2
+                        spriteIndex: sIdx
                     });
-                    // Mark house footprint as solid WALL (10 + gIndex)
+                    // Mark house building footprint as solid (10 + gIndex)
                     for (let dr = 0; dr < 3; dr++) {
                         for (let dc = 0; dc < 3; dc++) {
                             if (spot.r + dr < WORLD_ROWS && spot.c + dc < WORLD_COLS) {
@@ -496,12 +506,12 @@
         const ctx = canvas.getContext('2d');
 
         const player = {
-            x: 12 * TILE_SIZE, // Start in Isla del Bosque
-            y: 9 * TILE_SIZE,
-            targetX: 12 * TILE_SIZE,
-            targetY: 9 * TILE_SIZE,
-            gridX: 12,
-            gridY: 9,
+            x: 14 * TILE_SIZE,
+            y: 7 * TILE_SIZE,
+            targetX: 14 * TILE_SIZE,
+            targetY: 7 * TILE_SIZE,
+            gridX: 14,
+            gridY: 7,
             dirX: 0,
             dirY: 1,
             frame: 0,
@@ -514,14 +524,13 @@
         };
 
         function update() {
-            // Smooth player movement interpolation
             const dx = player.targetX - player.x;
             const dy = player.targetY - player.y;
             if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-                player.x += dx * 0.28;
-                player.y += dy * 0.28;
+                player.x += dx * 0.32;
+                player.y += dy * 0.32;
                 player.isMoving = true;
-                player.frame += 0.18;
+                player.frame += 0.2;
             } else {
                 player.x = player.targetX;
                 player.y = player.targetY;
@@ -529,11 +538,9 @@
                 player.frame += 0.08;
             }
 
-            // Smooth Camera follow
-            camera.x += (player.x + TILE_SIZE/2 - canvas.width/2 - camera.x) * 0.1;
-            camera.y += (player.y + TILE_SIZE/2 - canvas.height/2 - camera.y) * 0.1;
+            camera.x += (player.x + TILE_SIZE/2 - canvas.width/2 - camera.x) * 0.12;
+            camera.y += (player.y + TILE_SIZE/2 - canvas.height/2 - camera.y) * 0.12;
 
-            // Constrain camera to world
             camera.x = Math.max(0, Math.min(camera.x, WORLD_COLS * TILE_SIZE - canvas.width));
             camera.y = Math.max(0, Math.min(camera.y, WORLD_ROWS * TILE_SIZE - canvas.height));
         }
@@ -543,87 +550,105 @@
             ctx.save();
             ctx.translate(-Math.floor(camera.x), -Math.floor(camera.y));
 
-            // Visible Tile Range
             const startCol = Math.max(0, Math.floor(camera.x / TILE_SIZE) - 1);
             const endCol = Math.min(WORLD_COLS - 1, Math.ceil((camera.x + canvas.width) / TILE_SIZE) + 1);
             const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 1);
             const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 1);
 
-            // 1. Draw Ground (Water, Grass, Paths, Bridges)
+            // 1. Draw Terrain Base (ALWAYS draw water first under rivers and bridges)
             for (let r = startRow; r <= endRow; r++) {
                 for (let c = startCol; c <= endCol; c++) {
                     const x = c * TILE_SIZE;
                     const y = r * TILE_SIZE;
                     const tile = worldMap[r][c];
 
-                    if (tile === WATER) {
-                        // Ocean / River
+                    // Draw Water background for water tiles AND under bridges
+                    if (tile === WATER || tile === BRIDGE_H || tile === BRIDGE_V) {
                         if (assets.water.complete && assets.water.naturalWidth > 0) {
                             ctx.drawImage(assets.water, 0, 0, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
                         } else {
-                            ctx.fillStyle = '#1d556f';
+                            ctx.fillStyle = '#2980b9';
                             ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
                         }
-                    } else if (tile === BRIDGE) {
-                        // Bridge over water
-                        if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
-                            ctx.drawImage(assets.bridge, 0, 0, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
-                        } else {
-                            ctx.fillStyle = '#8b5a2b';
-                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-                        }
-                    } else {
-                        // Grass base
+                    }
+
+                    // Grass Island Surface
+                    if (tile === GRASS || tile === PATH || tile >= 10) {
                         if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
                             ctx.drawImage(assets.tilemap, 64, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
                         } else {
                             ctx.fillStyle = '#4c7b2c';
                             ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
                         }
+                    }
 
-                        // Road / Path
-                        if (tile === PATH) {
-                            if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
-                                ctx.drawImage(assets.tilemap, 192, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
-                            } else {
-                                ctx.fillStyle = '#b8945a';
-                                ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-                            }
+                    // Road / Cobblestone
+                    if (tile === PATH) {
+                        if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
+                            ctx.drawImage(assets.tilemap, 192, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
+                        } else {
+                            ctx.fillStyle = '#b8945a';
+                            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                        }
+                    }
+
+                    // Transparent Wood Bridges (Drawn ON TOP of water)
+                    if (tile === BRIDGE_H) {
+                        if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
+                            // Middle plank of horizontal bridge in Bridge_All
+                            ctx.drawImage(assets.bridge, 64, 0, 64, 64, x, y - 4, TILE_SIZE, TILE_SIZE + 8);
+                        } else {
+                            ctx.fillStyle = '#8b5a2b';
+                            ctx.fillRect(x, y + 8, TILE_SIZE, TILE_SIZE - 16);
+                        }
+                    } else if (tile === BRIDGE_V) {
+                        if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
+                            // Middle plank of vertical bridge in Bridge_All
+                            ctx.drawImage(assets.bridge, 0, 64, 64, 64, x - 4, y, TILE_SIZE + 8, TILE_SIZE);
+                        } else {
+                            ctx.fillStyle = '#8b5a2b';
+                            ctx.fillRect(x + 8, y, TILE_SIZE - 16, TILE_SIZE);
                         }
                     }
                 }
             }
 
-            // 2. Draw House Buildings
+            // 2. Draw House Buildings (Spaced with clean plaques)
             houses.forEach(h => {
                 const hx = h.c * TILE_SIZE;
                 const hy = h.r * TILE_SIZE;
                 const sImg = assets.houses[h.spriteIndex];
 
                 if (sImg && sImg.complete && sImg.naturalWidth > 0) {
-                    ctx.drawImage(sImg, hx - 8, hy - 24, TILE_SIZE * 3 + 16, TILE_SIZE * 3 + 24);
+                    ctx.drawImage(sImg, hx - 4, hy - 20, TILE_SIZE * 3 + 8, TILE_SIZE * 3 + 20);
                 } else {
                     ctx.fillStyle = '#6b3e1b';
                     ctx.fillRect(hx, hy, TILE_SIZE * 3, TILE_SIZE * 3);
                 }
 
-                // Game Name Plaque on the house
+                // Clean Wooden Plaque below each house
                 const game = gamesData[h.gameIndex];
                 if (game) {
-                    ctx.fillStyle = 'rgba(25, 12, 5, 0.9)';
-                    ctx.fillRect(hx + 10, hy + TILE_SIZE * 2.6, TILE_SIZE * 3 - 20, 20);
+                    const pw = TILE_SIZE * 3 - 10;
+                    const ph = 22;
+                    const px = hx + 5;
+                    const py = hy + TILE_SIZE * 2.7;
+
+                    ctx.fillStyle = 'rgba(28, 14, 6, 0.94)';
+                    ctx.fillRect(px, py, pw, ph);
                     ctx.strokeStyle = '#dfa143';
                     ctx.lineWidth = 1.5;
-                    ctx.strokeRect(hx + 10, hy + TILE_SIZE * 2.6, TILE_SIZE * 3 - 20, 20);
+                    ctx.strokeRect(px, py, pw, ph);
 
                     ctx.fillStyle = '#ffe6a3';
-                    ctx.font = 'bold 10px "MedievalSharp", cursive';
+                    ctx.font = 'bold 11px "MedievalSharp", cursive';
                     ctx.textAlign = 'center';
-                    ctx.fillText(game.name.substring(0, 16), hx + (TILE_SIZE * 3) / 2, hy + TILE_SIZE * 2.6 + 14);
+                    const shortTitle = game.name.length > 18 ? game.name.substring(0, 16) + '..' : game.name;
+                    ctx.fillText(shortTitle, hx + (TILE_SIZE * 3) / 2, py + 15);
                 }
             });
 
-            // 3. Highlight Target Interaction House
+            // 3. Highlight Target House (NO ugly yellow box, elegant scroll banner)
             const frontC = player.gridX + player.dirX;
             const frontR = player.gridY + player.dirY;
             if (frontR >= 0 && frontR < WORLD_ROWS && frontC >= 0 && frontC < WORLD_COLS) {
@@ -635,36 +660,32 @@
                         const fx = frontC * TILE_SIZE;
                         const fy = frontR * TILE_SIZE;
 
-                        // Golden entrance glow
-                        ctx.strokeStyle = '#ffd700';
-                        ctx.lineWidth = 3;
-                        ctx.strokeRect(fx + 2, fy + 2, TILE_SIZE - 4, TILE_SIZE - 4);
-
-                        // Banner Tooltip
-                        const tw = 240;
-                        const th = 52;
+                        // Elegant Banner Tooltip above the player/door
+                        const tw = 250;
+                        const th = 54;
                         const bx = fx - tw/2 + TILE_SIZE/2;
-                        const by = fy - 65;
+                        const by = fy - 72;
 
-                        ctx.fillStyle = 'rgba(20, 10, 5, 0.95)';
+                        ctx.fillStyle = 'rgba(20, 10, 5, 0.96)';
                         ctx.fillRect(bx, by, tw, th);
-                        ctx.strokeStyle = '#dfa143';
+                        ctx.strokeStyle = '#ffd700';
                         ctx.lineWidth = 2.5;
                         ctx.strokeRect(bx, by, tw, th);
 
                         ctx.fillStyle = '#ffd700';
-                        ctx.font = 'bold 12px "Cinzel", serif';
+                        ctx.font = 'bold 13px "Cinzel", serif';
                         ctx.textAlign = 'left';
-                        ctx.fillText('🏰 CASA: ' + game.name.substring(0, 16), bx + 10, by + 18);
+                        const titleTxt = game.name.length > 17 ? game.name.substring(0, 16) + '..' : game.name;
+                        ctx.fillText('🏰 ' + titleTxt, bx + 12, by + 20);
 
-                        ctx.fillStyle = '#5bb35b';
+                        ctx.fillStyle = '#78de78';
                         ctx.font = '10px "Press Start 2P", monospace';
-                        ctx.fillText('▶ [ENTER] ENTRAR', bx + 10, by + 38);
+                        ctx.fillText('▶ [ENTER] ENTRAR', bx + 12, by + 40);
                     }
                 }
             }
 
-            // 4. Draw Chosen Hero
+            // 4. Draw Selected Hero
             const heroImg = assets.heroes[selectedHero.id];
             if (heroImg && heroImg.complete && heroImg.naturalWidth > 0) {
                 const animRow = player.isMoving ? 1 : 0;
@@ -694,7 +715,7 @@
 
         requestAnimationFrame(gameLoop);
 
-        // --- Controls & Collision ---
+        // --- Controls & Smooth Walking ---
         window.addEventListener('keydown', (e) => {
             if (isModalOpen || document.getElementById('char-modal').style.display === 'flex') {
                 if (e.key === 'Escape') {
@@ -733,8 +754,8 @@
             if (moved) {
                 if (nc >= 0 && nc < WORLD_COLS && nr >= 0 && nr < WORLD_ROWS) {
                     const nextTile = worldMap[nr][nc];
-                    // Can walk on GRASS, PATH, BRIDGE (Cannot walk on WATER or inside house solid walls)
-                    if (nextTile === GRASS || nextTile === PATH || nextTile === BRIDGE) {
+                    // Walkable: GRASS, PATH, BRIDGE_H, BRIDGE_V
+                    if (nextTile === GRASS || nextTile === PATH || nextTile === BRIDGE_H || nextTile === BRIDGE_V) {
                         player.gridX = nc;
                         player.gridY = nr;
                         player.targetX = nc * TILE_SIZE;
