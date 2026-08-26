@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Reino Medieval - Ludoteca Quest</title>
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>">
@@ -11,38 +11,65 @@
         * {
             box-sizing: border-box;
             user-select: none;
+            -webkit-touch-callout: none;
         }
-        body {
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             background: #0d170a;
             color: #fff;
             font-family: 'MedievalSharp', cursive, sans-serif;
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            touch-action: manipulation;
+        }
+
+        #app-container {
+            position: relative;
+            width: 100vw;
             height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(circle, #2d4520 0%, #0e150a 100%);
         }
 
         #game-wrapper {
             position: relative;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.9), 0 0 0 8px #5c3a21, 0 0 0 12px #2b180d, 0 0 30px rgba(223, 161, 67, 0.4);
-            border-radius: 12px;
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+            max-height: 800px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.9);
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            #game-wrapper {
+                border-radius: 12px;
+                border: 8px solid #5c3a21;
+                box-shadow: 0 15px 45px rgba(0,0,0,0.9), 0 0 0 4px #2b180d, 0 0 30px rgba(223, 161, 67, 0.4);
+            }
         }
 
         canvas {
             display: block;
             image-rendering: pixelated;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         /* UI Top Bar */
         #top-bar {
             position: absolute;
-            top: 12px;
-            left: 20px;
-            right: 20px;
+            top: 10px;
+            left: 10px;
+            right: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -52,11 +79,11 @@
 
         .ui-ribbon {
             background: linear-gradient(180deg, #8b5a2b 0%, #4a2810 100%);
-            border: 3px solid #dfa143;
+            border: 2px solid #dfa143;
             border-radius: 8px;
-            padding: 8px 18px;
+            padding: 6px 14px;
             font-family: 'Cinzel', serif;
-            font-size: 15px;
+            font-size: 13px;
             color: #ffe6a3;
             text-shadow: 2px 2px 4px #000;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
@@ -67,57 +94,163 @@
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: 0.2s;
         }
-        .char-select-btn:hover {
+        .char-select-btn:hover, .char-select-btn:active {
             background: linear-gradient(180deg, #a86c35 0%, #613515 100%);
             transform: scale(1.05);
             color: #fff;
         }
 
-        #controls-help {
-            margin-top: 12px;
-            color: #e2c08d;
-            font-size: 12px;
-            font-family: 'Press Start 2P', monospace;
-            text-shadow: 2px 2px 3px #000;
-            letter-spacing: 1px;
+        /* --- VIRTUAL TOUCH CONTROLS (D-PAD & ACTION BUTTON) --- */
+        #touch-controls {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            justify-content: space-between;
+            align-items: flex-end;
+            pointer-events: none;
+            z-index: 20;
         }
 
-        /* Modal Styles */
+        /* Show touch controls on touch devices or small screens */
+        @media (max-width: 1024px), (hover: none) and (pointer: coarse) {
+            #touch-controls {
+                display: flex;
+            }
+            #controls-help-pc {
+                display: none;
+            }
+        }
+
+        .dpad-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            pointer-events: auto;
+        }
+
+        .dpad-btn {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            background: rgba(45, 25, 10, 0.85);
+            border: 2px solid #dfa143;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #ffd700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            touch-action: none;
+        }
+        .dpad-btn:active {
+            background: rgba(168, 108, 53, 0.95);
+            transform: scale(0.92);
+        }
+        .dpad-up    { top: 0; left: 52px; }
+        .dpad-down  { bottom: 0; left: 52px; }
+        .dpad-left  { top: 52px; left: 0; }
+        .dpad-right { top: 52px; right: 0; }
+
+        .action-btn-container {
+            pointer-events: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .touch-action-btn {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #a86c35 0%, #4a2810 100%);
+            border: 3px solid #ffd700;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 3px #000;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.8), inset 0 0 10px rgba(255, 215, 0, 0.5);
+            touch-action: none;
+        }
+        .touch-action-btn:active {
+            transform: scale(0.9);
+            background: linear-gradient(135deg, #ffd700 0%, #a86c35 100%);
+            color: #000;
+        }
+
+        /* Modal Styles (Mobile Responsive) */
         #game-modal, #char-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 8, 5, 0.88);
+            background: rgba(10, 8, 5, 0.92);
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(8px);
+            padding: 15px;
         }
         .modal-content {
             background: linear-gradient(135deg, #2c1b10 0%, #150c07 100%);
             border: 4px solid #dfa143;
             border-radius: 14px;
-            padding: 30px;
-            max-width: 920px;
-            width: 90%;
+            padding: 24px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
             display: flex;
-            gap: 30px;
+            gap: 25px;
             box-shadow: 0 0 45px rgba(223, 161, 67, 0.4), inset 0 0 25px rgba(0,0,0,0.8);
             position: relative;
         }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 15px;
+                gap: 15px;
+            }
+            #modal-img {
+                width: 100% !important;
+                max-width: 240px !important;
+                height: 280px !important;
+            }
+            .modal-details h2 {
+                font-size: 20px !important;
+                text-align: center;
+            }
+            .modal-details p {
+                font-size: 14px !important;
+            }
+            .char-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
         .close-btn {
             position: absolute;
-            top: 12px; right: 18px;
+            top: 10px; right: 15px;
             color: #dfa143;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
+            padding: 5px;
+            z-index: 10;
         }
-        .close-btn:hover {
+        .close-btn:hover, .close-btn:active {
             color: #fff;
             transform: scale(1.15);
         }
@@ -125,26 +258,27 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            width: 100%;
         }
         .modal-details h2 {
             color: #ffd276;
             font-family: 'Cinzel', serif;
             text-shadow: 2px 2px 6px #000;
             margin-top: 0;
-            font-size: 26px;
+            font-size: 24px;
             border-bottom: 2px solid #5c3a21;
             padding-bottom: 8px;
         }
         .modal-details p {
-            line-height: 1.8;
-            font-size: 16px;
+            line-height: 1.6;
+            font-size: 15px;
             color: #f1dfc5;
         }
         .btn-action {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 16px;
+            padding: 12px 16px;
             border: 2px solid #dfa143;
             border-radius: 6px;
             background: linear-gradient(180deg, #7c4c23 0%, #3e200c 100%);
@@ -157,10 +291,8 @@
             transition: all 0.2s;
             cursor: pointer;
         }
-        .btn-action:hover {
+        .btn-action:hover, .btn-action:active {
             background: linear-gradient(180deg, #9d612e 0%, #542b10 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(223, 161, 67, 0.4);
             color: #fff;
         }
 
@@ -168,63 +300,84 @@
         .char-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 15px;
+            width: 100%;
         }
         .char-card {
             background: rgba(40, 20, 10, 0.8);
             border: 2px solid #8b5a2b;
             border-radius: 8px;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
             transition: 0.2s;
         }
-        .char-card:hover, .char-card.selected {
+        .char-card:hover, .char-card:active, .char-card.selected {
             border-color: #ffd700;
             background: rgba(90, 45, 20, 0.9);
-            transform: translateY(-4px);
+            transform: scale(1.03);
             box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
         }
         .char-card img {
-            width: 64px;
-            height: 64px;
+            width: 54px;
+            height: 54px;
             object-fit: none;
             object-position: 0 0;
             image-rendering: pixelated;
         }
         .char-card span {
-            margin-top: 10px;
-            font-size: 13px;
+            margin-top: 8px;
+            font-size: 11px;
             color: #ffe6a3;
             font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     
-    <div id="game-wrapper">
-        <div id="top-bar">
-            <div class="ui-ribbon">🏰 REINO LUDOTECA: ISLAS & CASAS ⚔️</div>
-            <div class="ui-ribbon char-select-btn" onclick="openCharModal()">
-                <span>👤 HÉROE:</span> <strong id="current-hero-name" style="color:#ffd700;">Caballero Azul</strong> ⚙️
+    <div id="app-container">
+        <div id="game-wrapper">
+            <div id="top-bar">
+                <div class="ui-ribbon" style="font-size:12px;">🏰 REINO LUDOTECA ⚔️</div>
+                <div class="ui-ribbon char-select-btn" onclick="openCharModal()">
+                    <span>👤 HÉROE:</span> <strong id="current-hero-name" style="color:#ffd700;">Caballero Azul</strong> ⚙️
+                </div>
+            </div>
+
+            <canvas id="gameCanvas" width="960" height="600"></canvas>
+
+            <!-- CONTROLES TACTILES VIRTUALES PARA TELEFONOS -->
+            <div id="touch-controls">
+                <div class="dpad-container">
+                    <div class="dpad-btn dpad-up" id="btn-up">▲</div>
+                    <div class="dpad-btn dpad-left" id="btn-left">◀</div>
+                    <div class="dpad-btn dpad-right" id="btn-right">▶</div>
+                    <div class="dpad-btn dpad-down" id="btn-down">▼</div>
+                </div>
+
+                <div class="action-btn-container">
+                    <div class="touch-action-btn" id="btn-action">
+                        <span style="font-size:20px;">⚔️</span>
+                        <span>ENTRAR</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <canvas id="gameCanvas" width="1024" height="640"></canvas>
     </div>
-    <div id="controls-help">⚔️ FLECHAS/WASD: Caminar | PUENTES DIRECTOS | ENTER: Entrar a la Casa</div>
 
     <!-- Modal Juego -->
     <div id="game-modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
-            <img id="modal-img" src="" alt="Cover" style="width: 320px; height: 420px; object-fit: contain; border-radius: 8px; border: 3px solid #dfa143; box-shadow: 0 8px 20px rgba(0,0,0,0.8); background: #000;">
+            <img id="modal-img" src="" alt="Cover" style="width: 300px; height: 400px; object-fit: contain; border-radius: 8px; border: 3px solid #dfa143; box-shadow: 0 8px 20px rgba(0,0,0,0.8); background: #000;">
             <div class="modal-details">
                 <h2 id="modal-title">CASA DEL JUEGO</h2>
                 <p id="modal-desc">Detalles del juego...</p>
-                <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:20px;">
+                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:15px;">
                     <a href="#" id="modal-link" target="_blank" class="btn-action">▶ VER TUTORIAL</a>
                     <a href="#" id="modal-bgg-link" target="_blank" class="btn-action" style="border-color:#6ba3d6;">▶ VER EN BGG</a>
                     <label class="btn-action" style="border-color:#5bb35b;">
@@ -342,7 +495,7 @@
             document.getElementById('modal-title').innerText = '🏠 ' + game.name;
             document.getElementById('modal-img').src = game.image + '?v=' + new Date().getTime();
             document.getElementById('modal-desc').innerHTML = `
-                <span style="color:#ffd276; font-size:1.15em; font-weight:bold;">⭐ VALORACIÓN BGG: ${game.rating || 'N/A'}/10</span><br><br>
+                <span style="color:#ffd276; font-size:1.1em; font-weight:bold;">⭐ BGG: ${game.rating || 'N/A'}/10</span><br><br>
                 <span style="color:#dfa143; font-weight:bold;">JUGADORES:</span> ${game.players}<br>
                 <span style="color:#dfa143; font-weight:bold;">DIFICULTAD:</span> ${game.difficulty}<br>
                 <span style="color:#dfa143; font-weight:bold;">CATEGORÍA:</span> ${game.type}
@@ -395,7 +548,6 @@
         const BRIDGE_H = 3;
         const BRIDGE_V = 4;
 
-        // Initialize World with Water
         let worldMap = [];
         for (let r = 0; r < WORLD_ROWS; r++) {
             let row = [];
@@ -405,7 +557,6 @@
             worldMap.push(row);
         }
 
-        // 4 Large Islands with spacious layouts
         const islands = [
             { name: "Distrito Norte-Oeste", c1: 3, c2: 24, r1: 3, r2: 17 },
             { name: "Distrito Norte-Este", c1: 29, c2: 50, r1: 3, r2: 17 },
@@ -413,14 +564,12 @@
             { name: "Distrito Sur-Este",   c1: 29, c2: 50, r1: 22, r2: 36 }
         ];
 
-        // Paint Grass & Inner Paths
         islands.forEach(isl => {
             for (let r = isl.r1; r <= isl.r2; r++) {
                 for (let c = isl.c1; c <= isl.c2; c++) {
                     worldMap[r][c] = GRASS;
                 }
             }
-            // Island central streets (horizontal & vertical)
             const midR1 = isl.r1 + 4;
             const midR2 = isl.r1 + 9;
             const midC = Math.floor((isl.c1 + isl.c2) / 2);
@@ -433,46 +582,38 @@
             }
         });
 
-        // Multiple direct horizontal bridges directly connecting streets
-        // Connecting top islands at row 7 & 12
+        // Multiple direct horizontal bridges
         for (let c = 24; c <= 29; c++) {
             worldMap[7][c] = BRIDGE_H;
             worldMap[12][c] = BRIDGE_H;
-            // Connecting bottom islands at row 26 & 31
             worldMap[26][c] = BRIDGE_H;
             worldMap[31][c] = BRIDGE_H;
         }
 
-        // Multiple direct vertical bridges connecting streets
-        // Connecting left islands at col 8, 14, 20
+        // Multiple direct vertical bridges
         for (let r = 17; r <= 22; r++) {
             worldMap[r][8] = BRIDGE_V;
             worldMap[r][14] = BRIDGE_V;
             worldMap[r][20] = BRIDGE_V;
-            // Connecting right islands at col 34, 40, 46
             worldMap[r][34] = BRIDGE_V;
             worldMap[r][40] = BRIDGE_V;
             worldMap[r][46] = BRIDGE_V;
         }
 
-        // Separate, well-spaced Houses for all 44 games
+        // Houses for all games
         const houses = [];
         let gIndex = 0;
 
         islands.forEach((isl) => {
-            // Spacious spots with plenty of clearance (4-5 tiles apart)
             const spots = [
-                // Top row in island
                 { c: isl.c1 + 1, r: isl.r1 + 1 },
                 { c: isl.c1 + 6, r: isl.r1 + 1 },
                 { c: isl.c1 + 11, r: isl.r1 + 1 },
                 { c: isl.c1 + 16, r: isl.r1 + 1 },
-                // Middle row in island
                 { c: isl.c1 + 1, r: isl.r1 + 6 },
                 { c: isl.c1 + 6, r: isl.r1 + 6 },
                 { c: isl.c1 + 11, r: isl.r1 + 6 },
                 { c: isl.c1 + 16, r: isl.r1 + 6 },
-                // Bottom row in island
                 { c: isl.c1 + 1, r: isl.r1 + 11 },
                 { c: isl.c1 + 6, r: isl.r1 + 11 },
                 { c: isl.c1 + 11, r: isl.r1 + 11 },
@@ -488,7 +629,6 @@
                         r: spot.r,
                         spriteIndex: sIdx
                     });
-                    // Mark house building footprint as solid (10 + gIndex)
                     for (let dr = 0; dr < 3; dr++) {
                         for (let dc = 0; dc < 3; dc++) {
                             if (spot.r + dr < WORLD_ROWS && spot.c + dc < WORLD_COLS) {
@@ -523,6 +663,43 @@
             y: player.y
         };
 
+        function movePlayer(dx, dy) {
+            if (isModalOpen || document.getElementById('char-modal').style.display === 'flex') return;
+
+            player.dirX = dx;
+            player.dirY = dy;
+            const nc = player.gridX + dx;
+            const nr = player.gridY + dy;
+
+            if (nc >= 0 && nc < WORLD_COLS && nr >= 0 && nr < WORLD_ROWS) {
+                const nextTile = worldMap[nr][nc];
+                if (nextTile === GRASS || nextTile === PATH || nextTile === BRIDGE_H || nextTile === BRIDGE_V) {
+                    player.gridX = nc;
+                    player.gridY = nr;
+                    player.targetX = nc * TILE_SIZE;
+                    player.targetY = nr * TILE_SIZE;
+                }
+            }
+        }
+
+        function interactAction() {
+            if (isModalOpen) {
+                closeModal();
+                return;
+            }
+            const fc = player.gridX + player.dirX;
+            const fr = player.gridY + player.dirY;
+            if (fr >= 0 && fr < WORLD_ROWS && fc >= 0 && fc < WORLD_COLS) {
+                const targetTile = worldMap[fr][fc];
+                if (targetTile >= 10) {
+                    const gIdx = targetTile - 10;
+                    if (gamesData[gIdx]) {
+                        openGameModal(gamesData[gIdx]);
+                    }
+                }
+            }
+        }
+
         function update() {
             const dx = player.targetX - player.x;
             const dy = player.targetY - player.y;
@@ -555,14 +732,13 @@
             const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 1);
             const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 1);
 
-            // 1. Draw Terrain Base (ALWAYS draw water first under rivers and bridges)
+            // 1. Draw Terrain Base
             for (let r = startRow; r <= endRow; r++) {
                 for (let c = startCol; c <= endCol; c++) {
                     const x = c * TILE_SIZE;
                     const y = r * TILE_SIZE;
                     const tile = worldMap[r][c];
 
-                    // Draw Water background for water tiles AND under bridges
                     if (tile === WATER || tile === BRIDGE_H || tile === BRIDGE_V) {
                         if (assets.water.complete && assets.water.naturalWidth > 0) {
                             ctx.drawImage(assets.water, 0, 0, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -572,7 +748,6 @@
                         }
                     }
 
-                    // Grass Island Surface
                     if (tile === GRASS || tile === PATH || tile >= 10) {
                         if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
                             ctx.drawImage(assets.tilemap, 64, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -582,7 +757,6 @@
                         }
                     }
 
-                    // Road / Cobblestone
                     if (tile === PATH) {
                         if (assets.tilemap.complete && assets.tilemap.naturalWidth > 0) {
                             ctx.drawImage(assets.tilemap, 192, 64, 64, 64, x, y, TILE_SIZE, TILE_SIZE);
@@ -592,10 +766,8 @@
                         }
                     }
 
-                    // Transparent Wood Bridges (Drawn ON TOP of water)
                     if (tile === BRIDGE_H) {
                         if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
-                            // Middle plank of horizontal bridge in Bridge_All
                             ctx.drawImage(assets.bridge, 64, 0, 64, 64, x, y - 4, TILE_SIZE, TILE_SIZE + 8);
                         } else {
                             ctx.fillStyle = '#8b5a2b';
@@ -603,7 +775,6 @@
                         }
                     } else if (tile === BRIDGE_V) {
                         if (assets.bridge.complete && assets.bridge.naturalWidth > 0) {
-                            // Middle plank of vertical bridge in Bridge_All
                             ctx.drawImage(assets.bridge, 0, 64, 64, 64, x - 4, y, TILE_SIZE + 8, TILE_SIZE);
                         } else {
                             ctx.fillStyle = '#8b5a2b';
@@ -613,7 +784,7 @@
                 }
             }
 
-            // 2. Draw House Buildings (Spaced with clean plaques)
+            // 2. Draw House Buildings
             houses.forEach(h => {
                 const hx = h.c * TILE_SIZE;
                 const hy = h.r * TILE_SIZE;
@@ -626,7 +797,6 @@
                     ctx.fillRect(hx, hy, TILE_SIZE * 3, TILE_SIZE * 3);
                 }
 
-                // Clean Wooden Plaque below each house
                 const game = gamesData[h.gameIndex];
                 if (game) {
                     const pw = TILE_SIZE * 3 - 10;
@@ -648,7 +818,7 @@
                 }
             });
 
-            // 3. Highlight Target House (NO ugly yellow box, elegant scroll banner)
+            // 3. Highlight Target House
             const frontC = player.gridX + player.dirX;
             const frontR = player.gridY + player.dirY;
             if (frontR >= 0 && frontR < WORLD_ROWS && frontC >= 0 && frontC < WORLD_COLS) {
@@ -660,11 +830,10 @@
                         const fx = frontC * TILE_SIZE;
                         const fy = frontR * TILE_SIZE;
 
-                        // Elegant Banner Tooltip above the player/door
-                        const tw = 250;
-                        const th = 54;
+                        const tw = 240;
+                        const th = 50;
                         const bx = fx - tw/2 + TILE_SIZE/2;
-                        const by = fy - 72;
+                        const by = fy - 68;
 
                         ctx.fillStyle = 'rgba(20, 10, 5, 0.96)';
                         ctx.fillRect(bx, by, tw, th);
@@ -673,14 +842,14 @@
                         ctx.strokeRect(bx, by, tw, th);
 
                         ctx.fillStyle = '#ffd700';
-                        ctx.font = 'bold 13px "Cinzel", serif';
+                        ctx.font = 'bold 12px "Cinzel", serif';
                         ctx.textAlign = 'left';
                         const titleTxt = game.name.length > 17 ? game.name.substring(0, 16) + '..' : game.name;
-                        ctx.fillText('🏰 ' + titleTxt, bx + 12, by + 20);
+                        ctx.fillText('🏰 ' + titleTxt, bx + 10, by + 18);
 
                         ctx.fillStyle = '#78de78';
-                        ctx.font = '10px "Press Start 2P", monospace';
-                        ctx.fillText('▶ [ENTER] ENTRAR', bx + 12, by + 40);
+                        ctx.font = '9px "Press Start 2P", monospace';
+                        ctx.fillText('▶ TOCAR PARA ENTRAR', bx + 10, by + 38);
                     }
                 }
             }
@@ -715,7 +884,7 @@
 
         requestAnimationFrame(gameLoop);
 
-        // --- Controls & Smooth Walking ---
+        // --- KEYBOARD CONTROLS (PC) ---
         window.addEventListener('keydown', (e) => {
             if (isModalOpen || document.getElementById('char-modal').style.display === 'flex') {
                 if (e.key === 'Escape') {
@@ -725,41 +894,68 @@
                 return;
             }
 
-            let moved = false;
-            let nc = player.gridX;
-            let nr = player.gridY;
+            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') movePlayer(0, -1);
+            else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') movePlayer(0, 1);
+            else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') movePlayer(-1, 0);
+            else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') movePlayer(1, 0);
+            else if (e.key === 'Enter') interactAction();
+        });
 
-            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
-                player.dirX = 0; player.dirY = -1; nr--; moved = true;
-            } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
-                player.dirX = 0; player.dirY = 1; nr++; moved = true;
-            } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-                player.dirX = -1; player.dirY = 0; nc--; moved = true;
-            } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-                player.dirX = 1; player.dirY = 0; nc++; moved = true;
-            } else if (e.key === 'Enter') {
-                const fc = player.gridX + player.dirX;
-                const fr = player.gridY + player.dirY;
-                if (fr >= 0 && fr < WORLD_ROWS && fc >= 0 && fc < WORLD_COLS) {
-                    const targetTile = worldMap[fr][fc];
-                    if (targetTile >= 10) {
-                        const gIdx = targetTile - 10;
-                        if (gamesData[gIdx]) {
-                            openGameModal(gamesData[gIdx]);
-                        }
-                    }
-                }
-            }
+        // --- TOUCH CONTROLS (SMARTPHONE / TABLET) ---
+        function attachTouchBtn(id, action) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            let interval = null;
+            
+            const start = (e) => {
+                e.preventDefault();
+                action();
+                interval = setInterval(action, 140);
+            };
+            const stop = (e) => {
+                e.preventDefault();
+                if (interval) clearInterval(interval);
+            };
 
-            if (moved) {
-                if (nc >= 0 && nc < WORLD_COLS && nr >= 0 && nr < WORLD_ROWS) {
-                    const nextTile = worldMap[nr][nc];
-                    // Walkable: GRASS, PATH, BRIDGE_H, BRIDGE_V
-                    if (nextTile === GRASS || nextTile === PATH || nextTile === BRIDGE_H || nextTile === BRIDGE_V) {
-                        player.gridX = nc;
-                        player.gridY = nr;
-                        player.targetX = nc * TILE_SIZE;
-                        player.targetY = nr * TILE_SIZE;
+            el.addEventListener('touchstart', start, { passive: false });
+            el.addEventListener('touchend', stop, { passive: false });
+            el.addEventListener('touchcancel', stop, { passive: false });
+            el.addEventListener('mousedown', start);
+            el.addEventListener('mouseup', stop);
+            el.addEventListener('mouseleave', stop);
+        }
+
+        attachTouchBtn('btn-up', () => movePlayer(0, -1));
+        attachTouchBtn('btn-down', () => movePlayer(0, 1));
+        attachTouchBtn('btn-left', () => movePlayer(-1, 0));
+        attachTouchBtn('btn-right', () => movePlayer(1, 0));
+
+        const actBtn = document.getElementById('btn-action');
+        actBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            interactAction();
+        }, { passive: false });
+        actBtn.addEventListener('click', interactAction);
+
+        // Touch on Canvas directly to interact / walk
+        canvas.addEventListener('click', (e) => {
+            if (isModalOpen) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clickX = (e.clientX - rect.left) * scaleX + camera.x;
+            const clickY = (e.clientY - rect.top) * scaleY + camera.y;
+
+            const clickedCol = Math.floor(clickX / TILE_SIZE);
+            const clickedRow = Math.floor(clickY / TILE_SIZE);
+
+            if (clickedRow >= 0 && clickedRow < WORLD_ROWS && clickedCol >= 0 && clickedCol < WORLD_COLS) {
+                const tile = worldMap[clickedRow][clickedCol];
+                if (tile >= 10) {
+                    // Directly open clicked house!
+                    const gIdx = tile - 10;
+                    if (gamesData[gIdx]) {
+                        openGameModal(gamesData[gIdx]);
                     }
                 }
             }
