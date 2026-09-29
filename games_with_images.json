@@ -15,7 +15,8 @@
     "synopsis": "Lidera una de las 7 grandes civilizaciones del mundo antiguo. Pasa cartas de mano en mano a lo largo de 3 Eras para construir tu Maravilla arquitectónica, desarrollar ciencia y poderío militar.",
     "rank": "Beginner",
     "islandId": 1,
-    "id": 0
+    "id": 0,
+    "scoring": "• 7 Vías de Puntos: Estructuras civiles (azules), maravilla, tesoro militar (fichas de victoria/derrota), dinero (1 pt por 3 monedas), gremios (moradas) y cartas científicas (verdes: símbolos iguales² + sets de 3)."
   },
   {
     "name": "Akropolis",
@@ -33,7 +34,8 @@
     "synopsis": "Construye la mejor metrópolis en la antigua Grecia colocando losetas hexagonales de templos, mercados y jardines, apilándolas en altura para multiplicar su valor en puntos.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 1
+    "id": 1,
+    "scoring": "• Multiplicadores por Altura: Casas (bloques x estrellas), Mercados (periferia), Cuarteles (bordes), Templos (rodeados), Jardines (libres). Multiplica el valor del distrito por la altura de nivel donde se colocó."
   },
   {
     "name": "Akropolis: Athena",
@@ -51,7 +53,8 @@
     "synopsis": "Expansión para Akropolis que introduce la estatua de Atenea y nuevas cartas de misión de la diosa para ganar templos y losetas sagradas.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 2
+    "id": 2,
+    "scoring": "• Misiones de la Diosa: Reglas base de Akropolis sumando los puntos de las cartas de bendición de Atenea completadas al construir la estatua de la diosa en la acrópolis."
   },
   {
     "name": "Atenea",
@@ -69,7 +72,8 @@
     "synopsis": "Juego de cartas táctico ambientado en la mitología griega donde compites por ganarte la bendición de los dioses del Olimpo.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 3
+    "id": 3,
+    "scoring": "• Puntos Mitológicos: Combos de cartas de bendiciones divinas y templos del Olimpo. Gana quien acumule más puntos de honor al finalizar las rondas pactadas."
   },
   {
     "name": "¡Aventureros al Tren!",
@@ -87,7 +91,8 @@
     "synopsis": "Conecta ciudades reclamando rutas ferroviarias en un mapa con tus cartas de vagón. Cumple tus billetes de destino secretos para ganar la mayor cantidad de puntos antes que se acaben los trenes.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 4
+    "id": 4,
+    "scoring": "• Billetes y Rutas: Puntos por longitud de vías reclamadas (1 a 15 pts) + billetes de destino completados (los incompletos restan) + 10 pts al recorrido continuo más largo."
   },
   {
     "name": "Azul",
@@ -105,7 +110,8 @@
     "synopsis": "Juego de estrategia abstracto donde eres un maestro artesano decorando las paredes del Palacio Real de Évora con hermosos azulejos de cerámica portuguesa formando patrones elegantes.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 5
+    "id": 5,
+    "scoring": "• Mosaicos y Filas: Puntos continuos por azulejos adyacentes colocados en la pared; penalización por azulejos rotos en el suelo; bonos finales por filas completas (+2), columnas (+7) y sets de 5 colores (+10)."
   },
   {
     "name": "Bleef",
@@ -123,7 +129,8 @@
     "synopsis": "Juego de faroleo y engaño ingenioso. Inventa definiciones falsas pero creíbles para palabras insólitas de diccionario y vota para descubrir quién dice la verdad.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 6
+    "id": 6,
+    "scoring": "• Votación de Faroles: Ganas puntos si adivinas la definición real del diccionario y ganas puntos adicionales por cada jugador que haya votado tu definición inventada creyendo que era la real."
   },
   {
     "name": "Burako",
@@ -141,7 +148,8 @@
     "synopsis": "Juego de fichas tradicional de agilidad mental. Forma escaleras del mismo color o grupos de números iguales para vaciar tu atril y cerrar la partida con canastas.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 7
+    "id": 7,
+    "scoring": "• Canastas y Cierre: Canasta Pura (200 pts), Impura (100 pts), Cierre de partida (100 pts), fichas en mano restan puntos. Gana el primer equipo en alcanzar los 2000 o 3000 puntos."
   },
   {
     "name": "CACA",
@@ -159,7 +167,8 @@
     "synopsis": "Juego de cartas rápido, absurdo y lleno de risas para todas las edades donde debes bajar cartas sin desbordar el inodoro y deshacerte de tu mano antes que nadie.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 8
+    "id": 8,
+    "scoring": "• Descarte y Escape: Gana el primer jugador en quedarse sin cartas de evacuación sin hacer desbordar el inodoro con fichas de penalización."
   },
   {
     "name": "Carcassonne",
@@ -177,7 +186,8 @@
     "synopsis": "Juego maestro de colocación de losetas. Construye el paisaje medieval del sur de Francia levantando ciudades amuralladas, caminos, monasterios y campos puntuando con tus seguidores (meeples).",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 9
+    "id": 9,
+    "scoring": "• Cierre y Puntuación Final: Caminos (1 pt/loseta), Ciudades completas (2 pts/loseta + 2 por escudo), Monasterios (9 pts rodeado), Granjas/Campesinos (3 pts por cada ciudad abastecida)."
   },
   {
     "name": "Catan",
@@ -195,7 +205,8 @@
     "synopsis": "Coloniza una isla inexplorada construyendo poblados, ciudades y caminos. Negocia recursos esenciales (madera, trigo, oveja, ladrillo, mineral) para alcanzar 10 puntos de victoria.",
     "rank": "Beginner",
     "islandId": 1,
-    "id": 10
+    "id": 10,
+    "scoring": "• Carrera a 10 Puntos de Victoria: Poblados (1 PV), Ciudades (2 PV), Gran Ruta Comercial (2 PV), Gran Ejército de Caballería (2 PV) y Cartas de Desarrollo de Punto de Victoria (1 PV c/u)."
   },
   {
     "name": "Catan Energias renovables",
@@ -213,7 +224,8 @@
     "synopsis": "Edición moderna e independiente de Catan ambientada en el siglo XXI. Construye plantas de energía fósil o limpia, balanceando la producción industrial sin desatar catástrofes por contaminación.",
     "rank": "Beginner",
     "islandId": 1,
-    "id": 11
+    "id": 11,
+    "scoring": "• Puntos de Sostenibilidad (10 PV): Puntos por poblados, ciudades y plantas de energía limpia (solar/eólica). Si la contaminación global desborda el planeta, gana quien haya invertido más en energía verde."
   },
   {
     "name": "Catan Mercaderes y Barbaros",
@@ -231,7 +243,8 @@
     "synopsis": "Expansión modular de Catan que incluye 5 escenarios y 4 variantes: transporta mercancías en carretas, pesca en los ríos, comercia con nómadas y defiende la costa de las incursiones bárbaras.",
     "rank": "Beginner",
     "islandId": 1,
-    "id": 12
+    "id": 12,
+    "scoring": "• Puntos por Escenario (10 a 13 PV): Varía según el módulo activo: transportar mercancías en caravana, pesca de peces en los lagos, recuperar castillos y expulsar bárbaros."
   },
   {
     "name": "Color Brain",
@@ -249,7 +262,8 @@
     "synopsis": "Juego de preguntas donde todas las respuestas son colores. ¿De qué color son los anillos olímpicos o el sombrero de Mario? Responde bajando tus cartas de color antes que tus rivales.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 13
+    "id": 13,
+    "scoring": "• Puntuación por Ronda: Ganas 1 punto por cada equipo rival que se haya equivocado en los colores de la respuesta correcta. Gana el primer equipo en llegar a 10 puntos."
   },
   {
     "name": "Con Eso No Se Jode",
@@ -267,7 +281,8 @@
     "synopsis": "Juego de cartas argentino de humor negro y desafíos extremos sin límites morales ni censura, donde gana quien sume más puntos por sus decisiones incorrectas.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 14
+    "id": 14,
+    "scoring": "• Puntos de Victoria: Cada carta ganada por remate o respuesta más votada/hilarante suma 1 punto. Gana quien alcance 5 o 10 puntos acordados al inicio."
   },
   {
     "name": "Count up",
@@ -285,7 +300,8 @@
     "synopsis": "Juego cooperativo de concentración y sincronización mental donde los jugadores deben bajar cartas en orden ascendente sin mirarse ni comunicarse verbalmente.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 15
+    "id": 15,
+    "scoring": "• Sincronización Cooperativa: El grupo gana si logra contar del 1 al 50 bajando cartas sin superposiciones ni fallos de tiempo."
   },
   {
     "name": "Dany (Buró)",
@@ -303,7 +319,8 @@
     "synopsis": "Juego de deducción psicológica y cartas abstractas. Todos representan personalidades en la mente de Dany intentando comunicarse con recuerdos visuales, mientras una personalidad falsa sabotea las ideas.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 16
+    "id": 16,
+    "scoring": "• Personalidades Reales: Ganan si logran 6 aciertos descubriendo la idea secreta.\n• Dany (Personalidad Falsa): Gana si provoca 3 fallos en las adivinanzas o si no logran desenmascararlo en la votación final."
   },
   {
     "name": "Dixit Clásico",
@@ -321,7 +338,8 @@
     "synopsis": "Juego poético de creatividad e intuición. El cuentacuentos da una pista sutil sobre su carta ilustrada; los demás votan cuál creen que es la correcta entre las cartas trampas.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 17
+    "id": 17,
+    "scoring": "• Puntuación (30 Puntos): Si todos o nadie acierta, el narrador 0 y los demás 2 pts. Si algunos aciertan, narrador 3 pts y acertantes 3 pts. Cada voto a tu carta trampa te suma +1 pt."
   },
   {
     "name": "Dixit Odyssey",
@@ -339,7 +357,8 @@
     "synopsis": "Versión ampliada de Dixit que permite jugar hasta a 12 personas a la vez con nuevos tableros de votación por clavijas y 84 nuevas cartas de arte surrealista.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 18
+    "id": 18,
+    "scoring": "• Puntuación Ampliada: Mismo criterio de votación de cartas e historias metafóricas hasta llegar a la meta de 30 puntos en el tablero de clavijas."
   },
   {
     "name": "El Camarero",
@@ -357,7 +376,8 @@
     "synopsis": "Juego veloz de memoria y agilidad mental donde debes memorizar los pedidos de un restaurante caótico y servirlos a tiempo sin equivocarte en los ingredientes.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 19
+    "id": 19,
+    "scoring": "• Entrega de Comandas: Gana fichas de propina quien entregue las comandas de mesas sin equivocarse en los ingredientes memorizados. Gana quien sume más dinero en propinas."
   },
   {
     "name": "El Melómano",
@@ -375,7 +395,8 @@
     "synopsis": "Juego de mesa argentino de trivia y desafíos musicales para grupos. Adivina bandas, completa letras de canciones icónicas y canta melodías para sumar discos de oro.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 20
+    "id": 20,
+    "scoring": "• Discos de Oro: Cada respuesta o desafío musical cantado/adivinado correctamente otorga discos de oro. Gana el primer jugador o equipo en reunir los 6 discos de oro de diferentes géneros."
   },
   {
     "name": "Equipazo",
@@ -393,7 +414,8 @@
     "synopsis": "Party game cooperativo de comunicación y coordinación en equipo donde resuelven desafíos de palabras y conceptos bajo presión de tiempo.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 21
+    "id": 21,
+    "scoring": "• Puntuación por Ronda: Aciertos de pistas colaborativas en tiempo límite. Cada desafío resuelto con éxito aporta estrellas al marcador de equipo."
   },
   {
     "name": "Jardín Japonés",
@@ -411,7 +433,8 @@
     "synopsis": "Construye un sereno jardín zen colocando losetas de estanques con peces koi, bonsáis y linternas de piedra en armonía para conseguir la mayor puntuación estética.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 22
+    "id": 22,
+    "scoring": "• Armonía Zen: Puntos por formación de estanques de peces koi conectados, distribución equilibrada de bonsáis y simetría de linternas de piedra en el tablero."
   },
   {
     "name": "Just One",
@@ -429,7 +452,8 @@
     "synopsis": "Party game cooperativo ganador del Spiel des Jahres. Todos escriben en secreto una palabra pista para el adivinador, pero ¡las pistas repetidas se anulan y se borran antes de mostrarse!",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 23
+    "id": 23,
+    "scoring": "• Puntuación Cooperativa (13 Cartas): Cada palabra adivinada suma 1 punto, cada fallo descarta 2 cartas. Puntuación final sobre 13 puntos (13 = Puntuación Perfecta)."
   },
   {
     "name": "La Isla Prohibida",
@@ -447,7 +471,8 @@
     "synopsis": "Aventura cooperativa donde un equipo de arqueólogos debe recuperar 4 tesoros sagrados en una isla misteriosa cuyas losetas de terreno se van inundando y hundiendo con cada turno.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 24
+    "id": 24,
+    "scoring": "• Victoria Cooperativa: El equipo gana si consigue los 4 tesoros sagrados, todos los aventureros llegan al helipuerto 'Fools' Landing' y juegan una carta de Helicóptero antes de que se hunda la isla."
   },
   {
     "name": "Los Hombres Lobo de Castronegro",
@@ -465,7 +490,8 @@
     "synopsis": "Juego social para grupos grandes. Una aldea amenazada por licántropos debe debatir y linchar a los sospechosos de día, mientras los lobos devoran inocentes en secreto durante la noche.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 25
+    "id": 25,
+    "scoring": "• Aldeanos: Ganan linchando y eliminando a todos los Hombres Lobo.\n• Hombres Lobo: Ganan devorando a suficientes aldeanos hasta igualar o superar su número."
   },
   {
     "name": "Monopoly",
@@ -483,7 +509,8 @@
     "synopsis": "El clásico juego de bienes raíces. Compra calles, construye casas y hoteles de lujo, y cobra alquileres a los demás jugadores hasta dejarlos en bancarrota total.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 26
+    "id": 26,
+    "scoring": "• Eliminación Económica: Gana el último jugador que quede en pie tras llevar a todos los demás rivales a la bancarrota total mediante cobro de alquileres."
   },
   {
     "name": "Munchkin",
@@ -501,7 +528,8 @@
     "synopsis": "Parodia hilarante de los juegos de rol. Abre puertas de mazmorra, derrota monstruos ridículos, róbate los tesoros y traiciona a tus propios amigos para ser el primero en alcanzar el nivel 10.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 27
+    "id": 27,
+    "scoring": "• Nivel 10: Gana el primer jugador en alcanzar el Nivel 10 derrotando a un monstruo (o por carta especial que lo permita explícitamente)."
   },
   {
     "name": "Munchkin 3: Errores clericales",
@@ -519,7 +547,8 @@
     "synopsis": "Añade la clase Bardo, la raza Gnomo y nuevas criaturas como el Centauro y el Chicopez para ampliar y caotizar tus partidas de Munchkin.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 28
+    "id": 28,
+    "scoring": "• Nivel 10: Reglas estándar de Munchkin incorporando las habilidades de robo y combate de las nuevas clases Bardo y Gnomo."
   },
   {
     "name": "Munchkin 7: Trampas a dos manos",
@@ -537,7 +566,8 @@
     "synopsis": "Diseñado para mezclar múltiples cajas de Munchkin, permitiendo equipar más objetos poderosos y usar trampas dobles sin penalización.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 29
+    "id": 29,
+    "scoring": "• Nivel 10 Ampliado: Permite usar combinaciones de objetos bizarros para alcanzar el Nivel 10 en mazmorras combinadas."
   },
   {
     "name": "Munchkin: Dragones molones",
@@ -555,7 +585,8 @@
     "synopsis": "Expansión que introduce feroces y cómicos dragones a tus mazmorras de Munchkin, con tesoros legendarios y potenciadores dracónicos.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 30
+    "id": 30,
+    "scoring": "• Nivel 10 con Dragones: Reglas estándar de Munchkin; derrotar dragones legendarios otorga niveles dobles y botín reforzado."
   },
   {
     "name": "Panic Lab",
@@ -573,7 +604,8 @@
     "synopsis": "Juego de agilidad visual donde amebas mutantes escaparon del laboratorio y debes seguir su rastro a través de rejillas de ventilación y salas de mutación para atrapar a la correcta.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 31
+    "id": 31,
+    "scoring": "• Puntuación por Fichas: Gana 1 ficha de punto el primer jugador que toque la ameba correcta (siguiendo color, forma, patrón y mutaciones por ventilación). Gana quien consiga 5 puntos primero."
   },
   {
     "name": "Root",
@@ -591,7 +623,8 @@
     "synopsis": "Juego de guerra y control de áreas totalmente asimétrico ambientado en un bosque encantado. Cada facción (Marquesa felina, Dinastía del Nido, Alianza del Bosque y el Vagabundo) se juega con reglas y metas totalmente distintas.",
     "rank": "Advance",
     "islandId": 2,
-    "id": 32
+    "id": 32,
+    "scoring": "• Carrera a 30 Puntos o Carta de Dominancia:\n- Marquesa: Construcción de aserraderos/talleres/cuarteles.\n- Nido de Águilas: Construcción de nidos sin caer en caos.\n- Alianza: Simpatía y revueltas.\n- Vagabundo: Misiones y ayuda/eliminación de guerreros."
   },
   {
     "name": "Saboteur",
@@ -609,7 +642,8 @@
     "synopsis": "Eres un enano minero cavando túneles en busca de oro en la montaña, pero cuidado: entre tus compañeros hay saboteadores secretos que romperán tus herramientas y bloquearán los caminos.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 33
+    "id": 33,
+    "scoring": "• Mineros: Ganan si conectan el túnel desde la entrada hasta la carta de pepita de oro real.\n• Saboteadores: Ganan si se agotan las cartas del mazo sin que los mineros hayan llegado al oro.\n• Puntos: Se reparten cartas de pepitas de oro en 3 rondas acumulativas."
   },
   {
     "name": "Say My Name",
@@ -627,7 +661,8 @@
     "synopsis": "Party game de adivinanzas por equipos contrarreloj: describe personajes de series, películas, música y cultura pop a lo largo de 3 rondas (palabras libres, 1 sola palabra y mímica pura).",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 34
+    "id": 34,
+    "scoring": "• Puntuación por Equipos: Cada personaje adivinado en el tiempo límite suma 1 punto. Tras 3 rondas (palabras libres, 1 palabra, mímica), gana el equipo con más puntos acumulados."
   },
   {
     "name": "Secret Hitler",
@@ -645,7 +680,8 @@
     "synopsis": "Juego de deducción social y engaño político en la Alemania de 1930. Los liberales intentan aprobar leyes democráticas mientras los fascistas conspiran en secreto para colocar a su líder en el poder.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 35
+    "id": 35,
+    "scoring": "• Bando Liberal: Gana aprobando 5 políticas liberales o asesinando a Hitler.\n• Bando Fascista: Gana aprobando 6 políticas fascistas o eligiendo a Hitler como Canciller tras aprobar 3 políticas fascistas."
   },
   {
     "name": "Splendor",
@@ -663,7 +699,8 @@
     "synopsis": "Eres un mercader del Renacimiento que recolecta fichas de gemas para adquirir minas, barcos comerciales y artesanos que abaratan tus compras futuras y atraen a nobles influyentes.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 36
+    "id": 36,
+    "scoring": "• Carrera a 15 Puntos: Gana quien alcance 15 o más puntos de prestigio comprando cartas de desarrollo de gemas y atrayendo nobles influyentes (+3 pts c/u)."
   },
   {
     "name": "Sushi Go!",
@@ -681,7 +718,8 @@
     "synopsis": "Juego rápido de cartas estilo drafting. Elige una carta de sushi de tu mano y pásale el resto al de al lado. Junta combos de nigiris con wasabi, makis y puddings para sumar puntos.",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 37
+    "id": 37,
+    "scoring": "• Combos en 3 Rondas: Maki (más rollos = 6 pts), Tempura (pares = 5 pts), Sashimi (tríos = 10 pts), Dumplings (1 a 15 pts), Nigiris x3 con Wasabi, y Pudding final (mayoría +6 pts, minoría -6 pts)."
   },
   {
     "name": "Taco Gato Cabra Queso Pizza",
@@ -699,7 +737,8 @@
     "synopsis": "Frenético juego de reflejos y velocidad de reacción. Di la secuencia de palabras en voz alta mientras bajas cartas; en cuanto coincidan la palabra y la carta, ¡sé el más rápido en palmear el mazo!",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 38
+    "id": 38,
+    "scoring": "• Victoria Inmediata: Gana el primer jugador en quedarse sin cartas en su mazo y ser el más rápido en palmear la pila central correctamente en la siguiente coincidencia."
   },
   {
     "name": "TEG Tradicional",
@@ -717,7 +756,8 @@
     "synopsis": "El legendario juego de táctica bélica y conquista territorial. Cumple tu objetivo secreto dominando países y continentes mediante pactos, refuerzos y tiradas de dados.",
     "rank": "Beginner",
     "islandId": 1,
-    "id": 39
+    "id": 39,
+    "scoring": "• Objetivo Secreto: Gana de inmediato el jugador que cumpla en su turno el 100% de los requisitos territoriales de su tarjeta de objetivo secreto (o conquiste 30 países)."
   },
   {
     "name": "The King is Dead",
@@ -735,7 +775,8 @@
     "synopsis": "Juego de control de áreas tenso y sin azar ambientado en la Gran Bretaña medieval tras la muerte del Rey Arturo. Con solo 8 cartas para toda la partida, manipula las facciones para tomar el trono.",
     "rank": "Beginner",
     "islandId": 1,
-    "id": 40
+    "id": 40,
+    "scoring": "• Control Político Gran Bretaña: Quien tenga más cortesanos de la facción con más regiones controladas gana el trono. Si invaden los franceses (4 inestabilidades), gana quien tenga más sets completos de los 3 bandos."
   },
   {
     "name": "The Red Cathedral",
@@ -753,7 +794,8 @@
     "synopsis": "Construye la icónica Catedral de San Basilio en Moscú. Gestiona recursos en el rondel del mercado y levanta secciones y cúpulas doradas para ganarte el favor del Zar Iván el Terrible.",
     "rank": "Beginner",
     "islandId": 1,
-    "id": 41
+    "id": 41,
+    "scoring": "• Reconocimiento del Zar: Puntos por secciones construidas y adornadas con cúpulas/cruces en la catedral, mayorías de influencia por torre terminada y recursos restantes."
   },
   {
     "name": "The White Castle",
@@ -771,7 +813,8 @@
     "synopsis": "Estrategia profunda y compacta de gestión de dados en el Japón feudal. Gestiona los miembros de tu clan (guerreros, cortesanos y jardineros) en las salas del Castillo Himeji para ganar influencia ante el Daimyo.",
     "rank": "Advance",
     "islandId": 2,
-    "id": 42
+    "id": 42,
+    "scoring": "• Puntos de Clan (Castillo Himeji): Puntos por jardineros en estanques, cortesanos en plantas altas del castillo, guerreros en el patio de armas, sellos del Daimyo e influencia en el pasillo de linternas."
   },
   {
     "name": "Toma 6 (6 nimmt!)",
@@ -789,7 +832,8 @@
     "synopsis": "Juego de cartas brillante y adictivo. Todos bajan un número a la vez en 4 filas; si tu carta es la sexta de una fila, ¡estás obligado a comerte todas las cabezas de buey con puntos negativos!",
     "rank": "Rookie",
     "islandId": 0,
-    "id": 43
+    "id": 43,
+    "scoring": "• Puntos Negativos (Cabezas de Buey): Al colocar la 6ª carta de una fila te llevas todas las cartas anteriores. La partida termina cuando alguien llega a 66 puntos negativos; gana quien tenga MENOS puntos."
   },
   {
     "name": "Wingspan",
@@ -807,6 +851,7 @@
     "synopsis": "Juego aclamado de construcción de motores de cartas donde eres un investigador o coleccionista de aves descubriendo y atrayendo las mejores especies a tus hábitats naturales para encadenar combos.",
     "rank": "Beginner",
     "islandId": 1,
-    "id": 44
+    "id": 44,
+    "scoring": "• Ecosistema de Aves: Puntos impresos en cartas de pájaros jugadas + cartas de bonificación cumplidas + metas de final de ronda + 1 pt por huevo, 1 pt por alimento acumulado y 1 pt por carta solapada."
   }
 ]

@@ -93,7 +93,7 @@
             position: relative;
             pointer-events: auto;
             flex: 1;
-            max-width: 240px;
+            max-width: 220px;
         }
         #search-input {
             width: 100%;
@@ -155,7 +155,7 @@
             gap: 6px;
             pointer-events: none;
             z-index: 90;
-            max-width: 90vw;
+            max-width: 85vw;
         }
         .island-btn {
             background: rgba(45, 25, 12, 0.9);
@@ -173,6 +173,38 @@
             background: #8b5a2b;
             color: #ffd700;
             border-color: #ffd700;
+        }
+
+        /* --- ZOOM CONTROLS --- */
+        #zoom-controls {
+            position: absolute;
+            bottom: 150px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 95;
+            pointer-events: auto;
+        }
+        .zoom-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(45, 25, 10, 0.92);
+            border: 2px solid #dfa143;
+            border-radius: 8px;
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+            transition: 0.2s;
+        }
+        .zoom-btn:active {
+            transform: scale(0.92);
+            background: #8b5a2b;
         }
 
         /* Minimap Overlay */
@@ -202,12 +234,12 @@
             margin-top: 2px;
         }
 
-        /* --- SLIDE-IN KINGDOM GUIDE & LEADERBOARD --- */
-        #guide-panel, #leaderboard-panel {
+        /* --- SLIDE-IN PANELS --- */
+        #guide-panel, #leaderboard-panel, #users-panel {
             position: absolute;
             top: 0;
-            right: -340px;
-            width: 320px;
+            right: -360px;
+            width: 340px;
             height: 100%;
             background: linear-gradient(135deg, rgba(35, 18, 9, 0.98) 0%, rgba(15, 8, 4, 0.98) 100%);
             border-left: 3px solid #dfa143;
@@ -218,7 +250,7 @@
             overflow-y: auto;
             transition: right 0.3s ease;
         }
-        #guide-panel.open, #leaderboard-panel.open {
+        #guide-panel.open, #leaderboard-panel.open, #users-panel.open {
             right: 0;
         }
         .panel-close-btn {
@@ -319,44 +351,45 @@
             color: #000;
         }
 
-        /* --- MODAL POPUPS & 3D VIEWER CONTAINER --- */
-        #game-modal, #char-modal, #match-modal, #login-modal {
+        /* --- MODALS (LARGE MODERN MODULE DESIGN) --- */
+        #game-modal, #char-modal, #match-modal, #users-modal, #wheel-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 8, 5, 0.92);
+            background: rgba(10, 8, 5, 0.94);
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             padding: 15px;
         }
         .modal-content {
             background: linear-gradient(135deg, #2c1b10 0%, #150c07 100%);
             border: 4px solid #dfa143;
-            border-radius: 14px;
-            padding: 24px;
-            max-width: 950px;
-            width: 100%;
-            max-height: 90vh;
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 1050px;
+            width: 95vw;
+            max-height: 92vh;
             overflow-y: auto;
             display: flex;
             gap: 25px;
-            box-shadow: 0 0 45px rgba(223, 161, 67, 0.4), inset 0 0 25px rgba(0,0,0,0.8);
+            box-shadow: 0 0 50px rgba(223, 161, 67, 0.45), inset 0 0 30px rgba(0,0,0,0.9);
             position: relative;
         }
 
         /* 3D Box Container */
         #box3d-container {
-            width: 320px;
-            height: 380px;
+            width: 360px;
+            height: 420px;
             position: relative;
             background: radial-gradient(circle, #2d180c 0%, #100804 100%);
-            border-radius: 8px;
+            border-radius: 10px;
             border: 2px solid #dfa143;
             overflow: hidden;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.85);
             cursor: grab;
+            flex-shrink: 0;
         }
         #box3d-container:active {
             cursor: grabbing;
@@ -367,22 +400,22 @@
             left: 0;
             right: 0;
             text-align: center;
-            font-size: 10px;
-            color: #dfa143;
+            font-size: 11px;
+            color: #ffd700;
             pointer-events: none;
-            text-shadow: 1px 1px 2px #000;
+            text-shadow: 1px 1px 3px #000;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 820px) {
             .modal-content {
                 flex-direction: column;
                 align-items: center;
-                padding: 20px 15px;
+                padding: 20px 14px;
                 gap: 15px;
             }
             #box3d-container {
                 width: 100% !important;
-                max-width: 260px !important;
+                max-width: 280px !important;
                 height: 280px !important;
             }
             .modal-details h2 {
@@ -399,9 +432,9 @@
 
         .close-btn {
             position: absolute;
-            top: 10px; right: 15px;
+            top: 12px; right: 16px;
             color: #dfa143;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
             cursor: pointer;
             padding: 5px;
@@ -422,25 +455,31 @@
             font-family: 'Cinzel', serif;
             text-shadow: 2px 2px 6px #000;
             margin-top: 0;
-            font-size: 24px;
+            font-size: 25px;
             border-bottom: 2px solid #5c3a21;
             padding-bottom: 8px;
         }
         .synopsis-box {
-            background: rgba(15, 8, 4, 0.65);
+            background: rgba(15, 8, 4, 0.7);
             border-left: 3px solid #dfa143;
             padding: 10px 12px;
             margin: 10px 0;
             border-radius: 4px;
             font-style: italic;
             color: #ffe6a3;
-            font-size: 13px;
+            font-size: 13.5px;
             line-height: 1.5;
         }
-        .modal-details p {
-            line-height: 1.6;
-            font-size: 14px;
-            color: #f1dfc5;
+        .scoring-box {
+            background: rgba(25, 45, 20, 0.7);
+            border-left: 3px solid #5bb35b;
+            padding: 10px 12px;
+            margin: 8px 0;
+            border-radius: 4px;
+            color: #bdf0bd;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: pre-line;
         }
         .badge-rank {
             display: inline-block;
@@ -529,6 +568,28 @@
             margin-bottom: 12px;
             outline: none;
         }
+
+        /* --- ROULETTE WHEEL STYLES --- */
+        #wheel-canvas-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
+        }
+        #wheelCanvas {
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(223, 161, 67, 0.5);
+        }
+        #wheel-pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            color: #ffd700;
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px #000);
+        }
     </style>
 </head>
 <body>
@@ -543,9 +604,14 @@
                 <div id="search-results"></div>
             </div>
 
-            <!-- User Login Status -->
-            <div class="ui-ribbon" onclick="openLoginModal()">
-                <span>👤</span> <strong id="current-user-name" style="color:#ffd700;">Invitado</strong>
+            <!-- Users / Players Management -->
+            <div class="ui-ribbon" onclick="openUsersModal()">
+                <span>👥</span> <strong id="current-user-name" style="color:#ffd700;">Gremio de Jugadores</strong>
+            </div>
+
+            <!-- Roulette Wheel (Random Game) -->
+            <div class="ui-ribbon" onclick="openWheelModal()">
+                <span>🎡</span> <strong>RULETA</strong>
             </div>
 
             <!-- Leaderboard Button -->
@@ -570,6 +636,13 @@
             <div class="island-btn" onclick="teleportToIsland(1)">🟡 Beginner (2.0 - 2.9)</div>
             <div class="island-btn" onclick="teleportToIsland(2)">🟠 Advance (3.0 - 3.9)</div>
             <div class="island-btn" onclick="teleportToIsland(3)">🔴 Master (4.0 - 5.0)</div>
+        </div>
+
+        <!-- ZOOM CONTROLS -->
+        <div id="zoom-controls">
+            <div class="zoom-btn" onclick="changeZoom(0.15)">+</div>
+            <div class="zoom-btn" onclick="changeZoom(-0.15)">-</div>
+            <div class="zoom-btn" onclick="resetZoom()" style="font-size:11px;">1x</div>
         </div>
 
         <!-- INTERACTIVE MINIMAP -->
@@ -604,7 +677,7 @@
             <h2 class="panel-title">🏰 GUÍA DEL REINO</h2>
             <div class="guide-text">
                 <strong>¡Bienvenido a la Ludoteca Virtual 3D!</strong><br>
-                Este reino medieval contiene toda tu colección real de juegos de mesa clasificada según la métrica oficial de complejidad <strong>Weight (BGG)</strong>:
+                Este reino medieval contiene toda tu colección real de juegos de mesa clasificada según la métrica oficial de complejidad <strong>Weight (BGG)</strong>.
             </div>
             <div class="guide-text">
                 <strong>🏆 RANGOS DE COMPLEJIDAD (WEIGHT):</strong><br>
@@ -616,8 +689,8 @@
             <div class="guide-text">
                 <strong>📦 EN CADA CASA ENCONTRARÁS:</strong><br>
                 • <strong>Caja 3D Giratoria (Three.js)</strong>: Rota la caja 360° con el dedo/mouse.<br>
+                • <strong>📜 Criterio de Puntuación</strong>: Cómo se gana o puntúa el juego.<br>
                 • <strong>Registrar Partida</strong>: Anota los puntos y victorias de tus amigos.<br>
-                • <strong>Sinopsis Rápida</strong>: De qué trata el juego en 2 líneas.<br>
                 • Enlace directo exacto a su ficha oficial en BoardGameGeek.<br>
                 • Botón para ver el tutorial en VHS/YouTube.
             </div>
@@ -636,7 +709,7 @@
         </div>
     </div>
 
-    <!-- Modal Juego con Visor 3D Three.js -->
+    <!-- Modal Juego con Visor 3D Three.js & Scoring Rules -->
     <div id="game-modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
@@ -647,7 +720,12 @@
             <div class="modal-details">
                 <h2 id="modal-title">CASA DEL JUEGO</h2>
                 <div class="synopsis-box" id="modal-synopsis">Sinopsis del juego...</div>
-                <p id="modal-desc">Detalles del juego...</p>
+                
+                <div style="font-size:12px; color:#ffd700; font-weight:bold; margin-top:6px;">📜 CRITERIO DE PUNTUACIÓN Y VICTORIA:</div>
+                <div class="scoring-box" id="modal-scoring">Reglas de puntuación...</div>
+
+                <div id="modal-desc">Detalles del juego...</div>
+                
                 <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;">
                     <button class="btn-action" style="border-color:#ffd700;" onclick="openNewMatchModal(activeGameForUpload)">🏆 REGISTRAR PARTIDA</button>
                     <a href="#" id="modal-link" target="_blank" class="btn-action">▶ TUTORIAL</a>
@@ -663,7 +741,7 @@
 
     <!-- Modal Registro de Partida -->
     <div id="match-modal">
-        <div class="modal-content" style="max-width: 500px; flex-direction: column;">
+        <div class="modal-content" style="max-width: 520px; flex-direction: column;">
             <span class="close-btn" onclick="closeMatchModal()">✕</span>
             <h2 style="color:#ffd276; font-family:'Cinzel',serif; border-bottom:2px solid #5c3a21; padding-bottom:8px;">⚔️ REGISTRAR PARTIDA</h2>
             <div style="margin-top:12px;">
@@ -673,7 +751,7 @@
                 <label style="font-size:12px; color:#dfa143;">Fecha:</label>
                 <input type="date" id="match-date" class="medieval-input">
 
-                <label style="font-size:12px; color:#dfa143;">Jugadores y Puntuación (Nombre: Puntos):</label>
+                <label style="font-size:12px; color:#dfa143;">Jugadores y Puntuación:</label>
                 <div id="match-players-list">
                     <div style="display:flex; gap:8px; margin-bottom:8px;">
                         <input type="text" placeholder="Jugador 1" class="medieval-input player-name" style="margin:0; flex:2;">
@@ -694,15 +772,54 @@
         </div>
     </div>
 
-    <!-- Modal Login de Usuario -->
-    <div id="login-modal">
-        <div class="modal-content" style="max-width: 420px; flex-direction: column;">
-            <span class="close-btn" onclick="closeLoginModal()">✕</span>
-            <h2 style="color:#ffd276; font-family:'Cinzel',serif; border-bottom:2px solid #5c3a21; padding-bottom:8px;">🔑 ENTRADA AL GREMIO</h2>
+    <!-- Modal Gestión de Usuarios y Jugadores -->
+    <div id="users-modal">
+        <div class="modal-content" style="max-width: 650px; flex-direction: column;">
+            <span class="close-btn" onclick="closeUsersModal()">✕</span>
+            <h2 style="color:#ffd276; font-family:'Cinzel',serif; border-bottom:2px solid #5c3a21; padding-bottom:8px;">👥 GREMIO DE JUGADORES</h2>
+            
+            <div style="background:rgba(20,10,5,0.8); padding:12px; border-radius:8px; border:1.5px solid #dfa143; margin-top:10px;">
+                <h3 style="font-size:13px; color:#ffd700; margin-bottom:8px;">➕ Crear o Editar Jugador</h3>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div>
+                        <label style="font-size:11px; color:#dfa143;">Nombre / Apodo:</label>
+                        <input type="text" id="user-input-name" placeholder="Ej: Lucas" class="medieval-input" style="margin-bottom:6px;">
+                    </div>
+                    <div>
+                        <label style="font-size:11px; color:#dfa143;">Juego Favorito:</label>
+                        <select id="user-input-favorite" class="medieval-input" style="margin-bottom:6px;">
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-action" style="width:100%; border-color:#ffd700; margin-top:6px;" onclick="registerPlayer()">💾 GUARDAR JUGADOR</button>
+            </div>
+
             <div style="margin-top:15px;">
-                <label style="font-size:12px; color:#dfa143;">Nombre de Usuario / Apodo:</label>
-                <input type="text" id="login-username" placeholder="Tu nombre de aventurero..." class="medieval-input">
-                <button class="btn-action" style="width:100%; border-color:#ffd700; padding:12px;" onclick="handleLogin()">ENTRAR AL REINO</button>
+                <h3 style="font-size:13px; color:#ffd700; margin-bottom:8px;">📜 Miembros del Gremio</h3>
+                <div id="users-list-container" style="max-height:220px; overflow-y:auto;">
+                    Cargando miembros...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ruleta de Juego Aleatorio -->
+    <div id="wheel-modal">
+        <div class="modal-content" style="max-width: 450px; flex-direction: column; align-items: center;">
+            <span class="close-btn" onclick="closeWheelModal()">✕</span>
+            <h2 style="color:#ffd276; font-family:'Cinzel',serif; border-bottom:2px solid #5c3a21; padding-bottom:8px; width:100%; text-align:center;">🎡 RULETA DEL DESTINO</h2>
+            <p style="font-size:12px; color:#dfa143; text-align:center; margin:6px 0 12px 0;">¿No saben a qué jugar hoy? ¡Gira la ruleta y que decidan los dioses!</p>
+            
+            <div id="wheel-canvas-container">
+                <div id="wheel-pointer">▼</div>
+                <canvas id="wheelCanvas" width="320" height="320"></canvas>
+            </div>
+
+            <div id="wheel-result" style="margin-top:15px; font-family:'Cinzel',serif; font-size:16px; color:#ffd700; text-align:center; min-height:24px;"></div>
+
+            <div style="display:flex; gap:10px; margin-top:12px; width:100%;">
+                <button class="btn-action" style="flex:1; border-color:#ffd700; padding:12px;" onclick="spinWheel()">🎲 ¡GIRAR RULETA!</button>
+                <button id="wheel-view-btn" class="btn-action" style="display:none; border-color:#5bb35b; padding:12px;" onclick="goToWheelSelectedGame()">🏰 IR A LA CASA</button>
             </div>
         </div>
     </div>
@@ -718,52 +835,266 @@
     </div>
 
     <script>
-        const BUILD_VERSION = '1790720923';
-        const gamesData = [{"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "7.7", "local_image": "portadas/7_Wonders.jpg", "bgg_id": 68448, "bgg_url": "https://boardgamegeek.com/boardgame/68448/7-wonders", "weight": 2.32, "playing_time": "30 Min", "age": "10+", "synopsis": "Lidera una de las 7 grandes civilizaciones del mundo antiguo. Pasa cartas de mano en mano a lo largo de 3 Eras para construir tu Maravilla arquitectónica, desarrollar ciencia y poderío militar.", "rank": "Beginner", "islandId": 1, "id": 0}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "7.5", "local_image": "portadas/Akropolis.jpg", "bgg_id": 352484, "bgg_url": "https://boardgamegeek.com/boardgame/352484/akropolis", "weight": 1.68, "playing_time": "20-30 Min", "age": "8+", "synopsis": "Construye la mejor metrópolis en la antigua Grecia colocando losetas hexagonales de templos, mercados y jardines, apilándolas en altura para multiplicar su valor en puntos.", "rank": "Rookie", "islandId": 0, "id": 1}, {"name": "Akropolis: Athena", "players": "2-4", "difficulty": "Media", "type": "Expansión / Colocación de losetas 3D", "image": "portadas/Akropolis_Athena.jpg", "local_image": "portadas/Akropolis_Athena.jpg", "rating": "7.8", "bgg_id": 422822, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/422822/akropolis-athena", "weight": 1.75, "playing_time": "25-35 Min", "age": "8+", "synopsis": "Expansión para Akropolis que introduce la estatua de Atenea y nuevas cartas de misión de la diosa para ganar templos y losetas sagradas.", "rank": "Rookie", "islandId": 0, "id": 2}, {"name": "Atenea", "players": "2-5", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.0", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg", "bgg_id": 333955, "bgg_url": "https://boardgamegeek.com/boardgame/333955/atenea", "weight": 1.45, "playing_time": "30 Min", "age": "10+", "synopsis": "Juego de cartas táctico ambientado en la mitología griega donde compites por ganarte la bendición de los dioses del Olimpo.", "rank": "Rookie", "islandId": 0, "id": 3}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "7.4", "local_image": "portadas/Aventureros_al_Tren.jpg", "bgg_id": 9209, "bgg_url": "https://boardgamegeek.com/boardgame/9209/ticket-to-ride", "weight": 1.84, "playing_time": "30-60 Min", "age": "8+", "synopsis": "Conecta ciudades reclamando rutas ferroviarias en un mapa con tus cartas de vagón. Cumple tus billetes de destino secretos para ganar la mayor cantidad de puntos antes que se acaben los trenes.", "rank": "Rookie", "islandId": 0, "id": 4}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.7", "local_image": "portadas/Azul.jpg", "bgg_id": 230802, "bgg_url": "https://boardgamegeek.com/boardgame/230802/azul", "weight": 1.76, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Juego de estrategia abstracto donde eres un maestro artesano decorando las paredes del Palacio Real de Évora con hermosos azulejos de cerámica portuguesa formando patrones elegantes.", "rank": "Rookie", "islandId": 0, "id": 5}, {"name": "Bleef", "players": "3-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg", "bgg_id": 28017, "bgg_url": "https://boardgamegeek.com/boardgame/28017/bleff", "weight": 1.2, "playing_time": "45 Min", "age": "12+", "synopsis": "Juego de faroleo y engaño ingenioso. Inventa definiciones falsas pero creíbles para palabras insólitas de diccionario y vota para descubrir quién dice la verdad.", "rank": "Rookie", "islandId": 0, "id": 6}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "6.3", "local_image": "portadas/Burako.jpg", "bgg_id": 4042, "bgg_url": "https://boardgamegeek.com/boardgame/4042/rummikub", "weight": 1.5, "playing_time": "30-60 Min", "age": "8+", "synopsis": "Juego de fichas tradicional de agilidad mental. Forma escaleras del mismo color o grupos de números iguales para vaciar tu atril y cerrar la partida con canastas.", "rank": "Rookie", "islandId": 0, "id": 7}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg", "bgg_id": 250000, "bgg_url": "https://boardgamegeek.com/boardgame/250000/poop-the-game", "weight": 1.05, "playing_time": "15 Min", "age": "6+", "synopsis": "Juego de cartas rápido, absurdo y lleno de risas para todas las edades donde debes bajar cartas sin desbordar el inodoro y deshacerte de tu mano antes que nadie.", "rank": "Rookie", "islandId": 0, "id": 8}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "7.4", "local_image": "portadas/Carcassonne.jpg", "bgg_id": 822, "bgg_url": "https://boardgamegeek.com/boardgame/822/carcassonne", "weight": 1.9, "playing_time": "35-45 Min", "age": "7+", "synopsis": "Juego maestro de colocación de losetas. Construye el paisaje medieval del sur de Francia levantando ciudades amuralladas, caminos, monasterios y campos puntuando con tus seguidores (meeples).", "rank": "Rookie", "islandId": 0, "id": 9}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.1", "local_image": "portadas/Catan.jpg", "bgg_id": 13, "bgg_url": "https://boardgamegeek.com/boardgame/13/catan", "weight": 2.3, "playing_time": "60-120 Min", "age": "10+", "synopsis": "Coloniza una isla inexplorada construyendo poblados, ciudades y caminos. Negocia recursos esenciales (madera, trigo, oveja, ladrillo, mineral) para alcanzar 10 puntos de victoria.", "rank": "Beginner", "islandId": 1, "id": 10}, {"name": "Catan Energias renovables", "players": "3-4", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.6", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg", "bgg_id": 408727, "bgg_url": "https://boardgamegeek.com/boardgame/408727/catan-new-energies", "weight": 2.24, "playing_time": "90 Min", "age": "12+", "synopsis": "Edición moderna e independiente de Catan ambientada en el siglo XXI. Construye plantas de energía fósil o limpia, balanceando la producción industrial sin desatar catástrofes por contaminación.", "rank": "Beginner", "islandId": 1, "id": 11}, {"name": "Catan Mercaderes y Barbaros", "players": "2-4", "difficulty": "Media", "type": "Expansión modular / Comercio / Rutas", "rating": "7.2", "image": "portadas/Catan_Mercaderes_y_Barbaros.jpg", "local_image": "portadas/Catan_Mercaderes_y_Barbaros.jpg", "bgg_id": 27760, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/27760/catan-traders-barbarians", "weight": 2.37, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Expansión modular de Catan que incluye 5 escenarios y 4 variantes: transporta mercancías en carretas, pesca en los ríos, comercia con nómadas y defiende la costa de las incursiones bárbaras.", "rank": "Beginner", "islandId": 1, "id": 12}, {"name": "Color Brain", "players": "2-12", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "6.6", "local_image": "portadas/Color_Brain.jpg", "bgg_id": 235549, "bgg_url": "https://boardgamegeek.com/boardgame/235549/colourbrain", "weight": 1.1, "playing_time": "20-30 Min", "age": "12+", "synopsis": "Juego de preguntas donde todas las respuestas son colores. ¿De qué color son los anillos olímpicos o el sombrero de Mario? Responde bajando tus cartas de color antes que tus rivales.", "rank": "Rookie", "islandId": 0, "id": 13}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "6.3", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg", "bgg_id": 266472, "bgg_url": "https://boardgamegeek.com/boardgame/266472/con-eso-no-se-jode", "weight": 1.05, "playing_time": "20-40 Min", "age": "18+", "synopsis": "Juego de cartas argentino de humor negro y desafíos extremos sin límites morales ni censura, donde gana quien sume más puntos por sus decisiones incorrectas.", "rank": "Rookie", "islandId": 0, "id": 14}, {"name": "Count up", "players": "2-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.0", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg", "bgg_id": 292643, "bgg_url": "https://boardgamegeek.com/boardgame/292643/fifty", "weight": 1.1, "playing_time": "15-20 Min", "age": "8+", "synopsis": "Juego cooperativo de concentración y sincronización mental donde los jugadores deben bajar cartas en orden ascendente sin mirarse ni comunicarse verbalmente.", "rank": "Rookie", "islandId": 0, "id": 15}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "6.6", "local_image": "portadas/Dany_Buró.jpg", "bgg_id": 286694, "bgg_url": "https://boardgamegeek.com/boardgame/286694/dany", "weight": 1.25, "playing_time": "30 Min", "age": "16+", "synopsis": "Juego de deducción psicológica y cartas abstractas. Todos representan personalidades en la mente de Dany intentando comunicarse con recuerdos visuales, mientras una personalidad falsa sabotea las ideas.", "rank": "Rookie", "islandId": 0, "id": 16}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "7.2", "local_image": "portadas/Dixit_Clásico.jpg", "bgg_id": 39856, "bgg_url": "https://boardgamegeek.com/boardgame/39856/dixit", "weight": 1.21, "playing_time": "30 Min", "age": "8+", "synopsis": "Juego poético de creatividad e intuición. El cuentacuentos da una pista sutil sobre su carta ilustrada; los demás votan cuál creen que es la correcta entre las cartas trampas.", "rank": "Rookie", "islandId": 0, "id": 17}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.3", "local_image": "portadas/Dixit_Odyssey.jpg", "bgg_id": 92828, "bgg_url": "https://boardgamegeek.com/boardgame/92828/dixit-odyssey", "weight": 1.25, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Versión ampliada de Dixit que permite jugar hasta a 12 personas a la vez con nuevos tableros de votación por clavijas y 84 nuevas cartas de arte surrealista.", "rank": "Rookie", "islandId": 0, "id": 18}, {"name": "El Camarero", "players": "2-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg", "bgg_id": 273657, "bgg_url": "https://boardgamegeek.com/boardgame/273657/el-camarero", "weight": 1.1, "playing_time": "20 Min", "age": "7+", "synopsis": "Juego veloz de memoria y agilidad mental donde debes memorizar los pedidos de un restaurante caótico y servirlos a tiempo sin equivocarte en los ingredientes.", "rank": "Rookie", "islandId": 0, "id": 19}, {"name": "El Melómano", "players": "2-10", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.2", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg", "bgg_id": 120870, "bgg_url": "https://boardgamegeek.com/boardgame/120870/el-melomano", "weight": 1.15, "playing_time": "30-45 Min", "age": "12+", "synopsis": "Juego de mesa argentino de trivia y desafíos musicales para grupos. Adivina bandas, completa letras de canciones icónicas y canta melodías para sumar discos de oro.", "rank": "Rookie", "islandId": 0, "id": 20}, {"name": "Equipazo", "players": "4-12", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.2", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg", "bgg_id": 280000, "bgg_url": "https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=Team%20Work", "weight": 1.15, "playing_time": "20-30 Min", "age": "8+", "synopsis": "Party game cooperativo de comunicación y coordinación en equipo donde resuelven desafíos de palabras y conceptos bajo presión de tiempo.", "rank": "Rookie", "islandId": 0, "id": 21}, {"name": "Jardín Japonés", "players": "2-4", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg", "bgg_id": 378329, "bgg_url": "https://boardgamegeek.com/boardgame/378329/jardin-japones", "weight": 1.67, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Construye un sereno jardín zen colocando losetas de estanques con peces koi, bonsáis y linternas de piedra en armonía para conseguir la mayor puntuación estética.", "rank": "Rookie", "islandId": 0, "id": 22}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "7.6", "local_image": "portadas/Just_One.jpg", "bgg_id": 254640, "bgg_url": "https://boardgamegeek.com/boardgame/254640/just-one", "weight": 1.05, "playing_time": "20 Min", "age": "8+", "synopsis": "Party game cooperativo ganador del Spiel des Jahres. Todos escriben en secreto una palabra pista para el adivinador, pero ¡las pistas repetidas se anulan y se borran antes de mostrarse!", "rank": "Rookie", "islandId": 0, "id": 23}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "6.7", "local_image": "portadas/La_Isla_Prohibida.jpg", "bgg_id": 65244, "bgg_url": "https://boardgamegeek.com/boardgame/65244/forbidden-island", "weight": 1.74, "playing_time": "30 Min", "age": "10+", "synopsis": "Aventura cooperativa donde un equipo de arqueólogos debe recuperar 4 tesoros sagrados en una isla misteriosa cuyas losetas de terreno se van inundando y hundiendo con cada turno.", "rank": "Rookie", "islandId": 0, "id": 24}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.0", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "bgg_id": 25821, "bgg_url": "https://boardgamegeek.com/boardgame/25821/the-werewolves-of-millers-hollow", "weight": 1.34, "playing_time": "30 Min", "age": "10+", "synopsis": "Juego social para grupos grandes. Una aldea amenazada por licántropos debe debatir y linchar a los sospechosos de día, mientras los lobos devoran inocentes en secreto durante la noche.", "rank": "Rookie", "islandId": 0, "id": 25}, {"name": "Monopoly", "players": "2-8", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "4.4", "local_image": "portadas/Monopoly.jpg", "bgg_id": 1406, "bgg_url": "https://boardgamegeek.com/boardgame/1406/monopoly", "weight": 1.63, "playing_time": "60-180 Min", "age": "8+", "synopsis": "El clásico juego de bienes raíces. Compra calles, construye casas y hoteles de lujo, y cobra alquileres a los demás jugadores hasta dejarlos en bancarrota total.", "rank": "Rookie", "islandId": 0, "id": 26}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "6.0", "local_image": "portadas/Munchkin.jpg", "bgg_id": 1927, "bgg_url": "https://boardgamegeek.com/boardgame/1927/munchkin", "weight": 1.81, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Parodia hilarante de los juegos de rol. Abre puertas de mazmorra, derrota monstruos ridículos, róbate los tesoros y traiciona a tus propios amigos para ser el primero en alcanzar el nivel 10.", "rank": "Rookie", "islandId": 0, "id": 27}, {"name": "Munchkin 3: Errores clericales", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg", "bgg_id": 6606, "bgg_url": "https://boardgamegeek.com/boardgame/6606/munchkin-3-clerical-errors", "weight": 1.8, "playing_time": "60 Min", "age": "10+", "synopsis": "Añade la clase Bardo, la raza Gnomo y nuevas criaturas como el Centauro y el Chicopez para ampliar y caotizar tus partidas de Munchkin.", "rank": "Rookie", "islandId": 0, "id": 28}, {"name": "Munchkin 7: Trampas a dos manos", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.7", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "bgg_id": 92398, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/92398/munchkin-7-cheat-both-hands", "weight": 1.85, "playing_time": "60 Min", "age": "10+", "synopsis": "Diseñado para mezclar múltiples cajas de Munchkin, permitiendo equipar más objetos poderosos y usar trampas dobles sin penalización.", "rank": "Rookie", "islandId": 0, "id": 29}, {"name": "Munchkin: Dragones molones", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg", "bgg_id": 326728, "bgg_url": "https://boardgamegeek.com/boardgame/326728/munchkin-dragones-molones", "weight": 1.75, "playing_time": "60 Min", "age": "10+", "synopsis": "Expansión que introduce feroces y cómicos dragones a tus mazmorras de Munchkin, con tesoros legendarios y potenciadores dracónicos.", "rank": "Rookie", "islandId": 0, "id": 30}, {"name": "Panic Lab", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "6.4", "local_image": "portadas/Panic_Lab_Maldón.jpg", "bgg_id": 121073, "bgg_url": "https://boardgamegeek.com/boardgame/121073/panic-lab", "weight": 1.21, "playing_time": "15-30 Min", "age": "8+", "synopsis": "Juego de agilidad visual donde amebas mutantes escaparon del laboratorio y debes seguir su rastro a través de rejillas de ventilación y salas de mutación para atrapar a la correcta.", "rank": "Rookie", "islandId": 0, "id": 31}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "8.1", "local_image": "portadas/Root.jpg", "bgg_id": 237182, "bgg_url": "https://boardgamegeek.com/boardgame/237182/root", "weight": 3.84, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Juego de guerra y control de áreas totalmente asimétrico ambientado en un bosque encantado. Cada facción (Marquesa felina, Dinastía del Nido, Alianza del Bosque y el Vagabundo) se juega con reglas y metas totalmente distintas.", "rank": "Advance", "islandId": 2, "id": 32}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg", "bgg_id": 9220, "bgg_url": "https://boardgamegeek.com/boardgame/9220/saboteur", "weight": 1.31, "playing_time": "30 Min", "age": "8+", "synopsis": "Eres un enano minero cavando túneles en busca de oro en la montaña, pero cuidado: entre tus compañeros hay saboteadores secretos que romperán tus herramientas y bloquearán los caminos.", "rank": "Rookie", "islandId": 0, "id": 33}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "7.5", "local_image": "portadas/Say_My_Name.jpg", "bgg_id": 344849, "bgg_url": "https://boardgamegeek.com/boardgame/344849/say-my-name", "weight": 1.1, "playing_time": "30-45 Min", "age": "10+", "synopsis": "Party game de adivinanzas por equipos contrarreloj: describe personajes de series, películas, música y cultura pop a lo largo de 3 rondas (palabras libres, 1 sola palabra y mímica pura).", "rank": "Rookie", "islandId": 0, "id": 34}, {"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.5", "local_image": "portadas/Secret_Hitler.jpg", "bgg_id": 188834, "bgg_url": "https://boardgamegeek.com/boardgame/188834/secret-hitler", "weight": 1.7, "playing_time": "45 Min", "age": "13+", "synopsis": "Juego de deducción social y engaño político en la Alemania de 1930. Los liberales intentan aprobar leyes democráticas mientras los fascistas conspiran en secreto para colocar a su líder en el poder.", "rank": "Rookie", "islandId": 0, "id": 35}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.4", "local_image": "portadas/Splendor.jpg", "bgg_id": 148228, "bgg_url": "https://boardgamegeek.com/boardgame/148228/splendor", "weight": 1.78, "playing_time": "30 Min", "age": "10+", "synopsis": "Eres un mercader del Renacimiento que recolecta fichas de gemas para adquirir minas, barcos comerciales y artesanos que abaratan tus compras futuras y atraen a nobles influyentes.", "rank": "Rookie", "islandId": 0, "id": 36}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "7.0", "local_image": "portadas/Sushi_Go.jpg", "bgg_id": 133473, "bgg_url": "https://boardgamegeek.com/boardgame/133473/sushi-go", "weight": 1.16, "playing_time": "15 Min", "age": "8+", "synopsis": "Juego rápido de cartas estilo drafting. Elige una carta de sushi de tu mano y pásale el resto al de al lado. Junta combos de nigiris con wasabi, makis y puddings para sumar puntos.", "rank": "Rookie", "islandId": 0, "id": 37}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "6.6", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "bgg_id": 253344, "bgg_url": "https://boardgamegeek.com/boardgame/253344/taco-cat-goat-cheese-pizza", "weight": 1.05, "playing_time": "10-15 Min", "age": "8+", "synopsis": "Frenético juego de reflejos y velocidad de reacción. Di la secuencia de palabras en voz alta mientras bajas cartas; en cuanto coincidan la palabra y la carta, ¡sé el más rápido en palmear el mazo!", "rank": "Rookie", "islandId": 0, "id": 38}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "6.0", "local_image": "portadas/TEG_Tradicional.jpg", "bgg_id": 22392, "bgg_url": "https://boardgamegeek.com/boardgame/22392/teg-plan-tactico-y-estrategico-de-la-guerra", "weight": 2.1, "playing_time": "120-240 Min", "age": "12+", "synopsis": "El legendario juego de táctica bélica y conquista territorial. Cumple tu objetivo secreto dominando países y continentes mediante pactos, refuerzos y tiradas de dados.", "rank": "Beginner", "islandId": 1, "id": 39}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "7.5", "local_image": "portadas/The_King_is_Dead.jpg", "bgg_id": 319966, "bgg_url": "https://boardgamegeek.com/boardgame/319966/the-king-is-dead-second-edition", "weight": 2.21, "playing_time": "30-45 Min", "age": "14+", "synopsis": "Juego de control de áreas tenso y sin azar ambientado en la Gran Bretaña medieval tras la muerte del Rey Arturo. Con solo 8 cartas para toda la partida, manipula las facciones para tomar el trono.", "rank": "Beginner", "islandId": 1, "id": 40}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "7.6", "local_image": "portadas/The_Red_Cathedral.jpg", "bgg_id": 227224, "bgg_url": "https://boardgamegeek.com/boardgame/227224/the-red-cathedral", "weight": 2.82, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Construye la icónica Catedral de San Basilio en Moscú. Gestiona recursos en el rondel del mercado y levanta secciones y cúpulas doradas para ganarte el favor del Zar Iván el Terrible.", "rank": "Beginner", "islandId": 1, "id": 41}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.0", "local_image": "portadas/The_White_Castle.jpg", "bgg_id": 371942, "bgg_url": "https://boardgamegeek.com/boardgame/371942/the-white-castle", "weight": 3.07, "playing_time": "80 Min", "age": "12+", "synopsis": "Estrategia profunda y compacta de gestión de dados en el Japón feudal. Gestiona los miembros de tu clan (guerreros, cortesanos y jardineros) en las salas del Castillo Himeji para ganar influencia ante el Daimyo.", "rank": "Advance", "islandId": 2, "id": 42}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.0", "local_image": "portadas/Toma_6_6_nimmt.jpg", "bgg_id": 432, "bgg_url": "https://boardgamegeek.com/boardgame/432/6-nimmt", "weight": 1.19, "playing_time": "20-45 Min", "age": "8+", "synopsis": "Juego de cartas brillante y adictivo. Todos bajan un número a la vez en 4 filas; si tu carta es la sexta de una fila, ¡estás obligado a comerte todas las cabezas de buey con puntos negativos!", "rank": "Rookie", "islandId": 0, "id": 43}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.0", "local_image": "portadas/Wingspan.jpg", "bgg_id": 266192, "bgg_url": "https://boardgamegeek.com/boardgame/266192/wingspan", "weight": 2.47, "playing_time": "40-70 Min", "age": "10+", "synopsis": "Juego aclamado de construcción de motores de cartas donde eres un investigador o coleccionista de aves descubriendo y atrayendo las mejores especies a tus hábitats naturales para encadenar combos.", "rank": "Beginner", "islandId": 1, "id": 44}];
+        const BUILD_VERSION = '1790721612';
+        const gamesData = [{"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "7.7", "local_image": "portadas/7_Wonders.jpg", "bgg_id": 68448, "bgg_url": "https://boardgamegeek.com/boardgame/68448/7-wonders", "weight": 2.32, "playing_time": "30 Min", "age": "10+", "synopsis": "Lidera una de las 7 grandes civilizaciones del mundo antiguo. Pasa cartas de mano en mano a lo largo de 3 Eras para construir tu Maravilla arquitectónica, desarrollar ciencia y poderío militar.", "rank": "Beginner", "islandId": 1, "id": 0, "scoring": "• 7 Vías de Puntos: Estructuras civiles (azules), maravilla, tesoro militar (fichas de victoria/derrota), dinero (1 pt por 3 monedas), gremios (moradas) y cartas científicas (verdes: símbolos iguales² + sets de 3)."}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "7.5", "local_image": "portadas/Akropolis.jpg", "bgg_id": 352484, "bgg_url": "https://boardgamegeek.com/boardgame/352484/akropolis", "weight": 1.68, "playing_time": "20-30 Min", "age": "8+", "synopsis": "Construye la mejor metrópolis en la antigua Grecia colocando losetas hexagonales de templos, mercados y jardines, apilándolas en altura para multiplicar su valor en puntos.", "rank": "Rookie", "islandId": 0, "id": 1, "scoring": "• Multiplicadores por Altura: Casas (bloques x estrellas), Mercados (periferia), Cuarteles (bordes), Templos (rodeados), Jardines (libres). Multiplica el valor del distrito por la altura de nivel donde se colocó."}, {"name": "Akropolis: Athena", "players": "2-4", "difficulty": "Media", "type": "Expansión / Colocación de losetas 3D", "image": "portadas/Akropolis_Athena.jpg", "local_image": "portadas/Akropolis_Athena.jpg", "rating": "7.8", "bgg_id": 422822, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/422822/akropolis-athena", "weight": 1.75, "playing_time": "25-35 Min", "age": "8+", "synopsis": "Expansión para Akropolis que introduce la estatua de Atenea y nuevas cartas de misión de la diosa para ganar templos y losetas sagradas.", "rank": "Rookie", "islandId": 0, "id": 2, "scoring": "• Misiones de la Diosa: Reglas base de Akropolis sumando los puntos de las cartas de bendición de Atenea completadas al construir la estatua de la diosa en la acrópolis."}, {"name": "Atenea", "players": "2-5", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.0", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg", "bgg_id": 333955, "bgg_url": "https://boardgamegeek.com/boardgame/333955/atenea", "weight": 1.45, "playing_time": "30 Min", "age": "10+", "synopsis": "Juego de cartas táctico ambientado en la mitología griega donde compites por ganarte la bendición de los dioses del Olimpo.", "rank": "Rookie", "islandId": 0, "id": 3, "scoring": "• Puntos Mitológicos: Combos de cartas de bendiciones divinas y templos del Olimpo. Gana quien acumule más puntos de honor al finalizar las rondas pactadas."}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "7.4", "local_image": "portadas/Aventureros_al_Tren.jpg", "bgg_id": 9209, "bgg_url": "https://boardgamegeek.com/boardgame/9209/ticket-to-ride", "weight": 1.84, "playing_time": "30-60 Min", "age": "8+", "synopsis": "Conecta ciudades reclamando rutas ferroviarias en un mapa con tus cartas de vagón. Cumple tus billetes de destino secretos para ganar la mayor cantidad de puntos antes que se acaben los trenes.", "rank": "Rookie", "islandId": 0, "id": 4, "scoring": "• Billetes y Rutas: Puntos por longitud de vías reclamadas (1 a 15 pts) + billetes de destino completados (los incompletos restan) + 10 pts al recorrido continuo más largo."}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.7", "local_image": "portadas/Azul.jpg", "bgg_id": 230802, "bgg_url": "https://boardgamegeek.com/boardgame/230802/azul", "weight": 1.76, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Juego de estrategia abstracto donde eres un maestro artesano decorando las paredes del Palacio Real de Évora con hermosos azulejos de cerámica portuguesa formando patrones elegantes.", "rank": "Rookie", "islandId": 0, "id": 5, "scoring": "• Mosaicos y Filas: Puntos continuos por azulejos adyacentes colocados en la pared; penalización por azulejos rotos en el suelo; bonos finales por filas completas (+2), columnas (+7) y sets de 5 colores (+10)."}, {"name": "Bleef", "players": "3-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg", "bgg_id": 28017, "bgg_url": "https://boardgamegeek.com/boardgame/28017/bleff", "weight": 1.2, "playing_time": "45 Min", "age": "12+", "synopsis": "Juego de faroleo y engaño ingenioso. Inventa definiciones falsas pero creíbles para palabras insólitas de diccionario y vota para descubrir quién dice la verdad.", "rank": "Rookie", "islandId": 0, "id": 6, "scoring": "• Votación de Faroles: Ganas puntos si adivinas la definición real del diccionario y ganas puntos adicionales por cada jugador que haya votado tu definición inventada creyendo que era la real."}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "6.3", "local_image": "portadas/Burako.jpg", "bgg_id": 4042, "bgg_url": "https://boardgamegeek.com/boardgame/4042/rummikub", "weight": 1.5, "playing_time": "30-60 Min", "age": "8+", "synopsis": "Juego de fichas tradicional de agilidad mental. Forma escaleras del mismo color o grupos de números iguales para vaciar tu atril y cerrar la partida con canastas.", "rank": "Rookie", "islandId": 0, "id": 7, "scoring": "• Canastas y Cierre: Canasta Pura (200 pts), Impura (100 pts), Cierre de partida (100 pts), fichas en mano restan puntos. Gana el primer equipo en alcanzar los 2000 o 3000 puntos."}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg", "bgg_id": 250000, "bgg_url": "https://boardgamegeek.com/boardgame/250000/poop-the-game", "weight": 1.05, "playing_time": "15 Min", "age": "6+", "synopsis": "Juego de cartas rápido, absurdo y lleno de risas para todas las edades donde debes bajar cartas sin desbordar el inodoro y deshacerte de tu mano antes que nadie.", "rank": "Rookie", "islandId": 0, "id": 8, "scoring": "• Descarte y Escape: Gana el primer jugador en quedarse sin cartas de evacuación sin hacer desbordar el inodoro con fichas de penalización."}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "7.4", "local_image": "portadas/Carcassonne.jpg", "bgg_id": 822, "bgg_url": "https://boardgamegeek.com/boardgame/822/carcassonne", "weight": 1.9, "playing_time": "35-45 Min", "age": "7+", "synopsis": "Juego maestro de colocación de losetas. Construye el paisaje medieval del sur de Francia levantando ciudades amuralladas, caminos, monasterios y campos puntuando con tus seguidores (meeples).", "rank": "Rookie", "islandId": 0, "id": 9, "scoring": "• Cierre y Puntuación Final: Caminos (1 pt/loseta), Ciudades completas (2 pts/loseta + 2 por escudo), Monasterios (9 pts rodeado), Granjas/Campesinos (3 pts por cada ciudad abastecida)."}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.1", "local_image": "portadas/Catan.jpg", "bgg_id": 13, "bgg_url": "https://boardgamegeek.com/boardgame/13/catan", "weight": 2.3, "playing_time": "60-120 Min", "age": "10+", "synopsis": "Coloniza una isla inexplorada construyendo poblados, ciudades y caminos. Negocia recursos esenciales (madera, trigo, oveja, ladrillo, mineral) para alcanzar 10 puntos de victoria.", "rank": "Beginner", "islandId": 1, "id": 10, "scoring": "• Carrera a 10 Puntos de Victoria: Poblados (1 PV), Ciudades (2 PV), Gran Ruta Comercial (2 PV), Gran Ejército de Caballería (2 PV) y Cartas de Desarrollo de Punto de Victoria (1 PV c/u)."}, {"name": "Catan Energias renovables", "players": "3-4", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.6", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg", "bgg_id": 408727, "bgg_url": "https://boardgamegeek.com/boardgame/408727/catan-new-energies", "weight": 2.24, "playing_time": "90 Min", "age": "12+", "synopsis": "Edición moderna e independiente de Catan ambientada en el siglo XXI. Construye plantas de energía fósil o limpia, balanceando la producción industrial sin desatar catástrofes por contaminación.", "rank": "Beginner", "islandId": 1, "id": 11, "scoring": "• Puntos de Sostenibilidad (10 PV): Puntos por poblados, ciudades y plantas de energía limpia (solar/eólica). Si la contaminación global desborda el planeta, gana quien haya invertido más en energía verde."}, {"name": "Catan Mercaderes y Barbaros", "players": "2-4", "difficulty": "Media", "type": "Expansión modular / Comercio / Rutas", "rating": "7.2", "image": "portadas/Catan_Mercaderes_y_Barbaros.jpg", "local_image": "portadas/Catan_Mercaderes_y_Barbaros.jpg", "bgg_id": 27760, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/27760/catan-traders-barbarians", "weight": 2.37, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Expansión modular de Catan que incluye 5 escenarios y 4 variantes: transporta mercancías en carretas, pesca en los ríos, comercia con nómadas y defiende la costa de las incursiones bárbaras.", "rank": "Beginner", "islandId": 1, "id": 12, "scoring": "• Puntos por Escenario (10 a 13 PV): Varía según el módulo activo: transportar mercancías en caravana, pesca de peces en los lagos, recuperar castillos y expulsar bárbaros."}, {"name": "Color Brain", "players": "2-12", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "6.6", "local_image": "portadas/Color_Brain.jpg", "bgg_id": 235549, "bgg_url": "https://boardgamegeek.com/boardgame/235549/colourbrain", "weight": 1.1, "playing_time": "20-30 Min", "age": "12+", "synopsis": "Juego de preguntas donde todas las respuestas son colores. ¿De qué color son los anillos olímpicos o el sombrero de Mario? Responde bajando tus cartas de color antes que tus rivales.", "rank": "Rookie", "islandId": 0, "id": 13, "scoring": "• Puntuación por Ronda: Ganas 1 punto por cada equipo rival que se haya equivocado en los colores de la respuesta correcta. Gana el primer equipo en llegar a 10 puntos."}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "6.3", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg", "bgg_id": 266472, "bgg_url": "https://boardgamegeek.com/boardgame/266472/con-eso-no-se-jode", "weight": 1.05, "playing_time": "20-40 Min", "age": "18+", "synopsis": "Juego de cartas argentino de humor negro y desafíos extremos sin límites morales ni censura, donde gana quien sume más puntos por sus decisiones incorrectas.", "rank": "Rookie", "islandId": 0, "id": 14, "scoring": "• Puntos de Victoria: Cada carta ganada por remate o respuesta más votada/hilarante suma 1 punto. Gana quien alcance 5 o 10 puntos acordados al inicio."}, {"name": "Count up", "players": "2-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.0", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg", "bgg_id": 292643, "bgg_url": "https://boardgamegeek.com/boardgame/292643/fifty", "weight": 1.1, "playing_time": "15-20 Min", "age": "8+", "synopsis": "Juego cooperativo de concentración y sincronización mental donde los jugadores deben bajar cartas en orden ascendente sin mirarse ni comunicarse verbalmente.", "rank": "Rookie", "islandId": 0, "id": 15, "scoring": "• Sincronización Cooperativa: El grupo gana si logra contar del 1 al 50 bajando cartas sin superposiciones ni fallos de tiempo."}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "6.6", "local_image": "portadas/Dany_Buró.jpg", "bgg_id": 286694, "bgg_url": "https://boardgamegeek.com/boardgame/286694/dany", "weight": 1.25, "playing_time": "30 Min", "age": "16+", "synopsis": "Juego de deducción psicológica y cartas abstractas. Todos representan personalidades en la mente de Dany intentando comunicarse con recuerdos visuales, mientras una personalidad falsa sabotea las ideas.", "rank": "Rookie", "islandId": 0, "id": 16, "scoring": "• Personalidades Reales: Ganan si logran 6 aciertos descubriendo la idea secreta.\n• Dany (Personalidad Falsa): Gana si provoca 3 fallos en las adivinanzas o si no logran desenmascararlo en la votación final."}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "7.2", "local_image": "portadas/Dixit_Clásico.jpg", "bgg_id": 39856, "bgg_url": "https://boardgamegeek.com/boardgame/39856/dixit", "weight": 1.21, "playing_time": "30 Min", "age": "8+", "synopsis": "Juego poético de creatividad e intuición. El cuentacuentos da una pista sutil sobre su carta ilustrada; los demás votan cuál creen que es la correcta entre las cartas trampas.", "rank": "Rookie", "islandId": 0, "id": 17, "scoring": "• Puntuación (30 Puntos): Si todos o nadie acierta, el narrador 0 y los demás 2 pts. Si algunos aciertan, narrador 3 pts y acertantes 3 pts. Cada voto a tu carta trampa te suma +1 pt."}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.3", "local_image": "portadas/Dixit_Odyssey.jpg", "bgg_id": 92828, "bgg_url": "https://boardgamegeek.com/boardgame/92828/dixit-odyssey", "weight": 1.25, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Versión ampliada de Dixit que permite jugar hasta a 12 personas a la vez con nuevos tableros de votación por clavijas y 84 nuevas cartas de arte surrealista.", "rank": "Rookie", "islandId": 0, "id": 18, "scoring": "• Puntuación Ampliada: Mismo criterio de votación de cartas e historias metafóricas hasta llegar a la meta de 30 puntos en el tablero de clavijas."}, {"name": "El Camarero", "players": "2-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg", "bgg_id": 273657, "bgg_url": "https://boardgamegeek.com/boardgame/273657/el-camarero", "weight": 1.1, "playing_time": "20 Min", "age": "7+", "synopsis": "Juego veloz de memoria y agilidad mental donde debes memorizar los pedidos de un restaurante caótico y servirlos a tiempo sin equivocarte en los ingredientes.", "rank": "Rookie", "islandId": 0, "id": 19, "scoring": "• Entrega de Comandas: Gana fichas de propina quien entregue las comandas de mesas sin equivocarse en los ingredientes memorizados. Gana quien sume más dinero en propinas."}, {"name": "El Melómano", "players": "2-10", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.2", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg", "bgg_id": 120870, "bgg_url": "https://boardgamegeek.com/boardgame/120870/el-melomano", "weight": 1.15, "playing_time": "30-45 Min", "age": "12+", "synopsis": "Juego de mesa argentino de trivia y desafíos musicales para grupos. Adivina bandas, completa letras de canciones icónicas y canta melodías para sumar discos de oro.", "rank": "Rookie", "islandId": 0, "id": 20, "scoring": "• Discos de Oro: Cada respuesta o desafío musical cantado/adivinado correctamente otorga discos de oro. Gana el primer jugador o equipo en reunir los 6 discos de oro de diferentes géneros."}, {"name": "Equipazo", "players": "4-12", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.2", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg", "bgg_id": 280000, "bgg_url": "https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=Team%20Work", "weight": 1.15, "playing_time": "20-30 Min", "age": "8+", "synopsis": "Party game cooperativo de comunicación y coordinación en equipo donde resuelven desafíos de palabras y conceptos bajo presión de tiempo.", "rank": "Rookie", "islandId": 0, "id": 21, "scoring": "• Puntuación por Ronda: Aciertos de pistas colaborativas en tiempo límite. Cada desafío resuelto con éxito aporta estrellas al marcador de equipo."}, {"name": "Jardín Japonés", "players": "2-4", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg", "bgg_id": 378329, "bgg_url": "https://boardgamegeek.com/boardgame/378329/jardin-japones", "weight": 1.67, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Construye un sereno jardín zen colocando losetas de estanques con peces koi, bonsáis y linternas de piedra en armonía para conseguir la mayor puntuación estética.", "rank": "Rookie", "islandId": 0, "id": 22, "scoring": "• Armonía Zen: Puntos por formación de estanques de peces koi conectados, distribución equilibrada de bonsáis y simetría de linternas de piedra en el tablero."}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "7.6", "local_image": "portadas/Just_One.jpg", "bgg_id": 254640, "bgg_url": "https://boardgamegeek.com/boardgame/254640/just-one", "weight": 1.05, "playing_time": "20 Min", "age": "8+", "synopsis": "Party game cooperativo ganador del Spiel des Jahres. Todos escriben en secreto una palabra pista para el adivinador, pero ¡las pistas repetidas se anulan y se borran antes de mostrarse!", "rank": "Rookie", "islandId": 0, "id": 23, "scoring": "• Puntuación Cooperativa (13 Cartas): Cada palabra adivinada suma 1 punto, cada fallo descarta 2 cartas. Puntuación final sobre 13 puntos (13 = Puntuación Perfecta)."}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "6.7", "local_image": "portadas/La_Isla_Prohibida.jpg", "bgg_id": 65244, "bgg_url": "https://boardgamegeek.com/boardgame/65244/forbidden-island", "weight": 1.74, "playing_time": "30 Min", "age": "10+", "synopsis": "Aventura cooperativa donde un equipo de arqueólogos debe recuperar 4 tesoros sagrados en una isla misteriosa cuyas losetas de terreno se van inundando y hundiendo con cada turno.", "rank": "Rookie", "islandId": 0, "id": 24, "scoring": "• Victoria Cooperativa: El equipo gana si consigue los 4 tesoros sagrados, todos los aventureros llegan al helipuerto 'Fools' Landing' y juegan una carta de Helicóptero antes de que se hunda la isla."}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.0", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "bgg_id": 25821, "bgg_url": "https://boardgamegeek.com/boardgame/25821/the-werewolves-of-millers-hollow", "weight": 1.34, "playing_time": "30 Min", "age": "10+", "synopsis": "Juego social para grupos grandes. Una aldea amenazada por licántropos debe debatir y linchar a los sospechosos de día, mientras los lobos devoran inocentes en secreto durante la noche.", "rank": "Rookie", "islandId": 0, "id": 25, "scoring": "• Aldeanos: Ganan linchando y eliminando a todos los Hombres Lobo.\n• Hombres Lobo: Ganan devorando a suficientes aldeanos hasta igualar o superar su número."}, {"name": "Monopoly", "players": "2-8", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "4.4", "local_image": "portadas/Monopoly.jpg", "bgg_id": 1406, "bgg_url": "https://boardgamegeek.com/boardgame/1406/monopoly", "weight": 1.63, "playing_time": "60-180 Min", "age": "8+", "synopsis": "El clásico juego de bienes raíces. Compra calles, construye casas y hoteles de lujo, y cobra alquileres a los demás jugadores hasta dejarlos en bancarrota total.", "rank": "Rookie", "islandId": 0, "id": 26, "scoring": "• Eliminación Económica: Gana el último jugador que quede en pie tras llevar a todos los demás rivales a la bancarrota total mediante cobro de alquileres."}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "6.0", "local_image": "portadas/Munchkin.jpg", "bgg_id": 1927, "bgg_url": "https://boardgamegeek.com/boardgame/1927/munchkin", "weight": 1.81, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Parodia hilarante de los juegos de rol. Abre puertas de mazmorra, derrota monstruos ridículos, róbate los tesoros y traiciona a tus propios amigos para ser el primero en alcanzar el nivel 10.", "rank": "Rookie", "islandId": 0, "id": 27, "scoring": "• Nivel 10: Gana el primer jugador en alcanzar el Nivel 10 derrotando a un monstruo (o por carta especial que lo permita explícitamente)."}, {"name": "Munchkin 3: Errores clericales", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg", "bgg_id": 6606, "bgg_url": "https://boardgamegeek.com/boardgame/6606/munchkin-3-clerical-errors", "weight": 1.8, "playing_time": "60 Min", "age": "10+", "synopsis": "Añade la clase Bardo, la raza Gnomo y nuevas criaturas como el Centauro y el Chicopez para ampliar y caotizar tus partidas de Munchkin.", "rank": "Rookie", "islandId": 0, "id": 28, "scoring": "• Nivel 10: Reglas estándar de Munchkin incorporando las habilidades de robo y combate de las nuevas clases Bardo y Gnomo."}, {"name": "Munchkin 7: Trampas a dos manos", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.7", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "bgg_id": 92398, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/92398/munchkin-7-cheat-both-hands", "weight": 1.85, "playing_time": "60 Min", "age": "10+", "synopsis": "Diseñado para mezclar múltiples cajas de Munchkin, permitiendo equipar más objetos poderosos y usar trampas dobles sin penalización.", "rank": "Rookie", "islandId": 0, "id": 29, "scoring": "• Nivel 10 Ampliado: Permite usar combinaciones de objetos bizarros para alcanzar el Nivel 10 en mazmorras combinadas."}, {"name": "Munchkin: Dragones molones", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg", "bgg_id": 326728, "bgg_url": "https://boardgamegeek.com/boardgame/326728/munchkin-dragones-molones", "weight": 1.75, "playing_time": "60 Min", "age": "10+", "synopsis": "Expansión que introduce feroces y cómicos dragones a tus mazmorras de Munchkin, con tesoros legendarios y potenciadores dracónicos.", "rank": "Rookie", "islandId": 0, "id": 30, "scoring": "• Nivel 10 con Dragones: Reglas estándar de Munchkin; derrotar dragones legendarios otorga niveles dobles y botín reforzado."}, {"name": "Panic Lab", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "6.4", "local_image": "portadas/Panic_Lab_Maldón.jpg", "bgg_id": 121073, "bgg_url": "https://boardgamegeek.com/boardgame/121073/panic-lab", "weight": 1.21, "playing_time": "15-30 Min", "age": "8+", "synopsis": "Juego de agilidad visual donde amebas mutantes escaparon del laboratorio y debes seguir su rastro a través de rejillas de ventilación y salas de mutación para atrapar a la correcta.", "rank": "Rookie", "islandId": 0, "id": 31, "scoring": "• Puntuación por Fichas: Gana 1 ficha de punto el primer jugador que toque la ameba correcta (siguiendo color, forma, patrón y mutaciones por ventilación). Gana quien consiga 5 puntos primero."}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "8.1", "local_image": "portadas/Root.jpg", "bgg_id": 237182, "bgg_url": "https://boardgamegeek.com/boardgame/237182/root", "weight": 3.84, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Juego de guerra y control de áreas totalmente asimétrico ambientado en un bosque encantado. Cada facción (Marquesa felina, Dinastía del Nido, Alianza del Bosque y el Vagabundo) se juega con reglas y metas totalmente distintas.", "rank": "Advance", "islandId": 2, "id": 32, "scoring": "• Carrera a 30 Puntos o Carta de Dominancia:\n- Marquesa: Construcción de aserraderos/talleres/cuarteles.\n- Nido de Águilas: Construcción de nidos sin caer en caos.\n- Alianza: Simpatía y revueltas.\n- Vagabundo: Misiones y ayuda/eliminación de guerreros."}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg", "bgg_id": 9220, "bgg_url": "https://boardgamegeek.com/boardgame/9220/saboteur", "weight": 1.31, "playing_time": "30 Min", "age": "8+", "synopsis": "Eres un enano minero cavando túneles en busca de oro en la montaña, pero cuidado: entre tus compañeros hay saboteadores secretos que romperán tus herramientas y bloquearán los caminos.", "rank": "Rookie", "islandId": 0, "id": 33, "scoring": "• Mineros: Ganan si conectan el túnel desde la entrada hasta la carta de pepita de oro real.\n• Saboteadores: Ganan si se agotan las cartas del mazo sin que los mineros hayan llegado al oro.\n• Puntos: Se reparten cartas de pepitas de oro en 3 rondas acumulativas."}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "7.5", "local_image": "portadas/Say_My_Name.jpg", "bgg_id": 344849, "bgg_url": "https://boardgamegeek.com/boardgame/344849/say-my-name", "weight": 1.1, "playing_time": "30-45 Min", "age": "10+", "synopsis": "Party game de adivinanzas por equipos contrarreloj: describe personajes de series, películas, música y cultura pop a lo largo de 3 rondas (palabras libres, 1 sola palabra y mímica pura).", "rank": "Rookie", "islandId": 0, "id": 34, "scoring": "• Puntuación por Equipos: Cada personaje adivinado en el tiempo límite suma 1 punto. Tras 3 rondas (palabras libres, 1 palabra, mímica), gana el equipo con más puntos acumulados."}, {"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.5", "local_image": "portadas/Secret_Hitler.jpg", "bgg_id": 188834, "bgg_url": "https://boardgamegeek.com/boardgame/188834/secret-hitler", "weight": 1.7, "playing_time": "45 Min", "age": "13+", "synopsis": "Juego de deducción social y engaño político en la Alemania de 1930. Los liberales intentan aprobar leyes democráticas mientras los fascistas conspiran en secreto para colocar a su líder en el poder.", "rank": "Rookie", "islandId": 0, "id": 35, "scoring": "• Bando Liberal: Gana aprobando 5 políticas liberales o asesinando a Hitler.\n• Bando Fascista: Gana aprobando 6 políticas fascistas o eligiendo a Hitler como Canciller tras aprobar 3 políticas fascistas."}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.4", "local_image": "portadas/Splendor.jpg", "bgg_id": 148228, "bgg_url": "https://boardgamegeek.com/boardgame/148228/splendor", "weight": 1.78, "playing_time": "30 Min", "age": "10+", "synopsis": "Eres un mercader del Renacimiento que recolecta fichas de gemas para adquirir minas, barcos comerciales y artesanos que abaratan tus compras futuras y atraen a nobles influyentes.", "rank": "Rookie", "islandId": 0, "id": 36, "scoring": "• Carrera a 15 Puntos: Gana quien alcance 15 o más puntos de prestigio comprando cartas de desarrollo de gemas y atrayendo nobles influyentes (+3 pts c/u)."}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "7.0", "local_image": "portadas/Sushi_Go.jpg", "bgg_id": 133473, "bgg_url": "https://boardgamegeek.com/boardgame/133473/sushi-go", "weight": 1.16, "playing_time": "15 Min", "age": "8+", "synopsis": "Juego rápido de cartas estilo drafting. Elige una carta de sushi de tu mano y pásale el resto al de al lado. Junta combos de nigiris con wasabi, makis y puddings para sumar puntos.", "rank": "Rookie", "islandId": 0, "id": 37, "scoring": "• Combos en 3 Rondas: Maki (más rollos = 6 pts), Tempura (pares = 5 pts), Sashimi (tríos = 10 pts), Dumplings (1 a 15 pts), Nigiris x3 con Wasabi, y Pudding final (mayoría +6 pts, minoría -6 pts)."}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "6.6", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "bgg_id": 253344, "bgg_url": "https://boardgamegeek.com/boardgame/253344/taco-cat-goat-cheese-pizza", "weight": 1.05, "playing_time": "10-15 Min", "age": "8+", "synopsis": "Frenético juego de reflejos y velocidad de reacción. Di la secuencia de palabras en voz alta mientras bajas cartas; en cuanto coincidan la palabra y la carta, ¡sé el más rápido en palmear el mazo!", "rank": "Rookie", "islandId": 0, "id": 38, "scoring": "• Victoria Inmediata: Gana el primer jugador en quedarse sin cartas en su mazo y ser el más rápido en palmear la pila central correctamente en la siguiente coincidencia."}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "6.0", "local_image": "portadas/TEG_Tradicional.jpg", "bgg_id": 22392, "bgg_url": "https://boardgamegeek.com/boardgame/22392/teg-plan-tactico-y-estrategico-de-la-guerra", "weight": 2.1, "playing_time": "120-240 Min", "age": "12+", "synopsis": "El legendario juego de táctica bélica y conquista territorial. Cumple tu objetivo secreto dominando países y continentes mediante pactos, refuerzos y tiradas de dados.", "rank": "Beginner", "islandId": 1, "id": 39, "scoring": "• Objetivo Secreto: Gana de inmediato el jugador que cumpla en su turno el 100% de los requisitos territoriales de su tarjeta de objetivo secreto (o conquiste 30 países)."}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "7.5", "local_image": "portadas/The_King_is_Dead.jpg", "bgg_id": 319966, "bgg_url": "https://boardgamegeek.com/boardgame/319966/the-king-is-dead-second-edition", "weight": 2.21, "playing_time": "30-45 Min", "age": "14+", "synopsis": "Juego de control de áreas tenso y sin azar ambientado en la Gran Bretaña medieval tras la muerte del Rey Arturo. Con solo 8 cartas para toda la partida, manipula las facciones para tomar el trono.", "rank": "Beginner", "islandId": 1, "id": 40, "scoring": "• Control Político Gran Bretaña: Quien tenga más cortesanos de la facción con más regiones controladas gana el trono. Si invaden los franceses (4 inestabilidades), gana quien tenga más sets completos de los 3 bandos."}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "7.6", "local_image": "portadas/The_Red_Cathedral.jpg", "bgg_id": 227224, "bgg_url": "https://boardgamegeek.com/boardgame/227224/the-red-cathedral", "weight": 2.82, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Construye la icónica Catedral de San Basilio en Moscú. Gestiona recursos en el rondel del mercado y levanta secciones y cúpulas doradas para ganarte el favor del Zar Iván el Terrible.", "rank": "Beginner", "islandId": 1, "id": 41, "scoring": "• Reconocimiento del Zar: Puntos por secciones construidas y adornadas con cúpulas/cruces en la catedral, mayorías de influencia por torre terminada y recursos restantes."}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.0", "local_image": "portadas/The_White_Castle.jpg", "bgg_id": 371942, "bgg_url": "https://boardgamegeek.com/boardgame/371942/the-white-castle", "weight": 3.07, "playing_time": "80 Min", "age": "12+", "synopsis": "Estrategia profunda y compacta de gestión de dados en el Japón feudal. Gestiona los miembros de tu clan (guerreros, cortesanos y jardineros) en las salas del Castillo Himeji para ganar influencia ante el Daimyo.", "rank": "Advance", "islandId": 2, "id": 42, "scoring": "• Puntos de Clan (Castillo Himeji): Puntos por jardineros en estanques, cortesanos en plantas altas del castillo, guerreros en el patio de armas, sellos del Daimyo e influencia en el pasillo de linternas."}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.0", "local_image": "portadas/Toma_6_6_nimmt.jpg", "bgg_id": 432, "bgg_url": "https://boardgamegeek.com/boardgame/432/6-nimmt", "weight": 1.19, "playing_time": "20-45 Min", "age": "8+", "synopsis": "Juego de cartas brillante y adictivo. Todos bajan un número a la vez en 4 filas; si tu carta es la sexta de una fila, ¡estás obligado a comerte todas las cabezas de buey con puntos negativos!", "rank": "Rookie", "islandId": 0, "id": 43, "scoring": "• Puntos Negativos (Cabezas de Buey): Al colocar la 6ª carta de una fila te llevas todas las cartas anteriores. La partida termina cuando alguien llega a 66 puntos negativos; gana quien tenga MENOS puntos."}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.0", "local_image": "portadas/Wingspan.jpg", "bgg_id": 266192, "bgg_url": "https://boardgamegeek.com/boardgame/266192/wingspan", "weight": 2.47, "playing_time": "40-70 Min", "age": "10+", "synopsis": "Juego aclamado de construcción de motores de cartas donde eres un investigador o coleccionista de aves descubriendo y atrayendo las mejores especies a tus hábitats naturales para encadenar combos.", "rank": "Beginner", "islandId": 1, "id": 44, "scoring": "• Ecosistema de Aves: Puntos impresos en cartas de pájaros jugadas + cartas de bonificación cumplidas + metas de final de ronda + 1 pt por huevo, 1 pt por alimento acumulado y 1 pt por carta solapada."}];
 
         function bustCache(url) {
             if (!url) return '';
             return url + (url.includes('?') ? '&' : '?') + 'v=' + BUILD_VERSION;
         }
 
-        // --- AUTH & USER STATE ---
-        let currentUser = JSON.parse(localStorage.getItem('ludoteca_user') || 'null');
+        // Populate Favorite Games Dropdown
+        const favSelect = document.getElementById('user-input-favorite');
+        gamesData.forEach(g => {
+            const opt = document.createElement('option');
+            opt.value = g.name;
+            opt.innerText = g.name;
+            favSelect.appendChild(opt);
+        });
+
+        // --- ZOOM CONTROLS ---
+        let currentZoom = 1.0;
+        function changeZoom(delta) {
+            currentZoom = Math.min(1.8, Math.max(0.5, currentZoom + delta));
+        }
+        function resetZoom() {
+            currentZoom = 1.0;
+        }
+        window.addEventListener('wheel', (e) => {
+            if (isModalOpen || document.getElementById('wheel-modal').style.display === 'flex') return;
+            if (e.deltaY < 0) changeZoom(0.08);
+            else if (e.deltaY > 0) changeZoom(-0.08);
+        }, { passive: true });
+
+        // --- AUTH & PLAYERS MANAGEMENT ---
+        let kingdomUsers = [];
+        let activeUser = JSON.parse(localStorage.getItem('ludoteca_active_user') || 'null');
+
         function updateUIUser() {
-            const uName = currentUser ? currentUser.name : 'Invitado';
+            const uName = activeUser ? activeUser.name : 'Gremio de Jugadores';
             document.getElementById('current-user-name').innerText = uName;
         }
         updateUIUser();
 
-        function openLoginModal() {
-            document.getElementById('login-modal').style.display = 'flex';
-        }
-        function closeLoginModal() {
-            document.getElementById('login-modal').style.display = 'none';
-        }
-        async function handleLogin() {
-            const username = document.getElementById('login-username').value.trim();
-            if (!username) return;
+        async function loadUsers() {
             try {
-                const res = await fetch('api.php?action=login', {
+                const res = await fetch('api.php?action=get_data');
+                const d = await res.json();
+                kingdomUsers = d.users || [];
+            } catch (e) {
+                kingdomUsers = JSON.parse(localStorage.getItem('ludoteca_local_users') || '[]');
+            }
+            renderUsersList();
+        }
+        loadUsers();
+
+        function openUsersModal() {
+            loadUsers();
+            document.getElementById('users-modal').style.display = 'flex';
+        }
+        function closeUsersModal() {
+            document.getElementById('users-modal').style.display = 'none';
+        }
+
+        function renderUsersList() {
+            const container = document.getElementById('users-list-container');
+            if (!kingdomUsers || kingdomUsers.length === 0) {
+                container.innerHTML = '<p style="color:#aaa;">No hay jugadores creados.</p>';
+                return;
+            }
+            let html = '';
+            kingdomUsers.forEach(u => {
+                const isActive = activeUser && activeUser.id === u.id;
+                html += `
+                    <div style="background:rgba(20,10,5,0.85); border:1px solid ${isActive ? '#ffd700' : '#dfa143'}; border-radius:6px; padding:8px 10px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <strong style="color:${isActive ? '#ffd700' : '#fff'};">👤 ${u.name}</strong> ${isActive ? '<span style="color:#5bb35b; font-size:10px;">(Activo)</span>' : ''}<br>
+                            <small style="color:#dfa143;">Juego Favorito: ⭐ ${u.favorite_game || 'Catan'}</small>
+                        </div>
+                        <div style="display:flex; gap:6px;">
+                            <button class="btn-action" style="font-size:7.5px; padding:4px 8px; border-color:#ffd700;" onclick="selectActiveUser(${u.id})">ELEGIR</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function selectActiveUser(id) {
+            const u = kingdomUsers.find(x => x.id === id);
+            if (u) {
+                activeUser = u;
+                localStorage.setItem('ludoteca_active_user', JSON.stringify(activeUser));
+                updateUIUser();
+                renderUsersList();
+            }
+        }
+
+        async function registerPlayer() {
+            const name = document.getElementById('user-input-name').value.trim();
+            const favorite = document.getElementById('user-input-favorite').value;
+            if (!name) {
+                alert('Ingresa un nombre para el jugador.');
+                return;
+            }
+
+            const payload = {
+                username: name.toLowerCase().replace(/\s+/g, '_'),
+                name: name,
+                favorite_game: favorite,
+                avatar: 'warrior_blue'
+            };
+
+            try {
+                const res = await fetch('api.php?action=register_user', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: username })
+                    body: JSON.stringify(payload)
                 });
                 const d = await res.json();
                 if (d.status === 'success') {
-                    currentUser = d.user;
-                    localStorage.setItem('ludoteca_user', JSON.stringify(currentUser));
-                    updateUIUser();
-                    closeLoginModal();
-                    alert('¡Bienvenido al reino, ' + currentUser.name + '!');
+                    kingdomUsers = d.users;
+                    activeUser = d.user;
+                    localStorage.setItem('ludoteca_active_user', JSON.stringify(activeUser));
                 }
             } catch (e) {
-                // Local fallback
-                currentUser = { username: username, name: username, avatar: 'warrior_blue' };
-                localStorage.setItem('ludoteca_user', JSON.stringify(currentUser));
-                updateUIUser();
-                closeLoginModal();
-                alert('¡Sesión iniciada localmente, ' + username + '!');
+                const newUser = {
+                    id: Date.now(),
+                    username: payload.username,
+                    name: payload.name,
+                    favorite_game: payload.favorite_game,
+                    avatar: 'warrior_blue'
+                };
+                kingdomUsers.push(newUser);
+                activeUser = newUser;
+                localStorage.setItem('ludoteca_local_users', JSON.stringify(kingdomUsers));
+                localStorage.setItem('ludoteca_active_user', JSON.stringify(activeUser));
+            }
+
+            document.getElementById('user-input-name').value = '';
+            updateUIUser();
+            renderUsersList();
+            alert('¡Jugador ' + name + ' guardado con éxito!');
+        }
+
+        // --- ROULETTE WHEEL ENGINE ---
+        const wheelCanvas = document.getElementById('wheelCanvas');
+        const wCtx = wheelCanvas.getContext('2d');
+        let wheelAngle = 0;
+        let isSpinningWheel = false;
+        let selectedRouletteGame = null;
+
+        const WHEEL_COLORS = ['#8b4513', '#2e8b57', '#b8860b', '#4682b4', '#800000', '#483d8b', '#d2691e', '#2f4f4f'];
+
+        function drawRouletteWheel() {
+            const numSegments = gamesData.length;
+            const arc = (2 * Math.PI) / numSegments;
+            const radius = 160;
+
+            wCtx.clearRect(0, 0, 320, 320);
+            wCtx.save();
+            wCtx.translate(160, 160);
+            wCtx.rotate(wheelAngle);
+
+            for (let i = 0; i < numSegments; i++) {
+                const angle = i * arc;
+                wCtx.beginPath();
+                wCtx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length];
+                wCtx.moveTo(0, 0);
+                wCtx.arc(0, 0, radius, angle, angle + arc);
+                wCtx.lineTo(0, 0);
+                wCtx.fill();
+                wCtx.strokeStyle = '#dfa143';
+                wCtx.lineWidth = 1;
+                wCtx.stroke();
+
+                // Draw Text
+                wCtx.save();
+                wCtx.rotate(angle + arc / 2);
+                wCtx.textAlign = 'right';
+                wCtx.fillStyle = '#ffe6a3';
+                wCtx.font = 'bold 9px "MedievalSharp", cursive';
+                const shortTitle = gamesData[i].name.length > 14 ? gamesData[i].name.substring(0, 12) + '..' : gamesData[i].name;
+                wCtx.fillText(shortTitle, radius - 10, 3);
+                wCtx.restore();
+            }
+
+            // Center Pin
+            wCtx.beginPath();
+            wCtx.fillStyle = '#ffd700';
+            wCtx.arc(0, 0, 18, 0, 2 * Math.PI);
+            wCtx.fill();
+            wCtx.strokeStyle = '#5c3a21';
+            wCtx.lineWidth = 3;
+            wCtx.stroke();
+
+            wCtx.restore();
+        }
+        drawRouletteWheel();
+
+        function openWheelModal() {
+            document.getElementById('wheel-modal').style.display = 'flex';
+            document.getElementById('wheel-result').innerText = '';
+            document.getElementById('wheel-view-btn').style.display = 'none';
+            drawRouletteWheel();
+        }
+        function closeWheelModal() {
+            document.getElementById('wheel-modal').style.display = 'none';
+        }
+
+        function spinWheel() {
+            if (isSpinningWheel) return;
+            isSpinningWheel = true;
+            document.getElementById('wheel-result').innerText = '🎲 Girando el destino...';
+            document.getElementById('wheel-view-btn').style.display = 'none';
+
+            const extraSpins = 5 + Math.random() * 5;
+            const targetSpinAngle = extraSpins * 2 * Math.PI + Math.random() * 2 * Math.PI;
+            const duration = 4000;
+            const startTime = performance.now();
+            const initialAngle = wheelAngle;
+
+            function animateSpin(now) {
+                const elapsed = now - startTime;
+                const t = Math.min(1, elapsed / duration);
+                // Ease out cubic
+                const ease = 1 - Math.pow(1 - t, 3);
+                wheelAngle = initialAngle + targetSpinAngle * ease;
+                drawRouletteWheel();
+
+                if (t < 1) {
+                    requestAnimationFrame(animateSpin);
+                } else {
+                    isSpinningWheel = false;
+                    // Determine chosen game at pointer (Top: angle 3PI/2 = -PI/2)
+                    const arc = (2 * Math.PI) / gamesData.length;
+                    const normalizedAngle = (wheelAngle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+                    // Pointer is at 3PI/2 (top)
+                    const pointerAngle = (3 * Math.PI / 2 - normalizedAngle + 2 * Math.PI) % (2 * Math.PI);
+                    const chosenIdx = Math.floor(pointerAngle / arc) % gamesData.length;
+
+                    selectedRouletteGame = gamesData[chosenIdx];
+                    document.getElementById('wheel-result').innerHTML = `🎉 ¡EL DESTINO HA ELEGIDO:<br><strong style="color:#ffd700; font-size:18px;">${selectedRouletteGame.name}</strong>!`;
+                    document.getElementById('wheel-view-btn').style.display = 'inline-block';
+                }
+            }
+            requestAnimationFrame(animateSpin);
+        }
+
+        function goToWheelSelectedGame() {
+            if (!selectedRouletteGame) return;
+            closeWheelModal();
+            if (selectedRouletteGame.house) {
+                player.pathQueue = [];
+                player.gridX = selectedRouletteGame.house.doorC;
+                player.gridY = selectedRouletteGame.house.doorR;
+                player.x = selectedRouletteGame.house.doorC * TILE_SIZE;
+                player.y = selectedRouletteGame.house.doorR * TILE_SIZE;
+                player.targetX = player.x;
+                player.targetY = player.y;
+                camera.x = player.x;
+                camera.y = player.y;
+                openGameModal(selectedRouletteGame);
             }
         }
 
@@ -919,8 +1250,8 @@
 
         function initThreeJS() {
             const container = document.getElementById('box3d-container');
-            const width = container.clientWidth || 320;
-            const height = container.clientHeight || 380;
+            const width = container.clientWidth || 360;
+            const height = container.clientHeight || 420;
 
             scene3D = new THREE.Scene();
             camera3D = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
@@ -932,33 +1263,30 @@
             renderer3D.shadowMap.enabled = true;
             container.appendChild(renderer3D.domElement);
 
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
             scene3D.add(ambientLight);
 
             const dirLight = new THREE.DirectionalLight(0xfffaed, 1.2);
             dirLight.position.set(4, 5, 5);
             scene3D.add(dirLight);
 
-            const backLight = new THREE.DirectionalLight(0xdfa143, 0.5);
+            const backLight = new THREE.DirectionalLight(0xdfa143, 0.6);
             backLight.position.set(-4, -2, -4);
             scene3D.add(backLight);
 
-            // Box Geometry (Aspect ratio of typical board game box: width 2.4, height 3.0, depth 0.6)
             const geometry = new THREE.BoxGeometry(2.3, 3.0, 0.65);
             const materials = [
-                new THREE.MeshStandardMaterial({ color: 0x221108, roughness: 0.4 }), // Right side
-                new THREE.MeshStandardMaterial({ color: 0x221108, roughness: 0.4 }), // Left side
-                new THREE.MeshStandardMaterial({ color: 0x221108, roughness: 0.4 }), // Top
-                new THREE.MeshStandardMaterial({ color: 0x221108, roughness: 0.4 }), // Bottom
-                new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.1 }), // FRONT COVER
-                new THREE.MeshStandardMaterial({ color: 0x180c05, roughness: 0.4 })  // Back cover
+                new THREE.MeshStandardMaterial({ color: 0x221108, roughness: 0.4 }),
+                new THREE.MeshStandardMaterial({ color: 0x221108, roughness: 0.4 }),
+                new THREE.MeshStandardMaterial({ color: 0x221108, roughness: 0.4 }),
+                new THREE.MeshStandardMaterial({ color: 0x221108, roughness: 0.4 }),
+                new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.1 }),
+                new THREE.MeshStandardMaterial({ color: 0x180c05, roughness: 0.4 })
             ];
 
             boxMesh = new THREE.Mesh(geometry, materials);
             scene3D.add(boxMesh);
 
-            // Interaction Event Handlers for 3D Box
             const onDown = (x, y) => {
                 isDragging3D = true;
                 prevMouseX = x;
@@ -990,7 +1318,7 @@
             function animate3D() {
                 requestAnimationFrame(animate3D);
                 if (boxMesh && !isDragging3D && isModalOpen) {
-                    boxMesh.rotation.y += 0.008; // Gentle idle 3D rotation
+                    boxMesh.rotation.y += 0.008;
                 }
                 renderer3D.render(scene3D, camera3D);
             }
@@ -1005,7 +1333,7 @@
                 texture.generateMipmaps = true;
                 boxMesh.material[4].map = texture;
                 boxMesh.material[4].needsUpdate = true;
-                boxMesh.rotation.set(0.15, -0.35, 0); // Ideal 3D perspective angle
+                boxMesh.rotation.set(0.15, -0.35, 0);
             });
         }
 
@@ -1072,7 +1400,6 @@
             assets.coverThumbnails[g.id] = cImg;
         });
 
-        // --- UI TOGGLES ---
         function toggleGuide() {
             const el = document.getElementById('guide-panel');
             el.classList.toggle('open');
@@ -1136,8 +1463,8 @@
             isModalOpen = true;
             document.getElementById('modal-title').innerHTML = `🏠 ${game.name} <span class="badge-rank ${getRankClass(game.rank)}">${game.rank.toUpperCase()}</span>`;
             document.getElementById('modal-synopsis').innerText = game.synopsis || 'Juego de mesa clásico.';
-            
-            // Load 3D interactive Three.js Box
+            document.getElementById('modal-scoring').innerText = game.scoring || '• Puntos de Victoria estándar según el manual oficial.';
+
             load3DBoxCover(bustCache(game.image));
             
             document.getElementById('modal-desc').innerHTML = `
@@ -1152,7 +1479,6 @@
             
             const searchUrl = 'https://www.youtube.com/results?search_query=como+jugar+' + encodeURIComponent(game.name + ' juego de mesa tutorial');
             document.getElementById('modal-link').href = searchUrl;
-            
             document.getElementById('modal-bgg-link').href = game.bgg_url || ('https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=' + encodeURIComponent(game.name));
             
             document.getElementById('game-modal').style.display = 'flex';
@@ -1169,7 +1495,6 @@
             if (!file) return;
 
             const filename = activeGameForUpload.image.split('/').pop().split('?')[0];
-
             const endpoints = [
                 'upload.php?filename=' + encodeURIComponent(filename),
                 'http://127.0.0.1:7560/upload?filename=' + encodeURIComponent(filename)
@@ -1178,16 +1503,9 @@
             let success = false;
             for (let url of endpoints) {
                 try {
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        body: file
-                    });
-                    if (res.ok) {
-                        success = true;
-                        break;
-                    }
-                } catch (e) {
-                }
+                    const res = await fetch(url, { method: 'POST', body: file });
+                    if (res.ok) { success = true; break; }
+                } catch (e) {}
             }
 
             if (success) {
@@ -1453,7 +1771,7 @@
         }
 
         function movePlayerManual(dx, dy) {
-            if (isModalOpen || document.getElementById('char-modal').style.display === 'flex') return;
+            if (isModalOpen || document.getElementById('char-modal').style.display === 'flex' || document.getElementById('users-modal').style.display === 'flex' || document.getElementById('wheel-modal').style.display === 'flex') return;
             player.pathQueue = [];
             player.clickMarker = null;
             player.targetGameToOpen = null;
@@ -1526,19 +1844,20 @@
                 }
             }
 
-            camera.x += (player.x + TILE_SIZE/2 - canvas.width/2 - camera.x) * 0.14;
-            camera.y += (player.y + TILE_SIZE/2 - canvas.height/2 - camera.y) * 0.14;
+            camera.x += (player.x + TILE_SIZE/2 - canvas.width/(2 * currentZoom) - camera.x) * 0.14;
+            camera.y += (player.y + TILE_SIZE/2 - canvas.height/(2 * currentZoom) - camera.y) * 0.14;
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
+            ctx.scale(currentZoom, currentZoom);
             ctx.translate(-Math.floor(camera.x), -Math.floor(camera.y));
 
             const startCol = Math.max(0, Math.floor(camera.x / TILE_SIZE) - 2);
-            const endCol = Math.min(WORLD_COLS - 1, Math.ceil((camera.x + canvas.width) / TILE_SIZE) + 2);
+            const endCol = Math.min(WORLD_COLS - 1, Math.ceil((camera.x + canvas.width / currentZoom) / TILE_SIZE) + 2);
             const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE) - 2);
-            const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height) / TILE_SIZE) + 2);
+            const endRow = Math.min(WORLD_ROWS - 1, Math.ceil((camera.y + canvas.height / currentZoom) / TILE_SIZE) + 2);
 
             // 1. Draw Terrain Base
             for (let r = startRow; r <= endRow; r++) {
@@ -1790,12 +2109,13 @@
 
         // --- KEYBOARD CONTROLS (PC) ---
         window.addEventListener('keydown', (e) => {
-            if (isModalOpen || document.getElementById('char-modal').style.display === 'flex' || document.getElementById('match-modal').style.display === 'flex' || document.getElementById('login-modal').style.display === 'flex') {
+            if (isModalOpen || document.getElementById('char-modal').style.display === 'flex' || document.getElementById('match-modal').style.display === 'flex' || document.getElementById('users-modal').style.display === 'flex' || document.getElementById('wheel-modal').style.display === 'flex') {
                 if (e.key === 'Escape') {
                     closeModal();
                     closeCharModal();
                     closeMatchModal();
-                    closeLoginModal();
+                    closeUsersModal();
+                    closeWheelModal();
                 }
                 return;
             }
@@ -1850,8 +2170,8 @@
         canvas.addEventListener('click', (e) => {
             if (isModalOpen || document.getElementById('guide-panel').classList.contains('open') || document.getElementById('leaderboard-panel').classList.contains('open')) return;
             const rect = canvas.getBoundingClientRect();
-            const clickX = e.clientX + camera.x;
-            const clickY = e.clientY + camera.y;
+            const clickX = e.clientX / currentZoom + camera.x;
+            const clickY = e.clientY / currentZoom + camera.y;
 
             const targetC = Math.floor(clickX / TILE_SIZE);
             const targetR = Math.floor(clickY / TILE_SIZE);
