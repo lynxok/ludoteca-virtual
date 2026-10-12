@@ -8,9 +8,9 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <title>Habitación Gamer 3D - Repisa de Juegos en Primera Persona</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=MedievalSharp&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <title>Habitación Gamer 3D - Ludoteca Virtual</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=MedievalSharp&family=Cinzel:wght@700&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <!-- Three.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
@@ -43,7 +43,7 @@
             z-index: 1;
         }
 
-        /* --- HUD TOP BAR (ARCADE / ROOM STYLE) --- */
+        /* --- HUD TOP BAR --- */
         #hud-top {
             position: absolute;
             top: env(safe-area-inset-top, 14px);
@@ -82,30 +82,50 @@
             transform: scale(1.04);
         }
 
-        /* VIEW TOGGLE BUTTON (PANORÁMICA vs ACERCARSE) */
-        #btn-view-toggle {
-            background: linear-gradient(180deg, #b8860b 0%, #664600 100%);
-            border: 2px solid #ffd700;
-            color: #fff;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            font-weight: bold;
+        /* ROOM NAVIGATION / STATION PILLS */
+        #room-stations-nav {
+            position: absolute;
+            bottom: calc(env(safe-area-inset-bottom, 12px) + 20px);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 95;
+            pointer-events: auto;
         }
-        #btn-view-toggle:hover {
-            background: #ffd700;
+        .station-pill {
+            background: rgba(20, 15, 12, 0.92);
+            border: 2px solid #ffbe3b;
+            border-radius: 25px;
+            padding: 10px 18px;
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffe6a3;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(6px);
+        }
+        .station-pill.active, .station-pill:hover {
+            background: #ffbe3b;
             color: #000;
+            transform: scale(1.08);
+            box-shadow: 0 0 20px rgba(255, 190, 59, 0.6);
         }
 
-        /* Shelf Navigation Crosshairs / Floor Selector */
+        /* Shelf Navigation Floor Selector */
         #shelf-floors-nav {
             position: absolute;
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            display: flex;
+            display: none;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             z-index: 95;
             pointer-events: auto;
         }
@@ -115,7 +135,7 @@
             border-radius: 8px;
             color: #ffd700;
             font-family: 'Cinzel', serif;
-            padding: 8px 12px;
+            padding: 7px 11px;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.8);
             transition: 0.2s;
@@ -124,11 +144,11 @@
         }
         .floor-card-btn .floor-tag {
             font-family: 'Press Start 2P', monospace;
-            font-size: 9px;
+            font-size: 8px;
             color: #52e5ff;
         }
         .floor-card-btn .floor-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             color: #ffe6a3;
         }
@@ -142,7 +162,7 @@
             color: #000;
         }
 
-        /* Diegetic Sega Hub HUD (Card & Arcade Controller) */
+        /* Diegetic Sega Hub HUD for Shelf View */
         #shelf-selector-hud {
             position: absolute;
             bottom: calc(env(safe-area-inset-bottom, 12px) + 16px);
@@ -155,19 +175,13 @@
             border-radius: 12px;
             box-shadow: 0 0 35px rgba(255, 190, 59, 0.35), inset 0 0 20px rgba(0,0,0,0.9);
             padding: 14px 20px;
-            display: flex;
+            display: none;
             justify-content: space-between;
             align-items: center;
             gap: 15px;
             z-index: 100;
             pointer-events: auto;
             backdrop-filter: blur(8px);
-            transition: opacity 0.3s, transform 0.3s;
-        }
-        #shelf-selector-hud.minimized {
-            opacity: 0;
-            pointer-events: none;
-            transform: translate(-50%, 40px);
         }
 
         .game-info-side {
@@ -227,7 +241,7 @@
         .btn-x { background: #3498db; }
         .btn-y { background: #f1c40f; }
 
-        /* Left/Right Horizontal Arrows */
+        /* Left/Right Arrows in Shelf */
         .shelf-nav-arrow {
             position: absolute;
             top: 50%;
@@ -239,7 +253,7 @@
             border-radius: 50%;
             color: #ffbe3b;
             font-size: 22px;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -256,23 +270,119 @@
         #arrow-left { left: 20px; }
         #arrow-right { right: 180px; }
 
-        /* Floating 3D Shelf Click Banners in Overview Mode */
-        #overview-hint {
-            position: absolute;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(10, 10, 15, 0.85);
-            border: 2px solid #ffd700;
-            border-radius: 20px;
-            padding: 8px 18px;
-            font-family: 'Cinzel', serif;
-            font-size: 13px;
-            color: #ffe6a3;
-            z-index: 90;
-            pointer-events: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        /* --- BLACKBOARD / PIZARRA OVERLAY --- */
+        #blackboard-overlay {
             display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 10, 0.88);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+        }
+        .blackboard-frame {
+            background: #1b2e22; /* Dark Chalkboard Green */
+            border: 14px solid #5c381e; /* Wooden Frame */
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9), inset 0 0 35px rgba(0,0,0,0.8);
+            width: 100%;
+            max-width: 850px;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 25px;
+            position: relative;
+            font-family: 'Caveat', cursive, sans-serif;
+            color: #f5f5f5;
+        }
+        .chalk-title {
+            font-size: 34px;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.4);
+            border-bottom: 2px dashed #9bc4a8;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .chalk-scoring-rules {
+            background: rgba(10, 25, 15, 0.6);
+            border: 1px solid #78a385;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 20px;
+            margin-bottom: 18px;
+            color: #ffe6a3;
+        }
+        .chalk-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            padding: 8px 12px;
+            border-bottom: 1px dotted rgba(255,255,255,0.25);
+        }
+
+        /* --- RETRO TV MODAL (HOW TO PLAY VIDEO) --- */
+        #tv-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 5, 0.92);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+        .crt-tv-frame {
+            background: #2b2b2e;
+            border: 16px solid #4a3319;
+            border-radius: 28px;
+            box-shadow: 0 0 60px rgba(0,0,0,0.95), inset 0 0 20px #000;
+            width: 100%;
+            max-width: 760px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .crt-screen {
+            width: 100%;
+            height: 380px;
+            background: #000;
+            border-radius: 12px;
+            border: 4px solid #111;
+            overflow: hidden;
+            box-shadow: inset 0 0 30px rgba(82, 229, 255, 0.2);
+        }
+
+        /* MODALS & FORMS */
+        #game-modal, #add-game-modal, #match-modal, #login-modal, #wheel-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 5, 0.94);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            padding: 15px;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #1f140d 0%, #0d0805 100%);
+            border: 3px solid #ffbe3b;
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 1000px;
+            width: 95vw;
+            max-height: 92vh;
+            overflow-y: auto;
+            display: flex;
+            gap: 25px;
+            box-shadow: 0 0 50px rgba(255, 190, 59, 0.4), inset 0 0 30px rgba(0,0,0,0.9);
+            position: relative;
         }
 
         @media (max-width: 820px) {
@@ -405,17 +515,11 @@
 </head>
 <body>
 
-    <!-- 3D MULTI-SHELF ROOM CANVAS -->
+    <!-- 3D GAMER ROOM CANVAS -->
     <div id="canvas3d-container"></div>
-
-    <div id="overview-hint">🔭 VISTA PANORÁMICA DE LA REPISA — Toca cualquier piso para acercarte</div>
 
     <!-- HUD TOP BAR -->
     <div id="hud-top">
-        <div class="hud-btn" id="btn-view-toggle" onclick="toggleOverviewCamera()">
-            <span>🔭</span> <span id="view-toggle-text">VISTA GENERAL</span>
-        </div>
-
         <div class="hud-btn" onclick="openAddGameModal()" style="border-color:#5bb35b; color:#5bb35b;">
             <span>➕</span> AGREGAR JUEGO
         </div>
@@ -424,12 +528,28 @@
             <span>🎡</span> RULETA
         </div>
 
-        <div class="hud-btn" onclick="openLeaderboardModal()">
-            <span>🏆</span> RANKING
+        <div class="hud-btn" onclick="openBlackboardModal()" style="border-color:#ffd700; color:#ffd700;">
+            <span>📝</span> PIZARRA DE PUNTOS
         </div>
 
         <div class="hud-btn" onclick="openLoginModal()" id="btn-login-hud">
             <span>🔑</span> <span id="current-user-label">ENTRAR</span>
+        </div>
+    </div>
+
+    <!-- ROOM STATIONS NAV (MAIN ROOM OVERVIEW HUBS) -->
+    <div id="room-stations-nav">
+        <div class="station-pill active" id="pill-room" onclick="switchRoomStation('room')">
+            <span>🏠</span> HABITACIÓN
+        </div>
+        <div class="station-pill" id="pill-shelf" onclick="switchRoomStation('shelf')">
+            <span>📚</span> BIBLIOTECA
+        </div>
+        <div class="station-pill" id="pill-board" onclick="switchRoomStation('board')">
+            <span>📝</span> PIZARRA DE TIZA
+        </div>
+        <div class="station-pill" id="pill-tv" onclick="switchRoomStation('tv')">
+            <span>📺</span> TV TUTORIALES
         </div>
     </div>
 
@@ -473,10 +593,48 @@
                 <div class="btn-circle btn-x">X</div>
                 <span>PARTIDA</span>
             </div>
-            <div class="arcade-btn" onclick="showScoringActiveGame()">
-                <div class="btn-circle btn-y">Y</div>
-                <span>REGLAS</span>
+            <div class="arcade-btn" onclick="openTVTutorial(activeGame)">
+                <div class="btn-circle btn-y" style="background:#52e5ff;">📺</div>
+                <span>VER TUTORIAL</span>
             </div>
+        </div>
+    </div>
+
+    <!-- PIZARRA CON TIZA OVERLAY (10 pts, 5 pts, 3 pts, 1 pt) -->
+    <div id="blackboard-overlay">
+        <div class="blackboard-frame">
+            <span class="close-btn" style="color:#fff;" onclick="closeModal('blackboard-overlay')">✕</span>
+            <div class="chalk-title">📝 TABLERO DE PARTIDAS & PUNTOS</div>
+
+            <div class="chalk-scoring-rules">
+                <strong>REGLAMENTO DE LA CASA:</strong><br>
+                🥇 1er Lugar: <strong>10 Puntos</strong> | 🥈 2do Lugar: <strong>5 Puntos</strong><br>
+                🥉 3er Lugar: <strong>3 Puntos</strong> | 🎖️ 4to Lugar: <strong>1 Punto</strong>
+            </div>
+
+            <div style="font-size:26px; color:#ffe6a3; margin-bottom:10px; border-bottom:1px solid #78a385; padding-bottom:4px;">
+                🏆 RANKING DE JUGADORES
+            </div>
+            <div id="chalkboard-leaderboard-list">
+                Cargando registros con tiza...
+            </div>
+
+            <div style="display:flex; justify-content:space-between; margin-top:20px;">
+                <button class="btn-action" style="border-color:#ffd700;" onclick="openNewMatchModal(null)">+ REGISTRAR PARTIDA</button>
+                <button class="btn-action" style="border-color:#52e5ff;" onclick="closeModal('blackboard-overlay')">VOLVER A LA HABITACIÓN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RETRO TV MODAL (HOW TO PLAY VIDEO) -->
+    <div id="tv-modal">
+        <div class="crt-tv-frame">
+            <span class="close-btn" onclick="closeModal('tv-modal')">✕</span>
+            <h2 id="tv-game-title" style="font-family:'Cinzel',serif; color:#ffe6a3; margin-bottom:10px;">📺 CÓMO JUGAR</h2>
+            <div class="crt-screen">
+                <iframe id="tv-iframe" width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p style="font-size:12px; color:#ffbe3b; margin-top:10px; font-family:'Press Start 2P',monospace;">CANAL DE VIDEO VHS - TUTORIAL OFICIAL</p>
         </div>
     </div>
 
@@ -496,7 +654,7 @@
                 
                 <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;">
                     <button class="btn-action" style="border-color:#ffd700;" onclick="openNewMatchModal(activeGame)">🏆 REGISTRAR PARTIDA</button>
-                    <a href="#" id="modal-link" target="_blank" class="btn-action">▶ TUTORIAL</a>
+                    <button class="btn-action" style="border-color:#52e5ff;" onclick="openTVTutorial(activeGame)">📺 VER TUTORIAL EN TV</button>
                     <a href="#" id="modal-bgg-link" target="_blank" class="btn-action" style="border-color:#6ba3d6;">▶ VER EN BGG</a>
                 </div>
             </div>
@@ -564,23 +722,30 @@
                 <label style="font-size:12px; color:#ffbe3b;">Fecha:</label>
                 <input type="date" id="match-date" class="medieval-input">
 
-                <label style="font-size:12px; color:#ffbe3b;">Jugadores y Puntuación:</label>
+                <label style="font-size:12px; color:#ffbe3b;">Jugadores en Orden de Posición (1º Ganador, 2º, 3º, 4º):</label>
                 <div id="match-players-list">
-                    <div style="display:flex; gap:8px; margin-bottom:8px;">
-                        <input type="text" placeholder="Jugador 1" class="medieval-input player-name" style="margin:0; flex:2;">
-                        <input type="number" placeholder="Pts" class="medieval-input player-score" style="margin:0; flex:1;">
+                    <div style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+                        <span style="font-size:14px; width:28px;">🥇</span>
+                        <input type="text" placeholder="1er Puesto (10 pts)" class="medieval-input player-name" style="margin:0; flex:1;">
                     </div>
-                    <div style="display:flex; gap:8px; margin-bottom:8px;">
-                        <input type="text" placeholder="Jugador 2" class="medieval-input player-name" style="margin:0; flex:2;">
-                        <input type="number" placeholder="Pts" class="medieval-input player-score" style="margin:0; flex:1;">
+                    <div style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+                        <span style="font-size:14px; width:28px;">🥈</span>
+                        <input type="text" placeholder="2do Puesto (5 pts)" class="medieval-input player-name" style="margin:0; flex:1;">
+                    </div>
+                    <div style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+                        <span style="font-size:14px; width:28px;">🥉</span>
+                        <input type="text" placeholder="3er Puesto (3 pts)" class="medieval-input player-name" style="margin:0; flex:1;">
+                    </div>
+                    <div style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+                        <span style="font-size:14px; width:28px;">🎖️</span>
+                        <input type="text" placeholder="4to Puesto (1 pto)" class="medieval-input player-name" style="margin:0; flex:1;">
                     </div>
                 </div>
-                <button class="btn-action" style="margin-bottom:12px; font-size:8px;" onclick="addPlayerField()">+ Agregar Jugador</button>
 
                 <label style="font-size:12px; color:#ffbe3b;">Notas de la partida:</label>
                 <input type="text" id="match-notes" placeholder="Ej: Partida muy reñida..." class="medieval-input">
 
-                <button class="btn-action" style="width:100%; border-color:#5bb35b; padding:12px;" onclick="saveMatch()">📜 GUARDAR EN EL REINO</button>
+                <button class="btn-action" style="width:100%; border-color:#5bb35b; padding:12px;" onclick="saveMatch()">📜 GUARDAR EN LA PIZARRA</button>
             </div>
         </div>
     </div>
@@ -625,17 +790,8 @@
         </div>
     </div>
 
-    <!-- MODAL LEADERBOARD -->
-    <div id="leaderboard-modal">
-        <div class="modal-content" style="max-width: 550px; flex-direction: column;">
-            <span class="close-btn" onclick="closeModal('leaderboard-modal')">✕</span>
-            <h2 style="color:#ffe6a3; font-family:'Cinzel',serif; border-bottom:2px solid #5c3a21; padding-bottom:8px;">🏆 SALÓN DE LA GLORIA</h2>
-            <div id="leaderboard-list" style="margin-top:12px; font-size:13px;">Cargando partidas...</div>
-        </div>
-    </div>
-
     <script>
-        const BUILD_VERSION = '1791756275';
+        const BUILD_VERSION = '1791812684';
         let gamesData = [{"name": "7 Wonders", "players": "2-7", "difficulty": "Media", "type": "Card drafting / Gestión de recursos / Civilización", "image": "portadas/7_Wonders.jpg", "rating": "7.7", "local_image": "portadas/7_Wonders.jpg", "bgg_id": 68448, "bgg_url": "https://boardgamegeek.com/boardgame/68448/7-wonders", "weight": 2.32, "playing_time": "30 Min", "age": "10+", "synopsis": "Lidera una de las 7 grandes civilizaciones del mundo antiguo. Pasa cartas de mano en mano a lo largo de 3 Eras para construir tu Maravilla arquitectónica, desarrollar ciencia y poderío militar.", "rank": "Beginner", "islandId": 1, "id": 0, "scoring": "• 7 Vías de Puntos: Estructuras civiles (azules), maravilla, tesoro militar (fichas de victoria/derrota), dinero (1 pt por 3 monedas), gremios (moradas) y cartas científicas (verdes: símbolos iguales² + sets de 3)."}, {"name": "Akropolis", "players": "2-4", "difficulty": "Media", "type": "Colocación de losetas 3D / Puntuación", "image": "portadas/Akropolis.jpg", "rating": "7.5", "local_image": "portadas/Akropolis.jpg", "bgg_id": 352484, "bgg_url": "https://boardgamegeek.com/boardgame/352484/akropolis", "weight": 1.68, "playing_time": "20-30 Min", "age": "8+", "synopsis": "Construye la mejor metrópolis en la antigua Grecia colocando losetas hexagonales de templos, mercados y jardines, apilándolas en altura para multiplicar su valor en puntos.", "rank": "Rookie", "islandId": 0, "id": 1, "scoring": "• Multiplicadores por Altura: Casas (bloques x estrellas), Mercados (periferia), Cuarteles (bordes), Templos (rodeados), Jardines (libres). Multiplica el valor del distrito por la altura de nivel donde se colocó."}, {"name": "Akropolis: Athena", "players": "2-4", "difficulty": "Media", "type": "Expansión / Colocación de losetas 3D", "image": "portadas/Akropolis_Athena.jpg", "local_image": "portadas/Akropolis_Athena.jpg", "rating": "7.8", "bgg_id": 422822, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/422822/akropolis-athena", "weight": 1.75, "playing_time": "25-35 Min", "age": "8+", "synopsis": "Expansión para Akropolis que introduce la estatua de Atenea y nuevas cartas de misión de la diosa para ganar templos y losetas sagradas.", "rank": "Rookie", "islandId": 0, "id": 2, "scoring": "• Misiones de la Diosa: Reglas base de Akropolis sumando los puntos de las cartas de bendición de Atenea completadas al construir la estatua de la diosa en la acrópolis."}, {"name": "Atenea", "players": "2-5", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.0", "image": "portadas/Atenea.jpg", "local_image": "portadas/Atenea.jpg", "bgg_id": 333955, "bgg_url": "https://boardgamegeek.com/boardgame/333955/atenea", "weight": 1.45, "playing_time": "30 Min", "age": "10+", "synopsis": "Juego de cartas táctico ambientado en la mitología griega donde compites por ganarte la bendición de los dioses del Olimpo.", "rank": "Rookie", "islandId": 0, "id": 3, "scoring": "• Puntos Mitológicos: Combos de cartas de bendiciones divinas y templos del Olimpo. Gana quien acumule más puntos de honor al finalizar las rondas pactadas."}, {"name": "¡Aventureros al Tren!", "players": "2-5", "difficulty": "Media", "type": "Gestión de rutas / Colección de cartas", "image": "portadas/Aventureros_al_Tren.jpg", "rating": "7.4", "local_image": "portadas/Aventureros_al_Tren.jpg", "bgg_id": 9209, "bgg_url": "https://boardgamegeek.com/boardgame/9209/ticket-to-ride", "weight": 1.84, "playing_time": "30-60 Min", "age": "8+", "synopsis": "Conecta ciudades reclamando rutas ferroviarias en un mapa con tus cartas de vagón. Cumple tus billetes de destino secretos para ganar la mayor cantidad de puntos antes que se acaben los trenes.", "rank": "Rookie", "islandId": 0, "id": 4, "scoring": "• Billetes y Rutas: Puntos por longitud de vías reclamadas (1 a 15 pts) + billetes de destino completados (los incompletos restan) + 10 pts al recorrido continuo más largo."}, {"name": "Azul", "players": "2-4", "difficulty": "Media", "type": "Abstracto / Formación de patrones", "image": "portadas/Azul.jpg", "rating": "7.7", "local_image": "portadas/Azul.jpg", "bgg_id": 230802, "bgg_url": "https://boardgamegeek.com/boardgame/230802/azul", "weight": 1.76, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Juego de estrategia abstracto donde eres un maestro artesano decorando las paredes del Palacio Real de Évora con hermosos azulejos de cerámica portuguesa formando patrones elegantes.", "rank": "Rookie", "islandId": 0, "id": 5, "scoring": "• Mosaicos y Filas: Puntos continuos por azulejos adyacentes colocados en la pared; penalización por azulejos rotos en el suelo; bonos finales por filas completas (+2), columnas (+7) y sets de 5 colores (+10)."}, {"name": "Bleef", "players": "3-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Bleef.jpg", "local_image": "portadas/Bleef.jpg", "bgg_id": 28017, "bgg_url": "https://boardgamegeek.com/boardgame/28017/bleff", "weight": 1.2, "playing_time": "45 Min", "age": "12+", "synopsis": "Juego de faroleo y engaño ingenioso. Inventa definiciones falsas pero creíbles para palabras insólitas de diccionario y vota para descubrir quién dice la verdad.", "rank": "Rookie", "islandId": 0, "id": 6, "scoring": "• Votación de Faroles: Ganas puntos si adivinas la definición real del diccionario y ganas puntos adicionales por cada jugador que haya votado tu definición inventada creyendo que era la real."}, {"name": "Burako", "players": "2-4", "difficulty": "Media", "type": "Combinaciones / Gestión de fichas (Rummy)", "image": "portadas/Burako.jpg", "rating": "6.3", "local_image": "portadas/Burako.jpg", "bgg_id": 4042, "bgg_url": "https://boardgamegeek.com/boardgame/4042/rummikub", "weight": 1.5, "playing_time": "30-60 Min", "age": "8+", "synopsis": "Juego de fichas tradicional de agilidad mental. Forma escaleras del mismo color o grupos de números iguales para vaciar tu atril y cerrar la partida con canastas.", "rank": "Rookie", "islandId": 0, "id": 7, "scoring": "• Canastas y Cierre: Canasta Pura (200 pts), Impura (100 pts), Cierre de partida (100 pts), fichas en mano restan puntos. Gana el primer equipo en alcanzar los 2000 o 3000 puntos."}, {"name": "CACA", "players": "2-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.0", "image": "portadas/CACA.jpg", "local_image": "portadas/CACA.jpg", "bgg_id": 250000, "bgg_url": "https://boardgamegeek.com/boardgame/250000/poop-the-game", "weight": 1.05, "playing_time": "15 Min", "age": "6+", "synopsis": "Juego de cartas rápido, absurdo y lleno de risas para todas las edades donde debes bajar cartas sin desbordar el inodoro y deshacerte de tu mano antes que nadie.", "rank": "Rookie", "islandId": 0, "id": 8, "scoring": "• Descarte y Escape: Gana el primer jugador en quedarse sin cartas de evacuación sin hacer desbordar el inodoro con fichas de penalización."}, {"name": "Carcassonne", "players": "2-5", "difficulty": "Media", "type": "Colocación de losetas / Control de áreas", "image": "portadas/Carcassonne.jpg", "rating": "7.4", "local_image": "portadas/Carcassonne.jpg", "bgg_id": 822, "bgg_url": "https://boardgamegeek.com/boardgame/822/carcassonne", "weight": 1.9, "playing_time": "35-45 Min", "age": "7+", "synopsis": "Juego maestro de colocación de losetas. Construye el paisaje medieval del sur de Francia levantando ciudades amuralladas, caminos, monasterios y campos puntuando con tus seguidores (meeples).", "rank": "Rookie", "islandId": 0, "id": 9, "scoring": "• Cierre y Puntuación Final: Caminos (1 pt/loseta), Ciudades completas (2 pts/loseta + 2 por escudo), Monasterios (9 pts rodeado), Granjas/Campesinos (3 pts por cada ciudad abastecida)."}, {"name": "Catan", "players": "3-4", "difficulty": "Media", "type": "Negociación / Comercio / Gestión de recursos", "image": "portadas/Catan.jpg", "rating": "7.1", "local_image": "portadas/Catan.jpg", "bgg_id": 13, "bgg_url": "https://boardgamegeek.com/boardgame/13/catan", "weight": 2.3, "playing_time": "60-120 Min", "age": "10+", "synopsis": "Coloniza una isla inexplorada construyendo poblados, ciudades y caminos. Negocia recursos esenciales (madera, trigo, oveja, ladrillo, mineral) para alcanzar 10 puntos de victoria.", "rank": "Beginner", "islandId": 1, "id": 10, "scoring": "• Carrera a 10 Puntos de Victoria: Poblados (1 PV), Ciudades (2 PV), Gran Ruta Comercial (2 PV), Gran Ejército de Caballería (2 PV) y Cartas de Desarrollo de Punto de Victoria (1 PV c/u)."}, {"name": "Catan Energias renovables", "players": "3-4", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.6", "image": "portadas/Catan_Energias_renovables.jpg", "local_image": "portadas/Catan_Energias_renovables.jpg", "bgg_id": 408727, "bgg_url": "https://boardgamegeek.com/boardgame/408727/catan-new-energies", "weight": 2.24, "playing_time": "90 Min", "age": "12+", "synopsis": "Edición moderna e independiente de Catan ambientada en el siglo XXI. Construye plantas de energía fósil o limpia, balanceando la producción industrial sin desatar catástrofes por contaminación.", "rank": "Beginner", "islandId": 1, "id": 11, "scoring": "• Puntos de Sostenibilidad (10 PV): Puntos por poblados, ciudades y plantas de energía limpia (solar/eólica). Si la contaminación global desborda el planeta, gana quien haya invertido más en energía verde."}, {"name": "Catan Mercaderes y Barbaros", "players": "2-4", "difficulty": "Media", "type": "Expansión modular / Comercio / Rutas", "rating": "7.2", "image": "portadas/Catan_Mercaderes_y_Barbaros.jpg", "local_image": "portadas/Catan_Mercaderes_y_Barbaros.jpg", "bgg_id": 27760, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/27760/catan-traders-barbarians", "weight": 2.37, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Expansión modular de Catan que incluye 5 escenarios y 4 variantes: transporta mercancías en carretas, pesca en los ríos, comercia con nómadas y defiende la costa de las incursiones bárbaras.", "rank": "Beginner", "islandId": 1, "id": 12, "scoring": "• Puntos por Escenario (10 a 13 PV): Varía según el módulo activo: transportar mercancías en caravana, pesca de peces en los lagos, recuperar castillos y expulsar bárbaros."}, {"name": "Color Brain", "players": "2-12", "difficulty": "Baja", "type": "Trivia de colores / Party", "image": "portadas/Color_Brain.jpg", "rating": "6.6", "local_image": "portadas/Color_Brain.jpg", "bgg_id": 235549, "bgg_url": "https://boardgamegeek.com/boardgame/235549/colourbrain", "weight": 1.1, "playing_time": "20-30 Min", "age": "12+", "synopsis": "Juego de preguntas donde todas las respuestas son colores. ¿De qué color son los anillos olímpicos o el sombrero de Mario? Responde bajando tus cartas de color antes que tus rivales.", "rank": "Rookie", "islandId": 0, "id": 13, "scoring": "• Puntuación por Ronda: Ganas 1 punto por cada equipo rival que se haya equivocado en los colores de la respuesta correcta. Gana el primer equipo en llegar a 10 puntos."}, {"name": "Con Eso No Se Jode", "players": "3-10", "difficulty": "Baja", "type": "Party / Humor negro / Cartas", "image": "portadas/Con_Eso_No_Se_Jode.jpg", "rating": "6.3", "local_image": "portadas/Con_Eso_No_Se_Jode.jpg", "bgg_id": 266472, "bgg_url": "https://boardgamegeek.com/boardgame/266472/con-eso-no-se-jode", "weight": 1.05, "playing_time": "20-40 Min", "age": "18+", "synopsis": "Juego de cartas argentino de humor negro y desafíos extremos sin límites morales ni censura, donde gana quien sume más puntos por sus decisiones incorrectas.", "rank": "Rookie", "islandId": 0, "id": 14, "scoring": "• Puntos de Victoria: Cada carta ganada por remate o respuesta más votada/hilarante suma 1 punto. Gana quien alcance 5 o 10 puntos acordados al inicio."}, {"name": "Count up", "players": "2-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.0", "image": "portadas/Count_up.jpg", "local_image": "portadas/Count_up.jpg", "bgg_id": 292643, "bgg_url": "https://boardgamegeek.com/boardgame/292643/fifty", "weight": 1.1, "playing_time": "15-20 Min", "age": "8+", "synopsis": "Juego cooperativo de concentración y sincronización mental donde los jugadores deben bajar cartas en orden ascendente sin mirarse ni comunicarse verbalmente.", "rank": "Rookie", "islandId": 0, "id": 15, "scoring": "• Sincronización Cooperativa: El grupo gana si logra contar del 1 al 50 bajando cartas sin superposiciones ni fallos de tiempo."}, {"name": "Dany (Buró)", "players": "3-8", "difficulty": "Baja", "type": "Roles ocultos / Cartas / Asociación abstracta", "image": "portadas/Dany_Buró.jpg", "rating": "6.6", "local_image": "portadas/Dany_Buró.jpg", "bgg_id": 286694, "bgg_url": "https://boardgamegeek.com/boardgame/286694/dany", "weight": 1.25, "playing_time": "30 Min", "age": "16+", "synopsis": "Juego de deducción psicológica y cartas abstractas. Todos representan personalidades en la mente de Dany intentando comunicarse con recuerdos visuales, mientras una personalidad falsa sabotea las ideas.", "rank": "Rookie", "islandId": 0, "id": 16, "scoring": "• Personalidades Reales: Ganan si logran 6 aciertos descubriendo la idea secreta.\n• Dany (Personalidad Falsa): Gana si provoca 3 fallos en las adivinanzas o si no logran desenmascararlo en la votación final."}, {"name": "Dixit Clásico", "players": "3-8", "difficulty": "Baja", "type": "Deducción / Creatividad / Asociación", "image": "portadas/Dixit_Clásico.jpg", "rating": "7.2", "local_image": "portadas/Dixit_Clásico.jpg", "bgg_id": 39856, "bgg_url": "https://boardgamegeek.com/boardgame/39856/dixit", "weight": 1.21, "playing_time": "30 Min", "age": "8+", "synopsis": "Juego poético de creatividad e intuición. El cuentacuentos da una pista sutil sobre su carta ilustrada; los demás votan cuál creen que es la correcta entre las cartas trampas.", "rank": "Rookie", "islandId": 0, "id": 17, "scoring": "• Puntuación (30 Puntos): Si todos o nadie acierta, el narrador 0 y los demás 2 pts. Si algunos aciertan, narrador 3 pts y acertantes 3 pts. Cada voto a tu carta trampa te suma +1 pt."}, {"name": "Dixit Odyssey", "players": "3-12", "difficulty": "Baja", "type": "Deducción / Creatividad / Modos por equipos", "image": "portadas/Dixit_Odyssey.jpg", "rating": "7.3", "local_image": "portadas/Dixit_Odyssey.jpg", "bgg_id": 92828, "bgg_url": "https://boardgamegeek.com/boardgame/92828/dixit-odyssey", "weight": 1.25, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Versión ampliada de Dixit que permite jugar hasta a 12 personas a la vez con nuevos tableros de votación por clavijas y 84 nuevas cartas de arte surrealista.", "rank": "Rookie", "islandId": 0, "id": 18, "scoring": "• Puntuación Ampliada: Mismo criterio de votación de cartas e historias metafóricas hasta llegar a la meta de 30 puntos en el tablero de clavijas."}, {"name": "El Camarero", "players": "2-8", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Camarero.jpg", "local_image": "portadas/Camarero.jpg", "bgg_id": 273657, "bgg_url": "https://boardgamegeek.com/boardgame/273657/el-camarero", "weight": 1.1, "playing_time": "20 Min", "age": "7+", "synopsis": "Juego veloz de memoria y agilidad mental donde debes memorizar los pedidos de un restaurante caótico y servirlos a tiempo sin equivocarte en los ingredientes.", "rank": "Rookie", "islandId": 0, "id": 19, "scoring": "• Entrega de Comandas: Gana fichas de propina quien entregue las comandas de mesas sin equivocarse en los ingredientes memorizados. Gana quien sume más dinero en propinas."}, {"name": "El Melómano", "players": "2-10", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.2", "image": "portadas/Melomano.jpg", "local_image": "portadas/Melomano.jpg", "bgg_id": 120870, "bgg_url": "https://boardgamegeek.com/boardgame/120870/el-melomano", "weight": 1.15, "playing_time": "30-45 Min", "age": "12+", "synopsis": "Juego de mesa argentino de trivia y desafíos musicales para grupos. Adivina bandas, completa letras de canciones icónicas y canta melodías para sumar discos de oro.", "rank": "Rookie", "islandId": 0, "id": 20, "scoring": "• Discos de Oro: Cada respuesta o desafío musical cantado/adivinado correctamente otorga discos de oro. Gana el primer jugador o equipo en reunir los 6 discos de oro de diferentes géneros."}, {"name": "Equipazo", "players": "4-12", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.2", "image": "portadas/Equipazo.jpg", "local_image": "portadas/Equipazo.jpg", "bgg_id": 280000, "bgg_url": "https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=Team%20Work", "weight": 1.15, "playing_time": "20-30 Min", "age": "8+", "synopsis": "Party game cooperativo de comunicación y coordinación en equipo donde resuelven desafíos de palabras y conceptos bajo presión de tiempo.", "rank": "Rookie", "islandId": 0, "id": 21, "scoring": "• Puntuación por Ronda: Aciertos de pistas colaborativas en tiempo límite. Cada desafío resuelto con éxito aporta estrellas al marcador de equipo."}, {"name": "Jardín Japonés", "players": "2-4", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "7.4", "image": "portadas/Jardin_japones.jpg", "local_image": "portadas/Jardin_japones.jpg", "bgg_id": 378329, "bgg_url": "https://boardgamegeek.com/boardgame/378329/jardin-japones", "weight": 1.67, "playing_time": "30-45 Min", "age": "8+", "synopsis": "Construye un sereno jardín zen colocando losetas de estanques con peces koi, bonsáis y linternas de piedra en armonía para conseguir la mayor puntuación estética.", "rank": "Rookie", "islandId": 0, "id": 22, "scoring": "• Armonía Zen: Puntos por formación de estanques de peces koi conectados, distribución equilibrada de bonsáis y simetría de linternas de piedra en el tablero."}, {"name": "Just One", "players": "3-7", "difficulty": "Baja", "type": "Cooperativo / Deducción de palabras", "image": "portadas/Just_One.jpg", "rating": "7.6", "local_image": "portadas/Just_One.jpg", "bgg_id": 254640, "bgg_url": "https://boardgamegeek.com/boardgame/254640/just-one", "weight": 1.05, "playing_time": "20 Min", "age": "8+", "synopsis": "Party game cooperativo ganador del Spiel des Jahres. Todos escriben en secreto una palabra pista para el adivinador, pero ¡las pistas repetidas se anulan y se borran antes de mostrarse!", "rank": "Rookie", "islandId": 0, "id": 23, "scoring": "• Puntuación Cooperativa (13 Cartas): Cada palabra adivinada suma 1 punto, cada fallo descarta 2 cartas. Puntuación final sobre 13 puntos (13 = Puntuación Perfecta)."}, {"name": "La Isla Prohibida", "players": "2-4", "difficulty": "Media", "type": "Cooperativo / Gestión de acciones / Escape", "image": "portadas/La_Isla_Prohibida.jpg", "rating": "6.7", "local_image": "portadas/La_Isla_Prohibida.jpg", "bgg_id": 65244, "bgg_url": "https://boardgamegeek.com/boardgame/65244/forbidden-island", "weight": 1.74, "playing_time": "30 Min", "age": "10+", "synopsis": "Aventura cooperativa donde un equipo de arqueólogos debe recuperar 4 tesoros sagrados en una isla misteriosa cuyas losetas de terreno se van inundando y hundiendo con cada turno.", "rank": "Rookie", "islandId": 0, "id": 24, "scoring": "• Victoria Cooperativa: El equipo gana si consigue los 4 tesoros sagrados, todos los aventureros llegan al helipuerto 'Fools' Landing' y juegan una carta de Helicóptero antes de que se hunda la isla."}, {"name": "Los Hombres Lobo de Castronegro", "players": "8-18", "difficulty": "Baja", "type": "Roles ocultos / Deducción social / Eliminación", "image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "rating": "7.0", "local_image": "portadas/Los_Hombres_Lobo_de_Castronegro.jpg", "bgg_id": 25821, "bgg_url": "https://boardgamegeek.com/boardgame/25821/the-werewolves-of-millers-hollow", "weight": 1.34, "playing_time": "30 Min", "age": "10+", "synopsis": "Juego social para grupos grandes. Una aldea amenazada por licántropos debe debatir y linchar a los sospechosos de día, mientras los lobos devoran inocentes en secreto durante la noche.", "rank": "Rookie", "islandId": 0, "id": 25, "scoring": "• Aldeanos: Ganan linchando y eliminando a todos los Hombres Lobo.\n• Hombres Lobo: Ganan devorando a suficientes aldeanos hasta igualar o superar su número."}, {"name": "Monopoly", "players": "2-8", "difficulty": "Media", "type": "Negociación / Gestión económica / Dados", "image": "portadas/Monopoly.jpg", "rating": "4.4", "local_image": "portadas/Monopoly.jpg", "bgg_id": 1406, "bgg_url": "https://boardgamegeek.com/boardgame/1406/monopoly", "weight": 1.63, "playing_time": "60-180 Min", "age": "8+", "synopsis": "El clásico juego de bienes raíces. Compra calles, construye casas y hoteles de lujo, y cobra alquileres a los demás jugadores hasta dejarlos en bancarrota total.", "rank": "Rookie", "islandId": 0, "id": 26, "scoring": "• Eliminación Económica: Gana el último jugador que quede en pie tras llevar a todos los demás rivales a la bancarrota total mediante cobro de alquileres."}, {"name": "Munchkin", "players": "3-6", "difficulty": "Baja", "type": "Cartas / Farol / Mazmorreo humorístico", "image": "portadas/Munchkin.jpg", "rating": "6.0", "local_image": "portadas/Munchkin.jpg", "bgg_id": 1927, "bgg_url": "https://boardgamegeek.com/boardgame/1927/munchkin", "weight": 1.81, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Parodia hilarante de los juegos de rol. Abre puertas de mazmorra, derrota monstruos ridículos, róbate los tesoros y traiciona a tus propios amigos para ser el primero en alcanzar el nivel 10.", "rank": "Rookie", "islandId": 0, "id": 27, "scoring": "• Nivel 10: Gana el primer jugador en alcanzar el Nivel 10 derrotando a un monstruo (o por carta especial que lo permita explícitamente)."}, {"name": "Munchkin 3: Errores clericales", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Munchkin_3_Errores_clericales.jpg", "local_image": "portadas/Munchkin_3_Errores_clericales.jpg", "bgg_id": 6606, "bgg_url": "https://boardgamegeek.com/boardgame/6606/munchkin-3-clerical-errors", "weight": 1.8, "playing_time": "60 Min", "age": "10+", "synopsis": "Añade la clase Bardo, la raza Gnomo y nuevas criaturas como el Centauro y el Chicopez para ampliar y caotizar tus partidas de Munchkin.", "rank": "Rookie", "islandId": 0, "id": 28, "scoring": "• Nivel 10: Reglas estándar de Munchkin incorporando las habilidades de robo y combate de las nuevas clases Bardo y Gnomo."}, {"name": "Munchkin 7: Trampas a dos manos", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.7", "image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "local_image": "portadas/Munchkin_7_Trampas_a_dos_manos.jpg", "bgg_id": 92398, "bgg_url": "https://boardgamegeek.com/boardgameexpansion/92398/munchkin-7-cheat-both-hands", "weight": 1.85, "playing_time": "60 Min", "age": "10+", "synopsis": "Diseñado para mezclar múltiples cajas de Munchkin, permitiendo equipar más objetos poderosos y usar trampas dobles sin penalización.", "rank": "Rookie", "islandId": 0, "id": 29, "scoring": "• Nivel 10 Ampliado: Permite usar combinaciones de objetos bizarros para alcanzar el Nivel 10 en mazmorras combinadas."}, {"name": "Munchkin: Dragones molones", "players": "3-6", "difficulty": "Media", "type": "Expansión / Cartas", "rating": "6.8", "image": "portadas/Munchkin_Dragones_molones.jpg", "local_image": "portadas/Munchkin_Dragones_molones.jpg", "bgg_id": 326728, "bgg_url": "https://boardgamegeek.com/boardgame/326728/munchkin-dragones-molones", "weight": 1.75, "playing_time": "60 Min", "age": "10+", "synopsis": "Expansión que introduce feroces y cómicos dragones a tus mazmorras de Munchkin, con tesoros legendarios y potenciadores dracónicos.", "rank": "Rookie", "islandId": 0, "id": 30, "scoring": "• Nivel 10 con Dragones: Reglas estándar de Munchkin; derrotar dragones legendarios otorga niveles dobles y botín reforzado."}, {"name": "Panic Lab", "players": "2-10", "difficulty": "Baja", "type": "Reflejos / Velocidad visual / Dados", "image": "portadas/Panic_Lab_Maldón.jpg", "rating": "6.4", "local_image": "portadas/Panic_Lab_Maldón.jpg", "bgg_id": 121073, "bgg_url": "https://boardgamegeek.com/boardgame/121073/panic-lab", "weight": 1.21, "playing_time": "15-30 Min", "age": "8+", "synopsis": "Juego de agilidad visual donde amebas mutantes escaparon del laboratorio y debes seguir su rastro a través de rejillas de ventilación y salas de mutación para atrapar a la correcta.", "rank": "Rookie", "islandId": 0, "id": 31, "scoring": "• Puntuación por Fichas: Gana 1 ficha de punto el primer jugador que toque la ameba correcta (siguiendo color, forma, patrón y mutaciones por ventilación). Gana quien consiga 5 puntos primero."}, {"name": "Root", "players": "2-4", "difficulty": "Alta", "type": "Asimétrico / Control de áreas / Wargame", "image": "portadas/Root.jpg", "rating": "8.1", "local_image": "portadas/Root.jpg", "bgg_id": 237182, "bgg_url": "https://boardgamegeek.com/boardgame/237182/root", "weight": 3.84, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Juego de guerra y control de áreas totalmente asimétrico ambientado en un bosque encantado. Cada facción (Marquesa felina, Dinastía del Nido, Alianza del Bosque y el Vagabundo) se juega con reglas y metas totalmente distintas.", "rank": "Advance", "islandId": 2, "id": 32, "scoring": "• Carrera a 30 Puntos o Carta de Dominancia:\n- Marquesa: Construcción de aserraderos/talleres/cuarteles.\n- Nido de Águilas: Construcción de nidos sin caer en caos.\n- Alianza: Simpatía y revueltas.\n- Vagabundo: Misiones y ayuda/eliminación de guerreros."}, {"name": "Saboteur", "players": "3-10", "difficulty": "Baja", "type": "Roles ocultos / Farol / Construcción de caminos", "image": "portadas/Saboteur.jpg", "rating": "6.6", "local_image": "portadas/Saboteur.jpg", "bgg_id": 9220, "bgg_url": "https://boardgamegeek.com/boardgame/9220/saboteur", "weight": 1.31, "playing_time": "30 Min", "age": "8+", "synopsis": "Eres un enano minero cavando túneles en busca de oro en la montaña, pero cuidado: entre tus compañeros hay saboteadores secretos que romperán tus herramientas y bloquearán los caminos.", "rank": "Rookie", "islandId": 0, "id": 33, "scoring": "• Mineros: Ganan si conectan el túnel desde la entrada hasta la carta de pepita de oro real.\n• Saboteadores: Ganan si se agotan las cartas del mazo sin que los mineros hayan llegado al oro.\n• Puntos: Se reparten cartas de pepitas de oro en 3 rondas acumulativas."}, {"name": "Say My Name", "players": "4-12", "difficulty": "Baja", "type": "Party / Adivinanzas / Mímica", "image": "portadas/Say_My_Name.jpg", "rating": "7.5", "local_image": "portadas/Say_My_Name.jpg", "bgg_id": 344849, "bgg_url": "https://boardgamegeek.com/boardgame/344849/say-my-name", "weight": 1.1, "playing_time": "30-45 Min", "age": "10+", "synopsis": "Party game de adivinanzas por equipos contrarreloj: describe personajes de series, películas, música y cultura pop a lo largo de 3 rondas (palabras libres, 1 sola palabra y mímica pura).", "rank": "Rookie", "islandId": 0, "id": 34, "scoring": "• Puntuación por Equipos: Cada personaje adivinado en el tiempo límite suma 1 punto. Tras 3 rondas (palabras libres, 1 palabra, mímica), gana el equipo con más puntos acumulados."}, {"name": "Secret Hitler", "players": "5-10", "difficulty": "Baja", "type": "Deducción social / Roles ocultos / Farol", "image": "portadas/Secret_Hitler.jpg", "rating": "7.5", "local_image": "portadas/Secret_Hitler.jpg", "bgg_id": 188834, "bgg_url": "https://boardgamegeek.com/boardgame/188834/secret-hitler", "weight": 1.7, "playing_time": "45 Min", "age": "13+", "synopsis": "Juego de deducción social y engaño político en la Alemania de 1930. Los liberales intentan aprobar leyes democráticas mientras los fascistas conspiran en secreto para colocar a su líder en el poder.", "rank": "Rookie", "islandId": 0, "id": 35, "scoring": "• Bando Liberal: Gana aprobando 5 políticas liberales o asesinando a Hitler.\n• Bando Fascista: Gana aprobando 6 políticas fascistas o eligiendo a Hitler como Canciller tras aprobar 3 políticas fascistas."}, {"name": "Splendor", "players": "2-4", "difficulty": "Media", "type": "Engine building de fichas / Optimización", "image": "portadas/Splendor.jpg", "rating": "7.4", "local_image": "portadas/Splendor.jpg", "bgg_id": 148228, "bgg_url": "https://boardgamegeek.com/boardgame/148228/splendor", "weight": 1.78, "playing_time": "30 Min", "age": "10+", "synopsis": "Eres un mercader del Renacimiento que recolecta fichas de gemas para adquirir minas, barcos comerciales y artesanos que abaratan tus compras futuras y atraen a nobles influyentes.", "rank": "Rookie", "islandId": 0, "id": 36, "scoring": "• Carrera a 15 Puntos: Gana quien alcance 15 o más puntos de prestigio comprando cartas de desarrollo de gemas y atrayendo nobles influyentes (+3 pts c/u)."}, {"name": "Sushi Go!", "players": "2-5", "difficulty": "Baja", "type": "Card drafting / Colección de sets", "image": "portadas/Sushi_Go.jpg", "rating": "7.0", "local_image": "portadas/Sushi_Go.jpg", "bgg_id": 133473, "bgg_url": "https://boardgamegeek.com/boardgame/133473/sushi-go", "weight": 1.16, "playing_time": "15 Min", "age": "8+", "synopsis": "Juego rápido de cartas estilo drafting. Elige una carta de sushi de tu mano y pásale el resto al de al lado. Junta combos de nigiris con wasabi, makis y puddings para sumar puntos.", "rank": "Rookie", "islandId": 0, "id": 37, "scoring": "• Combos en 3 Rondas: Maki (más rollos = 6 pts), Tempura (pares = 5 pts), Sashimi (tríos = 10 pts), Dumplings (1 a 15 pts), Nigiris x3 con Wasabi, y Pudding final (mayoría +6 pts, minoría -6 pts)."}, {"name": "Taco Gato Cabra Queso Pizza", "players": "2-8", "difficulty": "Baja", "type": "Reflejos / Velocidad de reacción / Cartas", "image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "rating": "6.6", "local_image": "portadas/Taco_Gato_Cabra_Queso_Pizza.jpg", "bgg_id": 253344, "bgg_url": "https://boardgamegeek.com/boardgame/253344/taco-cat-goat-cheese-pizza", "weight": 1.05, "playing_time": "10-15 Min", "age": "8+", "synopsis": "Frenético juego de reflejos y velocidad de reacción. Di la secuencia de palabras en voz alta mientras bajas cartas; en cuanto coincidan la palabra y la carta, ¡sé el más rápido en palmear el mazo!", "rank": "Rookie", "islandId": 0, "id": 38, "scoring": "• Victoria Inmediata: Gana el primer jugador en quedarse sin cartas en su mazo y ser el más rápido en palmear la pila central correctamente en la siguiente coincidencia."}, {"name": "TEG Tradicional", "players": "2-6", "difficulty": "Media", "type": "Control de áreas / Táctico / Dados", "image": "portadas/TEG_Tradicional.jpg", "rating": "6.0", "local_image": "portadas/TEG_Tradicional.jpg", "bgg_id": 22392, "bgg_url": "https://boardgamegeek.com/boardgame/22392/teg-plan-tactico-y-estrategico-de-la-guerra", "weight": 2.1, "playing_time": "120-240 Min", "age": "12+", "synopsis": "El legendario juego de táctica bélica y conquista territorial. Cumple tu objetivo secreto dominando países y continentes mediante pactos, refuerzos y tiradas de dados.", "rank": "Beginner", "islandId": 1, "id": 39, "scoring": "• Objetivo Secreto: Gana de inmediato el jugador que cumpla en su turno el 100% de los requisitos territoriales de su tarjeta de objetivo secreto (o conquiste 30 países)."}, {"name": "The King is Dead", "players": "2-4", "difficulty": "Media", "type": "Control de áreas / Táctico puro / Sin azar", "image": "portadas/The_King_is_Dead.jpg", "rating": "7.5", "local_image": "portadas/The_King_is_Dead.jpg", "bgg_id": 319966, "bgg_url": "https://boardgamegeek.com/boardgame/319966/the-king-is-dead-second-edition", "weight": 2.21, "playing_time": "30-45 Min", "age": "14+", "synopsis": "Juego de control de áreas tenso y sin azar ambientado en la Gran Bretaña medieval tras la muerte del Rey Arturo. Con solo 8 cartas para toda la partida, manipula las facciones para tomar el trono.", "rank": "Beginner", "islandId": 1, "id": 40, "scoring": "• Control Político Gran Bretaña: Quien tenga más cortesanos de la facción con más regiones controladas gana el trono. Si invaden los franceses (4 inestabilidades), gana quien tenga más sets completos de los 3 bandos."}, {"name": "The Red Cathedral", "players": "1-4", "difficulty": "Alta", "type": "Rondel / Control de área / Optimización", "image": "portadas/The_Red_Cathedral.jpg", "rating": "7.6", "local_image": "portadas/The_Red_Cathedral.jpg", "bgg_id": 227224, "bgg_url": "https://boardgamegeek.com/boardgame/227224/the-red-cathedral", "weight": 2.82, "playing_time": "60-90 Min", "age": "10+", "synopsis": "Construye la icónica Catedral de San Basilio en Moscú. Gestiona recursos en el rondel del mercado y levanta secciones y cúpulas doradas para ganarte el favor del Zar Iván el Terrible.", "rank": "Beginner", "islandId": 1, "id": 41, "scoring": "• Reconocimiento del Zar: Puntos por secciones construidas y adornadas con cúpulas/cruces en la catedral, mayorías de influencia por torre terminada y recursos restantes."}, {"name": "The White Castle", "players": "1-4", "difficulty": "Alta", "type": "Gestión de dados / Colocación de trabajadores", "image": "portadas/The_White_Castle.jpg", "rating": "8.0", "local_image": "portadas/The_White_Castle.jpg", "bgg_id": 371942, "bgg_url": "https://boardgamegeek.com/boardgame/371942/the-white-castle", "weight": 3.07, "playing_time": "80 Min", "age": "12+", "synopsis": "Estrategia profunda y compacta de gestión de dados en el Japón feudal. Gestiona los miembros de tu clan (guerreros, cortesanos y jardineros) en las salas del Castillo Himeji para ganar influencia ante el Daimyo.", "rank": "Advance", "islandId": 2, "id": 42, "scoring": "• Puntos de Clan (Castillo Himeji): Puntos por jardineros en estanques, cortesanos en plantas altas del castillo, guerreros en el patio de armas, sellos del Daimyo e influencia en el pasillo de linternas."}, {"name": "Toma 6 (6 nimmt!)", "players": "2-10", "difficulty": "Baja", "type": "Gestión de mano / Descarte simultáneo", "image": "portadas/Toma_6_6_nimmt.jpg", "rating": "7.0", "local_image": "portadas/Toma_6_6_nimmt.jpg", "bgg_id": 432, "bgg_url": "https://boardgamegeek.com/boardgame/432/6-nimmt", "weight": 1.19, "playing_time": "20-45 Min", "age": "8+", "synopsis": "Juego de cartas brillante y adictivo. Todos bajan un número a la vez en 4 filas; si tu carta es la sexta de una fila, ¡estás obligado a comerte todas las cabezas de buey con puntos negativos!", "rank": "Rookie", "islandId": 0, "id": 43, "scoring": "• Puntos Negativos (Cabezas de Buey): Al colocar la 6ª carta de una fila te llevas todas las cartas anteriores. La partida termina cuando alguien llega a 66 puntos negativos; gana quien tenga MENOS puntos."}, {"name": "Wingspan", "players": "1-5", "difficulty": "Alta", "type": "Engine building / Gestión de cartas y recursos", "image": "portadas/Wingspan.jpg", "rating": "8.0", "local_image": "portadas/Wingspan.jpg", "bgg_id": 266192, "bgg_url": "https://boardgamegeek.com/boardgame/266192/wingspan", "weight": 2.47, "playing_time": "40-70 Min", "age": "10+", "synopsis": "Juego aclamado de construcción de motores de cartas donde eres un investigador o coleccionista de aves descubriendo y atrayendo las mejores especies a tus hábitats naturales para encadenar combos.", "rank": "Beginner", "islandId": 1, "id": 44, "scoring": "• Ecosistema de Aves: Puntos impresos en cartas de pájaros jugadas + cartas de bonificación cumplidas + metas de final de ronda + 1 pt por huevo, 1 pt por alimento acumulado y 1 pt por carta solapada."}];
 
         // Divide 45 games into 3 Shelf Floors
@@ -652,10 +808,10 @@
             else SHELF_FLOORS[0].games.push(g);
         });
 
+        let currentStation = 'room'; // 'room', 'shelf', 'board', 'tv'
         let currentFloor = 0;
         let activeIndexInFloor = 0;
         let activeGame = SHELF_FLOORS[0].games[0] || gamesData[0];
-        let isOverviewMode = false;
 
         function bustCache(url) {
             if (!url) return '';
@@ -720,12 +876,12 @@
             closeModal('login-modal');
         }
 
-        // --- THREE.JS 3D MULTI-FLOOR SHELF ROOM & OVERVIEW CAMERA ENGINE ---
+        // --- THREE.JS FULL 3D GAMER ROOM (ROOM, SHELF, CHALKBOARD, CRT TV) ---
         let scene, camera, renderer;
-        let shelfPlanks = [];
         let floorBookMeshes = [[], [], []];
-        let povHandsGroup, rightHandArm, rightHandPalm;
-        let targetCameraX = 0, targetCameraY = -0.25, targetCameraZ = 5.0;
+        let tvMesh, blackboardMesh, shelfGroup;
+        let povHandsGroup;
+        let targetCam = { x: 0, y: 1.2, z: 12.0 };
         let raycaster, mouse;
 
         function createSpineTexture(title, colorHex) {
@@ -764,17 +920,54 @@
             return tex;
         }
 
-        function init3DMultiShelf() {
+        function createBlackboardTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 640;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#1b2e22'; // Chalkboard Green
+            ctx.fillRect(0, 0, 1024, 640);
+
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 44px "Caveat", cursive';
+            ctx.textAlign = 'center';
+            ctx.fillText('📝 TABLERO DE PARTIDAS', 512, 80);
+
+            ctx.fillStyle = '#ffe6a3';
+            ctx.font = '32px "Caveat", cursive';
+            ctx.fillText('1º: 10 pts | 2º: 5 pts | 3º: 3 pts | 4º: 1 pt', 512, 140);
+
+            ctx.strokeStyle = '#78a385';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(100, 170);
+            ctx.lineTo(924, 170);
+            ctx.stroke();
+
+            ctx.fillStyle = '#f0f0f0';
+            ctx.font = '36px "Caveat", cursive';
+            ctx.textAlign = 'left';
+            ctx.fillText('👑 1. Maestro de Juegos - 45 pts', 150, 250);
+            ctx.fillText('🥈 2. Jugador Invitado - 28 pts', 150, 320);
+            ctx.fillText('🥉 3. Aventurero - 15 pts', 150, 390);
+
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.generateMipmaps = true;
+            return tex;
+        }
+
+        function init3DGamerRoom() {
             const container = document.getElementById('canvas3d-container');
             const w = window.innerWidth;
             const h = window.innerHeight;
 
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x0e0d0b);
-            scene.fog = new THREE.FogExp2(0x0e0d0b, 0.022);
+            scene.fog = new THREE.FogExp2(0x0e0d0b, 0.02);
 
             camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
-            camera.position.set(0, 1.2, 5.0);
+            camera.position.set(0, 1.2, 12.0); // Starts in room overview mode
 
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
             renderer.setSize(w, h);
@@ -786,47 +979,96 @@
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
 
-            // Warm atmospheric room lighting
+            // Room Lighting
             const ambient = new THREE.AmbientLight(0xffeedd, 0.75);
             scene.add(ambient);
 
-            const spot1 = new THREE.SpotLight(0xffdf99, 2.0, 25, Math.PI / 3, 0.5, 1);
-            spot1.position.set(0, 7, 7);
-            spot1.castShadow = true;
-            scene.add(spot1);
+            const spotRoom = new THREE.SpotLight(0xffdf99, 2.0, 30, Math.PI / 3, 0.5, 1);
+            spotRoom.position.set(0, 8, 8);
+            spotRoom.castShadow = true;
+            scene.add(spotRoom);
 
             const sunLight = new THREE.DirectionalLight(0xfff8ee, 1.3);
             sunLight.position.set(-10, 8, 8);
             sunLight.castShadow = true;
             scene.add(sunLight);
 
+            // Floor & Rug
+            const floorMat = new THREE.MeshStandardMaterial({ color: 0x221a14, roughness: 0.85 });
+            const roomFloor = new THREE.Mesh(new THREE.PlaneGeometry(80, 50), floorMat);
+            roomFloor.rotation.x = -Math.PI / 2;
+            roomFloor.position.set(0, -1.8, 0);
+            roomFloor.receiveShadow = true;
+            scene.add(roomFloor);
+
+            const rugMat = new THREE.MeshStandardMaterial({ color: 0x1e3a5f, roughness: 0.9 });
+            const rug = new THREE.Mesh(new THREE.CylinderGeometry(4.0, 4.0, 0.04, 32), rugMat);
+            rug.position.set(0, -1.78, 3.5);
+            scene.add(rug);
+
             // Back wall
-            const wallMat = new THREE.MeshStandardMaterial({ color: 0x1a1511, roughness: 0.9 });
-            const backWall = new THREE.Mesh(new THREE.PlaneGeometry(90, 45), wallMat);
-            backWall.position.set(0, 1.2, -1.3);
+            const wallMat = new THREE.MeshStandardMaterial({ color: 0x241d17, roughness: 0.9 });
+            const backWall = new THREE.Mesh(new THREE.PlaneGeometry(80, 35), wallMat);
+            backWall.position.set(0, 2.5, -1.5);
             backWall.receiveShadow = true;
             scene.add(backWall);
 
-            // Construct 3 Floors of Wooden Shelves with click detection
+            // --- STATION 1: 3D MULTI-FLOOR SHELF (RIGHT SIDE) ---
+            shelfGroup = new THREE.Group();
+            shelfGroup.position.set(6.5, 0, 0); // Positioned to the right of the room
+            scene.add(shelfGroup);
+
             const shelfMat = new THREE.MeshStandardMaterial({ color: 0x3d2314, roughness: 0.75 });
             const floorY = [-1.35, 0.95, 3.25];
 
             floorY.forEach((y, fIdx) => {
-                const plank = new THREE.Mesh(new THREE.BoxGeometry(45, 0.16, 2.6), shelfMat);
+                const plank = new THREE.Mesh(new THREE.BoxGeometry(22, 0.16, 2.6), shelfMat);
                 plank.position.set(0, y, 0);
                 plank.receiveShadow = true;
-                plank.userData = { isShelfPlank: true, floor: fIdx };
-                scene.add(plank);
-                shelfPlanks.push(plank);
+                shelfGroup.add(plank);
             });
 
-            // Build Game Boxes for each floor
             buildMultiFloorGameBoxes(floorY);
 
-            // Create POV Player Hands
+            // --- STATION 2: CHALKBOARD (LEFT SIDE WALL) ---
+            const chalkFrameMat = new THREE.MeshStandardMaterial({ color: 0x5c381e, roughness: 0.8 });
+            const chalkBoardInnerMat = new THREE.MeshStandardMaterial({ map: createBlackboardTexture(), roughness: 0.6 });
+
+            blackboardMesh = new THREE.Mesh(new THREE.BoxGeometry(5.2, 3.2, 0.14), chalkBoardInnerMat);
+            blackboardMesh.position.set(-6.5, 1.8, -1.35);
+            blackboardMesh.castShadow = true;
+            blackboardMesh.userData = { station: 'board' };
+            scene.add(blackboardMesh);
+
+            // --- STATION 3: RETRO CRT TV (CENTER FRONT) ---
+            const tvGroup = new THREE.Group();
+            tvGroup.position.set(0, -0.6, 1.8);
+
+            // TV Table
+            const tvTable = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.8, 1.8), shelfMat);
+            tvTable.position.set(0, -0.7, 0);
+            tvGroup.add(tvTable);
+
+            // CRT TV Body
+            const tvBodyMat = new THREE.MeshStandardMaterial({ color: 0x2b2b2e, roughness: 0.5 });
+            const tvScreenMat = new THREE.MeshStandardMaterial({ color: 0x112233, roughness: 0.2, emissive: 0x051525 });
+            
+            const tvBody = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.5, 1.4), tvBodyMat);
+            tvBody.position.set(0, 0.45, 0);
+            tvGroup.add(tvBody);
+
+            const tvScreen = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.1, 0.08), tvScreenMat);
+            tvScreen.position.set(0, 0.45, 0.7);
+            tvGroup.add(tvScreen);
+
+            tvMesh = tvGroup;
+            tvMesh.userData = { station: 'tv' };
+            scene.add(tvMesh);
+
+            // POV Hands
             createPOVHands();
 
-            // Click raycasting to select shelf/game
+            // Click raycasting
             renderer.domElement.addEventListener('click', onCanvasClick);
 
             window.addEventListener('resize', () => {
@@ -871,7 +1113,7 @@
                     mesh.position.set(startX + i * boxSpacing, yBase, 0);
                     mesh.castShadow = true;
                     mesh.receiveShadow = true;
-                    mesh.userData = { floor: fIdx, index: i, targetZ: 0, game: game };
+                    mesh.userData = { floor: fIdx, index: i, targetZ: 0, game: game, isGameBox: true };
 
                     if (game.image) {
                         textureLoader.load(bustCache(game.image), (tex) => {
@@ -880,12 +1122,10 @@
                         });
                     }
 
-                    scene.add(mesh);
+                    shelfGroup.add(mesh);
                     floorBookMeshes[fIdx].push(mesh);
                 });
             });
-
-            updateActiveShelfSelection(0, 0);
         }
 
         function createPOVHands() {
@@ -907,29 +1147,64 @@
             povHandsGroup.add(rightHandPalm);
         }
 
-        // --- CAMERA MODES: PANORÁMICA vs ACERCADO ---
-        function toggleOverviewCamera() {
-            if (isOverviewMode) {
-                // Switch to Focused Close-up Mode
-                isOverviewMode = false;
-                document.getElementById('view-toggle-text').innerText = 'VISTA GENERAL';
-                document.getElementById('overview-hint').style.display = 'none';
-                document.getElementById('shelf-selector-hud').classList.remove('minimized');
-                updateActiveShelfSelection(currentFloor, activeIndexInFloor);
-            } else {
-                // Switch to Far Overview Mode
-                isOverviewMode = true;
-                document.getElementById('view-toggle-text').innerText = 'ACERCARSE';
-                document.getElementById('overview-hint').style.display = 'block';
-                document.getElementById('shelf-selector-hud').classList.add('minimized');
-                
-                // Camera steps back to reveal entire room & all 3 shelf floors
-                targetCameraX = 0;
-                targetCameraY = 1.0;
-                targetCameraZ = 10.5;
+        // --- ROOM STATIONS CAMERA SWITCHER ---
+        function switchRoomStation(station) {
+            currentStation = station;
+            ['room', 'shelf', 'board', 'tv'].forEach(s => {
+                const pill = document.getElementById('pill-' + s);
+                if (pill) pill.classList.toggle('active', s === station);
+            });
 
-                // Reset all box out-slides
-                floorBookMeshes.forEach(meshList => meshList.forEach(m => m.userData.targetZ = 0));
+            const shelfNav = document.getElementById('shelf-floors-nav');
+            const shelfHud = document.getElementById('shelf-selector-hud');
+            const arrLeft = document.getElementById('arrow-left');
+            const arrRight = document.getElementById('arrow-right');
+
+            if (station === 'room') {
+                // Panoramic Room View
+                targetCam.x = 0;
+                targetCam.y = 1.2;
+                targetCam.z = 12.0;
+
+                shelfNav.style.display = 'none';
+                shelfHud.style.display = 'none';
+                arrLeft.style.display = 'none';
+                arrRight.style.display = 'none';
+
+                // Reset all popped-out boxes
+                floorBookMeshes.forEach(list => list.forEach(m => m.userData.targetZ = 0));
+            }
+            else if (station === 'shelf') {
+                // Close-up to Shelf
+                shelfNav.style.display = 'flex';
+                shelfHud.style.display = 'flex';
+                arrLeft.style.display = 'flex';
+                arrRight.style.display = 'flex';
+                updateActiveShelfSelection(currentFloor, activeIndexInFloor);
+            }
+            else if (station === 'board') {
+                // Focus on Chalkboard
+                targetCam.x = -6.5;
+                targetCam.y = 1.8;
+                targetCam.z = 3.8;
+
+                shelfNav.style.display = 'none';
+                shelfHud.style.display = 'none';
+                arrLeft.style.display = 'none';
+                arrRight.style.display = 'none';
+                setTimeout(() => openBlackboardModal(), 600);
+            }
+            else if (station === 'tv') {
+                // Focus on CRT TV
+                targetCam.x = 0;
+                targetCam.y = 0.2;
+                targetCam.z = 4.6;
+
+                shelfNav.style.display = 'none';
+                shelfHud.style.display = 'none';
+                arrLeft.style.display = 'none';
+                arrRight.style.display = 'none';
+                setTimeout(() => openTVTutorial(activeGame), 600);
             }
         }
 
@@ -941,15 +1216,6 @@
             activeIndexInFloor = Math.max(0, Math.min(floorGames.length - 1, gameIdx));
             activeGame = floorGames[activeIndexInFloor];
 
-            if (isOverviewMode) {
-                // Auto exit overview when a floor is picked
-                isOverviewMode = false;
-                document.getElementById('view-toggle-text').innerText = 'VISTA GENERAL';
-                document.getElementById('overview-hint').style.display = 'none';
-                document.getElementById('shelf-selector-hud').classList.remove('minimized');
-            }
-
-            // Animate 3D boxes: selected game slides outward from the shelf
             floorBookMeshes.forEach((meshList, f) => {
                 meshList.forEach((mesh, i) => {
                     if (f === currentFloor && i === activeIndexInFloor) {
@@ -960,22 +1226,19 @@
                 });
             });
 
-            // Adjust Camera Target to the selected game and shelf floor
             const boxSpacing = 0.45;
             const startX = -((floorGames.length - 1) * boxSpacing) / 2;
-            targetCameraX = startX + activeIndexInFloor * boxSpacing;
+            targetCam.x = 6.5 + (startX + activeIndexInFloor * boxSpacing);
             
             const floorCameraY = [-0.25, 2.05, 4.35];
-            targetCameraY = floorCameraY[currentFloor];
-            targetCameraZ = 5.0;
+            targetCam.y = floorCameraY[currentFloor];
+            targetCam.z = 4.8;
 
-            // Update Floor Buttons UI
             [0, 1, 2].forEach(f => {
                 const btn = document.getElementById('fbtn-' + f);
                 if (btn) btn.classList.toggle('active', f === currentFloor);
             });
 
-            // Update Diegetic HUD
             document.getElementById('hud-game-title').innerText = activeGame.name;
             document.getElementById('hud-game-rank').innerText = (activeGame.rank || 'ROOKIE').toUpperCase();
             document.getElementById('hud-game-rating').innerText = '⭐ ' + (activeGame.rating || 'N/A') + '★';
@@ -987,10 +1250,6 @@
         }
 
         function navigateShelf(dir) {
-            if (isOverviewMode) {
-                toggleOverviewCamera();
-                return;
-            }
             updateActiveShelfSelection(currentFloor, activeIndexInFloor + dir);
         }
 
@@ -1000,48 +1259,65 @@
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
 
-            // Check if clicked any game box
-            const allBoxes = [];
-            floorBookMeshes.forEach(list => list.forEach(m => allBoxes.push(m)));
-            const intersects = raycaster.intersectObjects(allBoxes);
+            // Raycast for stations or game boxes
+            const testObjects = [blackboardMesh, tvMesh];
+            floorBookMeshes.forEach(list => list.forEach(m => testObjects.push(m)));
 
+            const intersects = raycaster.intersectObjects(testObjects, true);
             if (intersects.length > 0) {
-                const hit = intersects[0].object;
-                if (hit.userData) {
-                    updateActiveShelfSelection(hit.userData.floor, hit.userData.index);
+                let hit = intersects[0].object;
+                while (hit && !hit.userData.isGameBox && !hit.userData.station && hit.parent) {
+                    hit = hit.parent;
+                }
+                if (hit && hit.userData) {
+                    if (hit.userData.isGameBox) {
+                        switchRoomStation('shelf');
+                        updateActiveShelfSelection(hit.userData.floor, hit.userData.index);
+                    } else if (hit.userData.station === 'board') {
+                        switchRoomStation('board');
+                    } else if (hit.userData.station === 'tv') {
+                        switchRoomStation('tv');
+                    }
                 }
             }
         }
 
         // Keyboard Controls
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') navigateShelf(-1);
-            else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') navigateShelf(1);
-            else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') setShelfFloor(currentFloor + 1);
-            else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') setShelfFloor(currentFloor - 1);
-            else if (e.key === ' ' || e.key === 'v' || e.key === 'V') toggleOverviewCamera();
-            else if (e.key === 'Enter') inspectActiveGame();
+            if (currentStation === 'shelf') {
+                if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') navigateShelf(-1);
+                else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') navigateShelf(1);
+                else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') setShelfFloor(currentFloor + 1);
+                else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') setShelfFloor(currentFloor - 1);
+                else if (e.key === 'Escape' || e.key === 'b' || e.key === 'B') switchRoomStation('room');
+                else if (e.key === 'Enter') inspectActiveGame();
+            } else {
+                if (e.key === '1') switchRoomStation('room');
+                else if (e.key === '2') switchRoomStation('shelf');
+                else if (e.key === '3') switchRoomStation('board');
+                else if (e.key === '4') switchRoomStation('tv');
+            }
         });
 
         function animate() {
             requestAnimationFrame(animate);
 
-            // Smooth Camera lerp (X, Y, Z for seamless zoom in/out transitions)
-            camera.position.x += (targetCameraX - camera.position.x) * 0.10;
-            camera.position.y += (targetCameraY - camera.position.y) * 0.10;
-            camera.position.z += (targetCameraZ - camera.position.z) * 0.10;
+            // Smooth Camera lerp
+            camera.position.x += (targetCam.x - camera.position.x) * 0.09;
+            camera.position.y += (targetCam.y - camera.position.y) * 0.09;
+            camera.position.z += (targetCam.z - camera.position.z) * 0.09;
 
-            // Smooth 3D boxes slide out
+            // Slide 3D boxes
             floorBookMeshes.forEach(meshList => {
                 meshList.forEach(mesh => {
                     mesh.position.z += (mesh.userData.targetZ - mesh.position.z) * 0.15;
                 });
             });
 
-            // Hands visibility & breathing animation
+            // Hands visibility
             if (povHandsGroup) {
-                povHandsGroup.visible = !isOverviewMode;
-                if (!isOverviewMode) {
+                povHandsGroup.visible = (currentStation === 'shelf');
+                if (currentStation === 'shelf') {
                     const time = Date.now() * 0.002;
                     povHandsGroup.position.y = Math.sin(time) * 0.02;
                     povHandsGroup.position.x = Math.cos(time * 0.5) * 0.015;
@@ -1049,6 +1325,70 @@
             }
 
             renderer.render(scene, camera);
+        }
+
+        // --- BLACKBOARD & CHALKBOARD RANKING (10, 5, 3, 1 PTS) ---
+        function openBlackboardModal() {
+            renderChalkboardLeaderboard();
+            document.getElementById('blackboard-overlay').style.display = 'flex';
+        }
+
+        async function renderChalkboardLeaderboard() {
+            const listEl = document.getElementById('chalkboard-leaderboard-list');
+            try {
+                const res = await fetch('api.php?action=get_data');
+                const d = await res.json();
+                const matches = d.matches || [];
+
+                const pointsTable = {};
+
+                // Exact scoring rules: 1st: 10 pts, 2nd: 5 pts, 3rd: 3 pts, 4th: 1 pt
+                const positionPoints = [10, 5, 3, 1];
+
+                matches.forEach(m => {
+                    if (m.players && m.players.length > 0) {
+                        m.players.forEach((p, idx) => {
+                            const ptsAwarded = positionPoints[idx] !== undefined ? positionPoints[idx] : 1;
+                            if (!pointsTable[p.name]) {
+                                pointsTable[p.name] = { points: 0, wins: 0, matches: 0 };
+                            }
+                            pointsTable[p.name].points += ptsAwarded;
+                            pointsTable[p.name].matches++;
+                            if (idx === 0 || p.winner) pointsTable[p.name].wins++;
+                        });
+                    }
+                });
+
+                const sorted = Object.entries(pointsTable).sort((a,b) => b[1].points - a[1].points);
+                if (sorted.length === 0) {
+                    listEl.innerHTML = '<div style="font-size:22px; padding:10px;">Aún no se han anotado partidas en la pizarra con tiza.</div>';
+                    return;
+                }
+
+                let html = '';
+                sorted.forEach(([name, stat], i) => {
+                    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🎖️';
+                    html += `
+                        <div class="chalk-row">
+                            <span>${medal} ${i+1}. ${name}</span>
+                            <span><strong>${stat.points} PUNTOS</strong> <small style="font-size:18px; color:#ffe6a3;">(${stat.wins} Victorias / ${stat.matches} Partidas)</small></span>
+                        </div>
+                    `;
+                });
+                listEl.innerHTML = html;
+            } catch(e) {
+                listEl.innerHTML = '<div style="font-size:22px;">Error al leer las partidas.</div>';
+            }
+        }
+
+        // --- RETRO CRT TV (YOUTUBE HOW TO PLAY) ---
+        function openTVTutorial(game) {
+            const g = game || activeGame;
+            if (!g) return;
+            document.getElementById('tv-game-title').innerText = '📺 ' + g.name.toUpperCase() + ' - CÓMO JUGAR';
+            const query = encodeURIComponent(g.name + ' como jugar juego de mesa tutorial');
+            document.getElementById('tv-iframe').src = 'https://www.youtube.com/embed?listType=search&list=' + query;
+            document.getElementById('tv-modal').style.display = 'flex';
         }
 
         // --- HUD ARCADE ACTIONS ---
@@ -1067,8 +1407,6 @@
                     <div><span style="color:#ffbe3b; font-weight:bold;">👥 JUGADORES:</span> ${activeGame.players}</div>
                 </div>
             `;
-            const searchUrl = 'https://www.youtube.com/results?search_query=como+jugar+' + encodeURIComponent(activeGame.name + ' tutorial');
-            document.getElementById('modal-link').href = searchUrl;
             document.getElementById('modal-bgg-link').href = activeGame.bgg_url || ('https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=' + encodeURIComponent(activeGame.name));
 
             document.getElementById('game-modal').style.display = 'flex';
@@ -1078,12 +1416,11 @@
             openNewMatchModal(activeGame);
         }
 
-        function showScoringActiveGame() {
-            inspectActiveGame();
-        }
-
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
+            if (id === 'tv-modal') {
+                document.getElementById('tv-iframe').src = '';
+            }
         }
 
         // --- BGG LIVE AUTOCOMPLETE ENGINE ---
@@ -1169,7 +1506,7 @@
             }
         }
 
-        // --- MATCHES & LEADERBOARD ---
+        // --- MATCHES REGISTRATION ---
         function openNewMatchModal(game) {
             document.getElementById('match-game-name').value = game ? game.name : 'Catan';
             document.getElementById('match-date').value = new Date().toISOString().split('T')[0];
@@ -1177,31 +1514,29 @@
             if (p1 && currentUser && currentUser.name) p1.value = currentUser.name;
             document.getElementById('match-modal').style.display = 'flex';
         }
-        function addPlayerField() {
-            const list = document.getElementById('match-players-list');
-            const row = document.createElement('div');
-            row.style = 'display:flex; gap:8px; margin-bottom:8px;';
-            row.innerHTML = `
-                <input type="text" placeholder="Jugador" class="medieval-input player-name" style="margin:0; flex:2;">
-                <input type="number" placeholder="Pts" class="medieval-input player-score" style="margin:0; flex:1;">
-            `;
-            list.appendChild(row);
-        }
+
         async function saveMatch() {
             const gName = document.getElementById('match-game-name').value;
             const names = document.querySelectorAll('.player-name');
-            const scores = document.querySelectorAll('.player-score');
             const players = [];
-            let max = -99999;
-            for (let i = 0; i < names.length; i++) {
-                const n = names[i].value.trim();
-                const s = Number(scores[i].value || 0);
+            const posPts = [10, 5, 3, 1];
+
+            names.forEach((inp, idx) => {
+                const n = inp.value.trim();
                 if (n) {
-                    if (s > max) max = s;
-                    players.push({ name: n, score: s, winner: false });
+                    players.push({
+                        name: n,
+                        score: posPts[idx] !== undefined ? posPts[idx] : 1,
+                        winner: idx === 0
+                    });
                 }
+            });
+
+            if (players.length === 0) {
+                alert('Ingresa al menos un jugador.');
+                return;
             }
-            players.forEach(p => { if (p.score === max) p.winner = true; });
+
             try {
                 await fetch('api.php?action=add_match', {
                     method: 'POST',
@@ -1215,40 +1550,8 @@
                 });
             } catch(e) {}
             closeModal('match-modal');
-            alert('¡Partida registrada con honor!');
-        }
-
-        function openLeaderboardModal() {
-            loadLeaderboard();
-            document.getElementById('leaderboard-modal').style.display = 'flex';
-        }
-        async function loadLeaderboard() {
-            try {
-                const res = await fetch('api.php?action=get_data');
-                const d = await res.json();
-                const matches = d.matches || [];
-                const scores = {};
-                matches.forEach(m => {
-                    m.players.forEach(p => {
-                        if (!scores[p.name]) scores[p.name] = { wins: 0, matches: 0, pts: 0 };
-                        scores[p.name].matches++;
-                        scores[p.name].pts += p.score;
-                        if (p.winner) scores[p.name].wins++;
-                    });
-                });
-                const rank = Object.entries(scores).sort((a,b) => b[1].wins - a[1].wins);
-                let html = '';
-                rank.forEach(([n, s], idx) => {
-                    const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉';
-                    html += `<div style="background:rgba(20,10,5,0.85); border:1px solid #ffbe3b; padding:8px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between;">
-                        <strong>${medal} ${n}</strong>
-                        <span style="color:#ffd700;">${s.wins} Victorias (${s.pts} pts)</span>
-                    </div>`;
-                });
-                document.getElementById('leaderboard-list').innerHTML = html || 'No hay partidas aún.';
-            } catch(e) {
-                document.getElementById('leaderboard-list').innerHTML = 'Sin partidas.';
-            }
+            renderChalkboardLeaderboard();
+            alert('¡Partida anotada con tiza en la pizarra!');
         }
 
         // --- ROULETTE ---
@@ -1260,6 +1563,7 @@
             const randFloor = Math.floor(Math.random() * 3);
             const floorGames = SHELF_FLOORS[randFloor].games;
             const randIdx = Math.floor(Math.random() * floorGames.length);
+            switchRoomStation('shelf');
             updateActiveShelfSelection(randFloor, randIdx);
             document.getElementById('wheel-result').innerHTML = `🎉 ¡EL DESTINO HA ELEGIDO:<br><strong style="color:#ffd700; font-size:20px;">${floorGames[randIdx].name}</strong>!`;
         }
@@ -1273,7 +1577,7 @@
         });
 
         window.onload = () => {
-            init3DMultiShelf();
+            init3DGamerRoom();
         };
     </script>
 </body>
